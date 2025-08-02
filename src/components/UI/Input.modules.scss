@@ -1,0 +1,30 @@
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 420px;
+    width: fit-content;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    padding: 12px 21px;
+
+    &:focus-within {
+        border-color: var(--color-accent);
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.input {
+    font-size: 20px;
+    border: none;
+    flex: 1;
+
+    &::placeholder {
+        color: var(--color-border);
+    }
+}
