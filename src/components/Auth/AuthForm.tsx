@@ -15,7 +15,6 @@ type AuthFormProps = {
 };
 
 const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
-    mode = 'signup'
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -178,7 +177,7 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                         {mode === 'signup' ? 'Sign Up' : 'Log In'}
                     </Button>
 
-                    {mode === 'signup' && (
+                    {mode === 'login' && (
                         <Button
                             style={{ backgroundColor: 'white', color: 'black' }}
                             type="button"

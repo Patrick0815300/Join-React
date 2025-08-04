@@ -3,7 +3,6 @@
     justify-content: space-between;
     gap: 10px;
     min-width: 420px;
-    width: fit-content;
     align-items: center;
     border-radius: 10px;
     border: 1px solid var(--color-border);
@@ -26,5 +25,11 @@
 
     &::placeholder {
         color: var(--color-border);
+    }
+}
+
+@media (max-width: 720px) {
+    .input-container {
+        min-width: auto;
     }
 }
