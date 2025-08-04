@@ -10,6 +10,10 @@
   --color-border: #D1D1D1;
 }
 
+body {
+  margin: 0;
+}
+
 input {
   outline: none;
 }

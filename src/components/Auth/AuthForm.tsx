@@ -163,6 +163,8 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                     )}
                 </div>
 
+                {mode === 'signup' ? <div><input type="checkbox" /> I accept the <a href="#">Privacy policy</a></div> : null}
+
                 <div className="button-container">
                     <Button
                         disabled={

@@ -1,0 +1,15 @@
+section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}

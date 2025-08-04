@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <AuthForm mode='login' />
+      <Login />
     </>
   )
 }
