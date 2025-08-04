@@ -3,9 +3,9 @@ import Input from '../UI/Input';
 import Mail from '../../assets/icons/mail.svg'
 import Lock from '../../assets/icons/lock.svg'
 import Person from '../../assets/icons/person.svg'
-
 import './AuthForm.modules.scss'
 import { useState } from 'react';
+import { validateEmail, validatePassword, checkConfirmPassword } from '../../utils/validation';
 
 
 type AuthFormProps = {
@@ -16,16 +16,6 @@ type AuthFormProps = {
 
 const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
     mode = 'signup'
-    const validateEmail = (email: string) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-        return emailRegex.test(email)
-    }
-
-    const validatePassword = (password: string) => {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-        return passwordRegex.test(password)
-    }
-
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -33,15 +23,20 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
         passwordConfirm: ''
     })
 
-    const [nameError, setNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [passwordConfirmError, setPasswordConfirmError] = useState(false)
+    const [errors, setErrors] = useState({
+        name: false,
+        email: false,
+        password: false,
+        passwordConfirm: false,
+    });
 
-    const [nameTouched, setNameTouched] = useState(false);
-    const [emailTouched, setEmailTouched] = useState(false);
-    const [passwordTouched, setPasswordTouched] = useState(false);
-    const [passwordConfirmTouched, setPasswordConfirmTouched] = useState(false);
+    const [touched, setTouched] = useState({
+        name: false,
+        email: false,
+        password: false,
+        passwordConfirm: false,
+    });
+
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -49,17 +44,20 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
 
         switch (name) {
             case "email":
-                setEmailError(!validateEmail(value));
+                setErrors(prev => ({ ...prev, email: !validateEmail(value) }));
                 break;
             case "password":
-                setPasswordError(!validatePassword(value));
-                setPasswordConfirmError(!checkConfirmPassword(value, form.passwordConfirm));
+                setErrors(prev => ({
+                    ...prev,
+                    password: !validatePassword(value),
+                    passwordConfirm: !checkConfirmPassword(value, form.passwordConfirm, mode), // Falls Passwort geändert, auch Bestätigung prüfen!
+                }));
                 break;
             case "name":
-                setNameError(value.trim().length < 3);
+                setErrors(prev => ({ ...prev, name: value.trim().length < 3 }));
                 break;
             case "passwordConfirm":
-                setPasswordConfirmError(!checkConfirmPassword(form.password, value));
+                setErrors(prev => ({ ...prev, passwordConfirm: !checkConfirmPassword(form.password, value, mode) }));
                 break;
         }
     };
@@ -67,25 +65,19 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
 
     const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         const { name } = e.target;
-        if (name === "email") setEmailTouched(true);
-        if (name === "password") setPasswordTouched(true);
-        if (name === "name") setNameTouched(true);
+        setTouched(prev => ({ ...prev, [name]: true }));
         if (name === 'passwordConfirm') {
-            setPasswordConfirmTouched(true);
-            const isValid = checkConfirmPassword(form.password, form.passwordConfirm);
-            setPasswordConfirmError(!isValid);
+            setErrors(prev => ({
+                ...prev,
+                passwordConfirm: !checkConfirmPassword(form.password, form.passwordConfirm, mode)
+            }));
         }
     };
-
-    const checkConfirmPassword = (pw: string, pwConfirm: string): boolean => {
-        return pw === pwConfirm && pwConfirm.length > 0;
-    }
-
 
 
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (validateEmail(form.email) && validatePassword(form.password) && checkConfirmPassword(form.password, form.passwordConfirm)) {
+        if (validateEmail(form.email) && validatePassword(form.password) && checkConfirmPassword(form.password, form.passwordConfirm, mode)) {
             setForm({
                 name: '',
                 email: '',
@@ -98,6 +90,11 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
         }
 
     }
+
+    const showError = (field: keyof typeof errors, msg: string) => (
+        touched[field] && errors[field] ? <label htmlFor={field}>{msg}</label> : null
+    );
+
 
     return (
         <>
@@ -120,9 +117,7 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                                 imgSrc={Person}
                                 imgAlt='Name-Icon'
                             />
-                            {nameTouched && nameError && (
-                                <label htmlFor="name">Name required with min. 3 letters</label>
-                            )}
+                            {showError('name', "Name required with min. 3 letters.")}
                         </>
                     )}
                     <Input
@@ -135,9 +130,8 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                         imgSrc={Mail}
                         imgAlt='Mail-Icon'
                     />
-                    {emailTouched && emailError && (
-                        <label htmlFor="email">Check your email. Please try again.</label>
-                    )}
+                    {showError('email', "Check your email. Please try again.")}
+
 
                     <Input
                         placeholder='Password'
@@ -150,9 +144,7 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                         imgSrc={Lock}
                         imgAlt='Lock-Icon'
                     />
-                    {passwordTouched && passwordError && (
-                        <label htmlFor="password">Check your Password. Please try again.</label>
-                    )}
+                    {showError('password', "Check your Password. Please try again.")}
 
                     {mode === 'signup' && (
                         <>
@@ -167,28 +159,36 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                                 imgSrc={Lock}
                                 imgAlt='Confirm-Password-Icon'
                             />
-                            {passwordConfirmTouched && passwordConfirmError && (
-                                <label htmlFor="passwordConfirm">Passwords do not match.</label>
-                            )}
+                            {showError('passwordConfirm', "Passwords do not match.")}
                         </>
                     )}
                 </div>
 
                 <div className="button-container">
                     <Button
-                        disabled=
-                        {emailError ||
-                            passwordError ||
-                            (mode === 'signup' && (nameError || passwordConfirmError))
-                        }>{mode === 'signup' ? 'Sign Up' : 'Log In'}</Button>
-                    {mode === 'signup' && (
-                        <>
-                            <Button style={{ backgroundColor: 'white', color: 'black' }}>Guest Log In</Button>
-                        </>
-                    )
+                        disabled={
+                            errors.email ||
+                            errors.password ||
+                            (mode === 'signup' && (errors.name || errors.passwordConfirm)) ||
+                            form.email.trim() === '' ||
+                            form.password.trim() === '' ||
+                            (mode === 'signup' && (form.name.trim() === '' || form.passwordConfirm.trim() === ''))
+                        }
+                    >
+                        {mode === 'signup' ? 'Sign Up' : 'Log In'}
+                    </Button>
 
-                    }
+                    {mode === 'signup' && (
+                        <Button
+                            style={{ backgroundColor: 'white', color: 'black' }}
+                            type="button"
+                            onClick={onGuestLogin}
+                        >
+                            Guest Log In
+                        </Button>
+                    )}
                 </div>
+
 
             </form >
         </>
