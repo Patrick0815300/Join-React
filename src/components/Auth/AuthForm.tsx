@@ -15,11 +15,13 @@ type AuthFormProps = {
 };
 
 const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
+    mode = 'signup'
     const [form, setForm] = useState({
         name: '',
         email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        checked: false
     })
 
     const [errors, setErrors] = useState({
@@ -35,7 +37,6 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
         password: false,
         passwordConfirm: false,
     });
-
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -76,12 +77,17 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
 
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (validateEmail(form.email) && validatePassword(form.password) && checkConfirmPassword(form.password, form.passwordConfirm, mode)) {
+        if (validateEmail(form.email) &&
+            validatePassword(form.password) &&
+            checkConfirmPassword(form.password, form.passwordConfirm, mode) &&
+            form.checked
+        ) {
             setForm({
                 name: '',
                 email: '',
                 password: '',
-                passwordConfirm: ''
+                passwordConfirm: '',
+                checked: false
             })
         } else {
             // Toast Error Meldung
@@ -163,7 +169,7 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
                     )}
                 </div>
 
-                {mode === 'signup' ? <div><input type="checkbox" /> I accept the <a href="#">Privacy policy</a></div> : null}
+                {mode === 'signup' ? <div><input type="checkbox" checked={form.checked} onChange={e => setForm({ ...form, checked: e.target.checked })} /> I accept the <a href="#">Privacy policy</a></div> : null}
 
                 <div className="button-container">
                     <Button
