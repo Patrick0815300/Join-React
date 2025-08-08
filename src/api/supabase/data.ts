@@ -1,4 +1,3 @@
-// src/api/supabase/data.ts (optional)
 import { supabase } from './client.ts';
 
 export async function getInstruments() {

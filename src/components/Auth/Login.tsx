@@ -11,7 +11,10 @@ const Login = ({ }) => {
             .catch(e => console.error('Fehler beim laden der Daten' + e))
     }, [])
 
-    console.log('Instrument: ' + instrument);
+    //console.log('Instrument: ' + instrument);
+
+    //Session();
+
 
 
     return (
