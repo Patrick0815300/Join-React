@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import AuthForm from "./AuthForm"
 import { getData } from "../../api/supabase/data"
 import './Login.modules.scss'
-import { getSession, getUser, signUp } from "../../api/supabase/user"
+import { getSession, getUser, signUp, login } from "../../api/supabase/user"
 
 const Login = ({ }) => {
     const [instrument, setInstrument] = useState<any[]>([]);
@@ -12,21 +12,36 @@ const Login = ({ }) => {
             .catch(e => console.error(e))
     }, [])
 
-    console.log(instrument);
+    const [form, setForm] = useState(
+        {
+            name: '',
+            email: '',
+            password: '',
+            passwordConfirm: '',
+            checked: false
+        });
 
-
-
+    const handleAuthSubmit = async (formData: { email: string; password: string }) => {
+        console.log("Daten vom Formular:", formData);
+        login(formData.email, formData.password)
+        try {
+            const session = await getSession();
+            console.log("Login erfolgreich", session);
+            // z.B. Weiterleitung oder Zustand setzen
+        } catch (error) {
+            console.error("Login fehlgeschlagen", error);
+        }
+    };
 
 
     return (
         <>
             <section>
-                <AuthForm mode="login" />
+                <AuthForm
+                    mode="login"
+                    onSubmit={handleAuthSubmit}
+                />
                 <button onClick={() => getUser()}>Los</button>
-                <footer>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Legal otice</a>
-                </footer>
             </section>
         </>
     )
