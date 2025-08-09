@@ -76,11 +76,14 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
 
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (validateEmail(form.email) &&
-            validatePassword(form.password) &&
-            checkConfirmPassword(form.password, form.passwordConfirm, mode) &&
-            form.checked
-        ) {
+        const emailOk = validateEmail(form.email);
+        const pwOk = validatePassword(form.password);
+        const confirmOk = mode === "signup"
+            ? checkConfirmPassword(form.password, form.passwordConfirm, mode)
+            : true; // <- immer true beim Login
+        const checkedOk = mode === "signup" ? form.checked : true;
+        if (emailOk && pwOk && confirmOk && checkedOk) {
+            if (onSubmit) onSubmit(form)
             setForm({
                 name: '',
                 email: '',
@@ -92,8 +95,8 @@ const AuthForm = ({ mode, onGuestLogin, onSubmit }: AuthFormProps) => {
             // Toast Error Meldung
             console.log('Schade');
         }
+    };
 
-    }
 
     const showError = (field: keyof typeof errors, msg: string) => (
         touched[field] && errors[field] ? <label htmlFor={field}>{msg}</label> : null
