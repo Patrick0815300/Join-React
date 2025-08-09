@@ -1,6 +1,7 @@
 import { useState } from "react"
 import AuthForm from "./AuthForm"
-import { getSession, signUp, } from "../../api/supabase/user"
+import { getSession, signUp, } from "../../api/supabase/user.ts"
+import { addContact } from "../../api/supabase/data.ts"
 
 type FormDataProp = {
     name: string,
@@ -19,15 +20,21 @@ const SignUp = ({ }) => {
             checked: false
         });
 
+    function splitName(fullName: string): { firstName: string; lastName: string } {
+        const parts = fullName.trim().split(' ');
+        const firstName = parts[0] || '';
+        const lastName = parts.slice(1).join(' ') || '';
+        return { lastName, firstName };
+    }
+
     const handleAuthSubmit = async (formData: FormDataProp) => {
-        console.log("Daten vom Formular:", formData);
-        signUp(formData.email, formData.password)
+        const name = splitName(formData.name);
         try {
-            const session = await getSession();
-            console.log("SignUp erfolgreich", session);
-            // z.B. Weiterleitung oder Zustand setzen
-        } catch (error) {
+            await signUp(formData.email, formData.password)
+            await addContact(name.lastName, name.firstName, formData.email)
+        } catch (error: any) {
             console.error("SignUp fehlgeschlagen", error);
+            //error.message übergeben an Toast !
         }
     };
 
