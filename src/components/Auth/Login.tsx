@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import AuthForm from "./AuthForm"
-import { getData } from "../../api/supabase/data"
 import './Login.modules.scss'
-import { getSession, getUser, signUp, login } from "../../api/supabase/user"
+import { getSession, getUser, login } from "../../api/supabase/user"
 
 const Login = ({ }) => {
-    const [instrument, setInstrument] = useState<any[]>([]);
-    useEffect(() => {
-        getData('contacts')
-            .then(data => setInstrument(data))
-            .catch(e => console.error(e))
-    }, [])
+    // const [instrument, setInstrument] = useState<any[]>([]);
+    // useEffect(() => {
+    //     getData('contacts')
+    //         .then(data => setInstrument(data))
+    //         .catch(e => console.error(e))
+    // }, [])
 
     const [form, setForm] = useState(
         {
@@ -41,7 +40,6 @@ const Login = ({ }) => {
                     mode="login"
                     onSubmit={handleAuthSubmit}
                 />
-                <button onClick={() => getUser()}>Los</button>
             </section>
         </>
     )
