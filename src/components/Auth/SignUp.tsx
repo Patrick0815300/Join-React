@@ -1,7 +1,9 @@
-import { useState } from "react"
-import AuthForm from "./AuthForm"
+import AuthForm from "./AuthForm.tsx"
 import { getSession, signUp, } from "../../api/supabase/user.ts"
 import { addContact } from "../../api/supabase/data.ts"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import './Login.modules.scss'
 
 type FormDataProp = {
     name: string,
@@ -11,14 +13,15 @@ type FormDataProp = {
     checked: false
 }
 const SignUp = ({ }) => {
-    const [form, setForm] = useState(
-        {
-            name: '',
-            email: '',
-            password: '',
-            passwordConfirm: '',
-            checked: false
-        });
+    const navigate = useNavigate();
+
+    const [toast, setToast] = useState({
+        msg: '',
+        show: false
+    })
+
+
+
 
     function splitName(fullName: string): { firstName: string; lastName: string } {
         const parts = fullName.trim().split(' ');
@@ -32,16 +35,23 @@ const SignUp = ({ }) => {
         try {
             await signUp(formData.email, formData.password)
             await addContact(name.lastName, name.firstName, formData.email)
+            setToast({ msg: 'You successfully Sign Up.', show: true })
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (error: any) {
             console.error("SignUp fehlgeschlagen", error);
-            //error.message übergeben an Toast !
+            setToast({ msg: error.message, show: true })
         }
     };
-
 
     return (
         <>
             <section>
+                {toast.show === true ?
+                    <div className="toast">{toast.msg}</div> : null
+                }
+
                 <AuthForm
                     mode="signup"
                     onSubmit={handleAuthSubmit}
