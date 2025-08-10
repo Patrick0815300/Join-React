@@ -1,14 +1,21 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css'
-import AuthForm from './components/Auth/AuthForm'
 import Login from './components/Auth/Login'
 import SignUp from './components/Auth/SignUp'
 
 
 function App() {
 
+
   return (
     <>
-      <SignUp />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/signup" replace />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
