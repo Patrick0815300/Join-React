@@ -3,6 +3,7 @@ import './App.css'
 import Login from './components/Auth/Login.tsx'
 import SignUp from './components/Auth/SignUp.tsx'
 import { Navbar } from './components/Shared/Navbar.tsx';
+import { Header } from './components/Shared/Header.tsx';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/navbar" element={<Navbar />} />
+          <Route path="/header" element={<Header />} />
         </Routes>
       </BrowserRouter>
 

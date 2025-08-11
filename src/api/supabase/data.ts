@@ -16,3 +16,10 @@ export async function addContact(lastname: string, firstname: string, mail: stri
     if (error) throw error;
     return data
 }
+
+export async function updateContact(column: string, content: string, mail: string) {
+    const { error } = await supabase
+        .from('contacts')
+        .update({ column, content })
+        .eq('mail', mail)
+}
