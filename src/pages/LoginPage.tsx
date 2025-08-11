@@ -6,6 +6,8 @@ import './LoginPage.modules.scss'
 export function LoginPage() {
     const navigate = useNavigate();
 
+    
+
     return (
         <>
             <section>
