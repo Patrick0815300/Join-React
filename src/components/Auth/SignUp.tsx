@@ -20,9 +20,6 @@ const SignUp = ({ }) => {
         show: false
     })
 
-
-
-
     function splitName(fullName: string): { firstName: string; lastName: string } {
         const parts = fullName.trim().split(' ');
         const firstName = parts[0] || '';
