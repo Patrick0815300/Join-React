@@ -6,11 +6,13 @@ export async function getData(database: string) {
     return data;
 }
 
-export async function addContact(lastname: string, firstname: string, mail: string) {
+export async function addContact(userId: string, lastname: string, firstname: string, mail: string) {
+    console.log('userId addContact: ', userId);
+
     const { data, error } = await supabase
         .from('contacts')
         .insert([
-            { lastname: lastname, firstname: firstname, mail: mail },
+            { user_id: userId, lastname: lastname, firstname: firstname, mail: mail },
         ])
         .select()
     if (error) throw error;

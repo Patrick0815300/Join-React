@@ -20,13 +20,18 @@ const Login = ({ }) => {
             checked: false
         });
 
+    const [toast, setToast] = useState({
+        msg: '',
+        show: false
+    })
+
     const handleAuthSubmit = async (formData: { email: string; password: string }) => {
         console.log("Daten vom Formular:", formData);
         login(formData.email, formData.password)
         try {
             const session = await getSession();
             console.log("Login erfolgreich", session);
-            // z.B. Weiterleitung oder Zustand setzen
+            setToast({ msg: 'Successfull Log In.', show: true })
         } catch (error) {
             console.error("Login fehlgeschlagen", error);
         }
@@ -36,6 +41,9 @@ const Login = ({ }) => {
     return (
         <>
             <section>
+                {toast.show === true ?
+                    <div className="toast">{toast.msg}</div> : null
+                }
                 <AuthForm
                     mode="login"
                     onSubmit={handleAuthSubmit}
