@@ -1,8 +1,8 @@
 import AuthForm from "./AuthForm.tsx"
-import { getSession, signUp, } from "../../api/supabase/user.ts"
+import { signUp, } from "../../api/supabase/user.ts"
 import { addContact } from "../../api/supabase/data.ts"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import './Login.modules.scss'
 
 type FormDataProp = {
@@ -20,6 +20,14 @@ const SignUp = ({ }) => {
         show: false
     })
 
+    const signUpUser = async (formData: FormDataProp) => {
+        const name = splitName(formData.name);
+        const data = await signUp(formData.email, formData.password);
+        if (data.user) {
+            await addContact(data.user.id, name.lastName, name.firstName, formData.email);
+        }
+    }
+
     function splitName(fullName: string): { firstName: string; lastName: string } {
         const parts = fullName.trim().split(' ');
         const firstName = parts[0] || '';
@@ -28,10 +36,8 @@ const SignUp = ({ }) => {
     }
 
     const handleAuthSubmit = async (formData: FormDataProp) => {
-        const name = splitName(formData.name);
         try {
-            await signUp(formData.email, formData.password)
-            await addContact(name.lastName, name.firstName, formData.email)
+            await signUpUser(formData);
             setToast({ msg: 'You successfully Sign Up.', show: true })
             setTimeout(() => {
                 navigate('/login');
