@@ -18,6 +18,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/navbar" element={<Navbar />} />
+          <Route path="/header" element={<Header />} />
         </Routes>
       </BrowserRouter>
 

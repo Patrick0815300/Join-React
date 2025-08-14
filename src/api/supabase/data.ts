@@ -25,3 +25,13 @@ export async function updateContact(column: string, content: string, mail: strin
         .update({ column, content })
         .eq('mail', mail)
 }
+
+export async function getSingleColumn(tableName: string, column: string, id: string) {
+    const { data, error } = await supabase
+        .from(tableName)
+        .select('*')
+        .eq(column, id)
+        .single()
+    if (error) throw error;
+    return data;
+}
