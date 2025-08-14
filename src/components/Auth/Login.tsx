@@ -27,12 +27,11 @@ const Login = ({ }) => {
 
     const handleAuthSubmit = async (formData: { email: string; password: string }) => {
         console.log("Daten vom Formular:", formData);
-        login(formData.email, formData.password)
         try {
-            const session = await getSession();
-            console.log("Login erfolgreich", session);
+            await login(formData.email, formData.password)
             setToast({ msg: 'Successfull Log In.', show: true })
-        } catch (error) {
+        } catch (error: any) {
+            setToast({ msg: error?.message || 'Logged in failed.', show: true })
             console.error("Login fehlgeschlagen", error);
         }
     };
