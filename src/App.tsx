@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css'
-import Login from './components/Auth/Login.tsx'
-import SignUp from './components/Auth/SignUp.tsx'
 import { Navbar } from './components/Shared/Navbar.tsx';
 import { Header } from './components/Shared/Header.tsx';
 import { SignUpPage } from './pages/SignUpPage.tsx';
@@ -16,9 +14,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/signup" replace />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/navbar" element={<Navbar />} />
         </Routes>
       </BrowserRouter>
