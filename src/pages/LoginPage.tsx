@@ -6,13 +6,13 @@ import './LoginPage.modules.scss'
 export function LoginPage() {
     const navigate = useNavigate();
 
-    
+
 
     return (
         <>
             <section>
                 <img className="logo" src="src/assets/icons/logo.svg" alt="Logo" />
-                <header>
+                <header className="head">
                     <span>Not a Join user?</span>
                     <Button onClick={() => navigate('/signup')}>Sign up</Button>
                 </header>
