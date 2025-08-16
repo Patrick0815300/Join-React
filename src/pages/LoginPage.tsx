@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Login from "../components/Auth/Login"
 import Button from "../components/UI/Button"
 import './LoginPage.modules.scss'
+import { LoginContainer } from "../components/containers/LoginContainer";
 
 export function LoginPage() {
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ export function LoginPage() {
                     <span>Not a Join user?</span>
                     <Button onClick={() => navigate('/signup')}>Sign up</Button>
                 </header>
-                <Login />
+                <LoginContainer />
                 <footer>
                     <a href="#">Privacy Policy</a>
                     <a href="#">Legal notice</a>
