@@ -96,6 +96,11 @@ export function AuthFormContainer({ mode, onGuestLogin, onSubmit }: AuthFormProp
         touched[field] && errors[field] ? <label htmlFor={field}>{msg}</label> : null
     );
 
+    const onCheckedChange = (checked: boolean) => {
+        setForm(prev => ({ ...prev, checked }));
+    };
+
+
 
     return (
         <>
@@ -108,7 +113,7 @@ export function AuthFormContainer({ mode, onGuestLogin, onSubmit }: AuthFormProp
                 onInputBlur={onInputBlur}
                 showError={showError}
                 onGuestLogin={onGuestLogin}
-                setForm={setForm}
+                onCheckedChange={onCheckedChange}
             />
         </>
     )
