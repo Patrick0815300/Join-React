@@ -4,7 +4,7 @@ import Mail from '../../assets/icons/mail.svg'
 import Lock from '../../assets/icons/lock.svg'
 import Person from '../../assets/icons/person.svg'
 
-export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, onInputBlur, showError, onGuestLogin, setForm }: any) {
+export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, onInputBlur, showError, onGuestLogin, onCheckedChange }: any) {
     return (
         <>
             <form onSubmit={onSubmitChange} className="form-container">
@@ -73,7 +73,16 @@ export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, on
                     )}
                 </div>
 
-                {mode === 'signup' ? <div><input type="checkbox" checked={form.checked} onChange={e => setForm({ ...form, checked: e.target.checked })} /> I accept the <a href="#">Privacy policy</a></div> : null}
+                {mode === 'signup' ? (
+                    <div>
+                        <input
+                            type="checkbox"
+                            checked={form.checked}
+                            onChange={e => onCheckedChange && onCheckedChange(e.target.checked)}
+                        />
+                        I accept the <a href="#">Privacy policy</a>
+                    </div>
+                ) : null}
 
                 <div className="button-container">
                     <Button
