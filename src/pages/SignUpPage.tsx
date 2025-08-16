@@ -1,4 +1,4 @@
-import SignUp from "../components/Auth/SignUp"
+import { SignUpContainer } from "../components/containers/SignUpContainer"
 import './LoginPage.modules.scss'
 
 export function SignUpPage() {
@@ -7,7 +7,7 @@ export function SignUpPage() {
         <>
             <section>
                 <img className="logo" src="src/assets/icons/logo.svg" alt="Logo" />
-                <SignUp />
+                <SignUpContainer />
                 <footer>
                     <a href="#">Privacy Policy</a>
                     <a href="#">Legal notice</a>
