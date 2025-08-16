@@ -6,6 +6,7 @@ import { AppLayout } from './components/layout/AppLayout';
 import { getUser } from './api/supabase/user';
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
+import { DashboardContainer } from './components/containers/DashboardContainer';
 
 function App() {
   const [user, setUser] = useState<User | null>(null); const [loading, setLoading] = useState(true);
@@ -33,7 +34,7 @@ function App() {
           <Route path="/" element={<AppLayout />}>
             <Route
               path="board"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <DashboardContainer /> : <Navigate to="/login" replace />}
             />
             <Route
               path="tasks"
