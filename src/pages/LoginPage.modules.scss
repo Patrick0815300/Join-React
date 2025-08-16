@@ -2,7 +2,36 @@ section {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #F6F7F8;
+
+    .logo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: moveToTopLeft 2s forwards;
+    }
+
+    @keyframes moveToTopLeft {
+        to {
+            left: 5%;
+            top: 5%;
+            transform: none;
+        }
+    }
+
+}
+
+.head {
+    margin-top: 67px;
+    margin-right: 122px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 35px;
 }
 
 footer {
@@ -13,3 +42,6 @@ footer {
     align-items: center;
     margin-bottom: 40px;
 }
+
+
+@media (max-width: 720px) {}

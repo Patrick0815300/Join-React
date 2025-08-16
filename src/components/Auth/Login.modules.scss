@@ -1,15 +1,27 @@
 section {
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
-footer {
-    display: flex;
-    width: 100%;
-    gap: 16px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 40px;
+.toast {
+    background-color: #2A3647;
+    color: white;
+    padding: 25px;
+    border-radius: 25px;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    /* Start unten außerhalb des sichtbaren Bereichs */
+    transform: translate(-50%, 0);
+    /* Horizontales Zentrieren */
+    animation: moveToCenter 2s forwards;
+}
+
+@keyframes moveToCenter {
+    to {
+        top: 50%;
+        /* Mitte vertikal */
+        transform: translate(-50%, -50%);
+        /* Zentriert horizontal und vertikal */
+    }
 }

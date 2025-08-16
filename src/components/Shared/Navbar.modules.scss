@@ -1,0 +1,28 @@
+nav {
+    background-color: var(--color-background);
+    width: 232px;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 64px;
+    box-sizing: border-box;
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}

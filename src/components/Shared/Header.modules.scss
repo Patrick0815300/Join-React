@@ -1,0 +1,64 @@
+button {
+    cursor: pointer;
+}
+
+.header {
+    padding: 20px 40px;
+    background-color: white;
+    box-shadow: 0px 4px 4px 0px #0000001A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    .header-btns {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .help {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px;
+            color: #A8A8A8;
+            border: 1px solid #A8A8A8;
+            background-color: transparent;
+        }
+
+        .logged-user {
+            border: 3px solid #2A3647;
+            width: 48px;
+            height: 48px;
+            border-radius: 559px;
+            padding: 10px;
+            color: var(--color-accent);
+            background-color: white;
+            position: relative;
+        }
+    }
+
+    .submenu-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 20px;
+        border-top-right-radius: 0;
+        background-color: var(--color-background);
+        box-shadow: 0px 0px 4px 0px #0000001A;
+        padding: 10px;
+        gap: 16px;
+        position: absolute;
+        right: 50%;
+
+
+        a {
+            color: #CDCDCD;
+            padding: 8px 16px;
+            white-space: nowrap;
+        }
+    }
+}

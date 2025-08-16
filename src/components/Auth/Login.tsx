@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import AuthForm from "./AuthForm"
-import { getData } from "../../api/supabase/data"
 import './Login.modules.scss'
-import { getSession, getUser, signUp, login } from "../../api/supabase/user"
+import { getSession, getUser, login } from "../../api/supabase/user"
 
 const Login = ({ }) => {
-    const [instrument, setInstrument] = useState<any[]>([]);
-    useEffect(() => {
-        getData('contacts')
-            .then(data => setInstrument(data))
-            .catch(e => console.error(e))
-    }, [])
+    // const [instrument, setInstrument] = useState<any[]>([]);
+    // useEffect(() => {
+    //     getData('contacts')
+    //         .then(data => setInstrument(data))
+    //         .catch(e => console.error(e))
+    // }, [])
 
     const [form, setForm] = useState(
         {
@@ -21,11 +20,18 @@ const Login = ({ }) => {
             checked: false
         });
 
+    const [toast, setToast] = useState({
+        msg: '',
+        show: false
+    })
+
     const handleAuthSubmit = async (formData: { email: string; password: string }) => {
+        console.log("Daten vom Formular:", formData);
         try {
             await login(formData.email, formData.password)
             setToast({ msg: 'Successfull Log In.', show: true })
         } catch (error: any) {
+            setToast({ msg: error?.message || 'Logged in failed.', show: true })
             console.error("Login fehlgeschlagen", error);
         }
     };
@@ -34,11 +40,13 @@ const Login = ({ }) => {
     return (
         <>
             <section>
+                {toast.show === true ?
+                    <div className="toast">{toast.msg}</div> : null
+                }
                 <AuthForm
                     mode="login"
                     onSubmit={handleAuthSubmit}
                 />
-                <button onClick={() => getUser()}>Los</button>
             </section>
         </>
     )
