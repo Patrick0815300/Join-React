@@ -1,27 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css'
-import { Navbar } from './components/Shared/Navbar.tsx';
-import { Header } from './components/Shared/Header.tsx';
 import { SignUpPage } from './pages/SignUpPage.tsx';
 import { LoginPage } from './pages/LoginPage.tsx';
-import { BoardPage } from './pages/BoardPage.tsx';
+import { AppLayout } from './components/layout/AppLayout.tsx';
 
 
 function App() {
-
-
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/app" replace />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/navbar" element={<Navbar />} />
-          <Route path="/header" element={<Header />} />
+          <Route path="/app" element={<AppLayout />} />
         </Routes>
       </BrowserRouter>
-
     </>
   )
 }
