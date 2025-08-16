@@ -20,7 +20,6 @@ function App() {
   }, []);
 
   if (loading) {
-    // Optional: Ladeanzeige während Auth-Check
     return <div>Loading...</div>;
   }
 
