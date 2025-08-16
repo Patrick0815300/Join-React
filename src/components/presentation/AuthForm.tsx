@@ -3,8 +3,48 @@ import Input from "../UI/Input.tsx";
 import Mail from '../../assets/icons/mail.svg'
 import Lock from '../../assets/icons/lock.svg'
 import Person from '../../assets/icons/person.svg'
+import './AuthForm.modules.scss'
 
-export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, onInputBlur, showError, onGuestLogin, onCheckedChange }: any) {
+// Typ für das Formular-Objekt
+type FormData = {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+    checked: boolean;
+};
+
+// Typ für Fehlerstatus
+type FormErrors = {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+    passwordConfirm: boolean;
+};
+
+// Typ für "berührte" Felder
+type FormTouched = {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+    passwordConfirm: boolean;
+};
+
+// Props für die Präsentationskomponente
+type AuthFormPresentationProps = {
+    mode: 'login' | 'signup';
+    form: FormData;
+    errors: FormErrors;
+    onSubmitChange: (e: React.FormEvent<HTMLFormElement>) => void;
+    onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onInputBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+    showError: (field: keyof FormErrors, msg: string) => React.ReactNode;
+    onGuestLogin?: () => void;
+    onCheckedChange: (checked: boolean) => void;
+};
+
+
+export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, onInputBlur, showError, onGuestLogin, onCheckedChange }: AuthFormPresentationProps) {
     return (
         <>
             <form onSubmit={onSubmitChange} className="form-container">
@@ -33,7 +73,7 @@ export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, on
                         placeholder='Email'
                         id='email'
                         name='email'
-                        value={form.email}
+                        value={form?.email}
                         onChange={onInputChange}
                         onBlur={onInputBlur}
                         imgSrc={Mail}

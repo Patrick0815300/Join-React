@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { login } from "../../api/supabase/user.tsx";
 import { Login } from "../presentation/Login.tsx";
+import { login } from "../../api/supabase/user.ts";
 
 export function LoginContainer() {
     const [toast, setToast] = useState({

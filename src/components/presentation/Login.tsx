@@ -1,4 +1,5 @@
-import { AuthForm } from "./AuthForm";
+import { AuthFormContainer } from "../containers/AuthContainer";
+import './Login.modules.scss'
 
 type Toast = {
     msg: string;
@@ -18,7 +19,7 @@ export function Login({ toast, handleAuthSubmit }: LoginProps) {
                 {toast.show === true ?
                     <div className="toast">{toast.msg}</div> : null
                 }
-                <AuthForm
+                <AuthFormContainer
                     mode="login"
                     onSubmit={handleAuthSubmit}
                 />

@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { checkConfirmPassword, validateEmail, validatePassword } from "../../utils/validation";
-import { AuthForm } from "../presentation/AuthForm";
+import { AuthForm } from "../presentation/AuthForm.tsx";
+
+type FormErrors = {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+    passwordConfirm: boolean;
+};
+
+type ShowErrorFn = (field: keyof FormErrors, msg: string) => React.ReactNode;
 
 type AuthFormProps = {
     mode: 'login' | 'signup';
@@ -74,7 +83,7 @@ export function AuthFormContainer({ mode, onGuestLogin, onSubmit }: AuthFormProp
         const pwOk = validatePassword(form.password);
         const confirmOk = mode === "signup"
             ? checkConfirmPassword(form.password, form.passwordConfirm, mode)
-            : true; // <- immer true beim Login
+            : true;
         const checkedOk = mode === "signup" ? form.checked : true;
         if (emailOk && pwOk && confirmOk && checkedOk) {
             if (onSubmit) onSubmit(form)
@@ -85,22 +94,17 @@ export function AuthFormContainer({ mode, onGuestLogin, onSubmit }: AuthFormProp
                 passwordConfirm: '',
                 checked: false
             })
-        } else {
-            // Toast Error Meldung
-            console.log('Schade');
         }
     };
 
 
-    const showError = (field: keyof typeof errors, msg: string) => (
+    const showError: ShowErrorFn = (field, msg) => (
         touched[field] && errors[field] ? <label htmlFor={field}>{msg}</label> : null
     );
 
     const onCheckedChange = (checked: boolean) => {
         setForm(prev => ({ ...prev, checked }));
     };
-
-
 
     return (
         <>
