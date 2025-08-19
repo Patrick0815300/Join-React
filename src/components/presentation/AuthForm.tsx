@@ -3,7 +3,7 @@ import Input from "../UI/Input.tsx";
 import Mail from '../../assets/icons/mail.svg'
 import Lock from '../../assets/icons/lock.svg'
 import Person from '../../assets/icons/person.svg'
-import './AuthForm.modules.scss'
+import styles from './AuthForm.module.scss'
 
 // Typ für das Formular-Objekt
 type FormData = {
@@ -47,13 +47,13 @@ type AuthFormPresentationProps = {
 export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, onInputBlur, showError, onGuestLogin, onCheckedChange }: AuthFormPresentationProps) {
     return (
         <>
-            <form onSubmit={onSubmitChange} className="form-container">
-                <div className="header-container">
+            <form onSubmit={onSubmitChange} className={styles.formContainer}>
+                <div className={styles.headerContainer}>
                     <h1>{mode === 'signup' ? 'Sign Up' : 'Log In'}</h1>
 
-                    <span className='underline'></span>
+                    <span className={styles.underline}></span>
                 </div>
-                <div className="inputs">
+                <div className={styles.inputs}>
                     {mode === 'signup' && (
                         <>
                             <Input
@@ -124,7 +124,7 @@ export function AuthForm({ mode, form, errors, onSubmitChange, onInputChange, on
                     </div>
                 ) : null}
 
-                <div className="button-container">
+                <div className={styles.buttonContainer}>
                     <Button
                         disabled={
                             errors.email ||

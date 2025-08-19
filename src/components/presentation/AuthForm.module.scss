@@ -1,4 +1,4 @@
-.form-container {
+.formContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,7 +23,7 @@
         }
     }
 
-    .header-container {
+    .headerContainer {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -38,7 +38,7 @@
         margin-top: -48px;
     }
 
-    .button-container {
+    .buttonContainer {
         display: flex;
         gap: 35px;
     }
