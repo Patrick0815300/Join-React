@@ -8,6 +8,8 @@ module.exports = {
         '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.app.json' }]
     },
     moduleNameMapper: {
-        '\\.(css|less|scss)$': 'identity-obj-proxy'
+        '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
     }
+
+
 };
