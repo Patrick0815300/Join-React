@@ -42,7 +42,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 readOnly={readOnly}
                 autoComplete={autoComplete}
                 ref={ref}
-                className={`${'input'} ${className}`}
+                className={`${styles.input} ${className}`}
                 {...props}
             />
             <img src={imgSrc} alt={imgAlt} />
