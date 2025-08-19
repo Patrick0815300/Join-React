@@ -1,5 +1,5 @@
 import React from 'react';
-import './Input.modules.scss'
+import styles from './Input.module.scss'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string;
@@ -28,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         },
         ref
     ) => (
-        <div className='input-container'>
+        <div className={styles.inputContainer}>
             <input
                 id={id}
                 name={name}
