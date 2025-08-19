@@ -26,3 +26,6 @@ dist-ssr
 src/assets/icons
 .env
 .env.local
+
+
+# Testing mit jest
