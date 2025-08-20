@@ -35,3 +35,15 @@ export async function getSingleColumn(tableName: string, column: string, id: str
     if (error) throw error;
     return data;
 }
+
+export async function subscribeChannel(table: string) {
+    const channels = supabase.channel('custom-all-channel')
+        .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: table },
+            (payload) => {
+                console.log('Change received!', payload)
+            }
+        )
+        .subscribe()
+}
