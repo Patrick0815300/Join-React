@@ -33,7 +33,7 @@ function App() {
           {/* Routen mit Layout */}
           <Route path="/" element={<AppLayout />}>
             <Route
-              path="board"
+              path="dashboard"
               element={isAuthenticated ? <DashboardContainer /> : <Navigate to="/login" replace />}
             />
             <Route

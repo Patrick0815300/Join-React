@@ -1,6 +1,11 @@
+import type { Task } from '../containers/DashboardContainer';
 import './Dashboard.modules.scss'
 
-export function Dashboard() {
+interface DashboardProps {
+    todos: Task[];
+}
+
+export function Dashboard({ todos }: DashboardProps) {
     return (
         <>
             <header>
@@ -13,7 +18,7 @@ export function Dashboard() {
                         <div className="card">
                             <img className='icon' src="#" alt="icon" />
                             <div>
-                                <span className="count">1</span>
+                                <span className="count">{todos.length}</span>
                                 <span className='category'>To Do</span>
                             </div>
                         </div>
