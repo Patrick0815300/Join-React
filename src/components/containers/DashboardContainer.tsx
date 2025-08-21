@@ -22,23 +22,51 @@ type Phase = 'todo' | 'in_progress' | 'await_feedback' | 'done'
 export function DashboardContainer() {
     const [tasks, setTasks] = useState<Task[]>([])
     const [todos, setTodos] = useState<Task[]>([])
+    const [inProgress, setInProgress] = useState<Task[]>([])
+    const [awaitFeedback, setAwaitFeedback] = useState<Task[]>([])
+    const [done, setDone] = useState<Task[]>([])
+    const [nextUrgent, setNextUrgent] = useState<Task | null>(null);
+
 
     const getTaskData = async () => {
         const data = await getData('tasks')
         const todos = data.filter(tasks => tasks.phase === 'todo');
+        const inProgress = data.filter(tasks => tasks.phase === 'in_progress');
+        const awaitFeedback = data.filter(tasks => tasks.phase === 'await_feedback');
+        const done = data.filter(tasks => tasks.phase === 'done');
         setTodos(todos);
-        console.log(todos.length);
+        setInProgress(inProgress);
+        setAwaitFeedback(awaitFeedback);
+        setDone(done);
+
+        getNextUrgent(data)
+    }
+
+    const getNextUrgent = (tasks: Task[]) => {
+        const urgents = tasks.filter(tasks => tasks.priority === 'Urgent');
+        if (urgents.length > 0) {
+            const newestTask = urgents.reduce((latest, current) => {
+                const latestTime = new Date(latest.due_date).getTime();
+                const currentTime = new Date(current.due_date).getTime();
+                return currentTime > latestTime ? current : latest;
+            });
+            setNextUrgent(newestTask);
+        } else { setNextUrgent(null) }
     }
 
 
     useEffect(() => {
-        getTaskData()
+        getTaskData();
     }, [])
 
     return (
         <>
             <Dashboard
                 todos={todos}
+                inProgress={inProgress}
+                awaitFeedback={awaitFeedback}
+                done={done}
+                nextUrgent={nextUrgent}
             />
         </>
     )

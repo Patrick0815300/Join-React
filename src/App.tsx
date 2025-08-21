@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
 import { SignUpPage } from './pages/SignUpPage';
 import { LoginPage } from './pages/LoginPage';
 import { AppLayout } from './components/layout/AppLayout';
@@ -7,6 +6,7 @@ import { getUser } from './api/supabase/user';
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { DashboardContainer } from './components/containers/DashboardContainer';
+import './App.css';
 
 function App() {
   const [user, setUser] = useState<User | null>(null); const [loading, setLoading] = useState(true);
