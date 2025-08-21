@@ -1,11 +1,22 @@
+import { getTime, getUrgentDate } from '../../utils/date';
 import type { Task } from '../containers/DashboardContainer';
 import './Dashboard.modules.scss'
 
 interface DashboardProps {
     todos: Task[];
+    inProgress: Task[];
+    awaitFeedback: Task[];
+    done: Task[];
+    nextUrgent: Task | null;
 }
 
-export function Dashboard({ todos }: DashboardProps) {
+export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }: DashboardProps) {
+
+    const countAllTasks = (): number => {
+        const count = todos.length + inProgress.length + awaitFeedback.length + done.length;
+        return count
+    }
+
     return (
         <>
             <header>
@@ -25,7 +36,7 @@ export function Dashboard({ todos }: DashboardProps) {
                         <div className="card">
                             <img className='icon' src="#" alt="icon" />
                             <div>
-                                <span className="count">1</span>
+                                <span className="count">{done.length}</span>
                                 <span className='category'>Done</span>
                             </div>
                         </div>
@@ -35,11 +46,13 @@ export function Dashboard({ todos }: DashboardProps) {
                         <div className="card">
                             <img className='icon' src="#" alt="icon" />
                             <div>
-                                <span className="count">1</span>
+                                <span className="count"></span>
                                 <span className='category'>Urgent</span>
                             </div>
                             <div>
-                                <span className="date">August 18, 2025</span>
+                                <span className="date">
+                                    {nextUrgent ? getUrgentDate(nextUrgent.due_date) : 'No Urgent Task available'}
+                                </span>
                                 <span>Upcoming Deadline</span>
                             </div>
                         </div>
@@ -48,26 +61,26 @@ export function Dashboard({ todos }: DashboardProps) {
                     <div className="single-row row-3">
                         <div className="card">
                             <div>
-                                <span className="count">1</span>
+                                <span className="count">{countAllTasks()}</span>
                                 <span className='category'>Task in Board</span>
                             </div>
                         </div>
                         <div className="card">
                             <div>
-                                <span className="count">1</span>
+                                <span className="count">{inProgress.length}</span>
                                 <span className='category'>Tasks in Progress</span>
                             </div>
                         </div>
                         <div className="card">
                             <div>
-                                <span className="count">1</span>
+                                <span className="count">{awaitFeedback.length}</span>
                                 <span className='category'>Awaiting Feedback</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="user-container">
-                    <span className="greeting">Good morning,</span>
+                    <span className="greeting">{getTime()}</span>
                     <span className="name">Name</span>
                 </div>
             </div>
