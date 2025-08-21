@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import './Header.modules.scss'
-import { getSession, getUser, logout } from '../../api/supabase/user';
-import { getSingleColumn } from '../../api/supabase/data';
+import { logout } from '../../api/supabase/user';
 import { Link } from 'react-router-dom';
+import { getUserName, shortFormatName } from '../../utils/user';
+import './Header.modules.scss'
+
 
 export function Header() {
     const [name, setName] = useState('');
@@ -12,18 +13,11 @@ export function Header() {
         getName();
     }, [name])
 
-    const formatName = (firstname: string, lastname: string) => {
-        if (!firstname && !lastname) return '';
-        const firstInitial = firstname ? firstname.charAt(0).toUpperCase() : '';
-        const lastInitial = lastname ? lastname.charAt(0).toUpperCase() : '';
-        return firstInitial + lastInitial;
-    };
 
     const getName = async () => {
-        const user = await getUser();
-        const data = await getSingleColumn('contacts', 'user_id', user!.id);
-        const name = formatName(data.firstname, data.lastname)
-        setName(name)
+        const name = await getUserName();
+        const shortName = shortFormatName(name.firstname, name.lastname)
+        setName(shortName)
     }
 
     const toggleSubmenu = () => {

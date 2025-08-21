@@ -8,9 +8,10 @@ interface DashboardProps {
     awaitFeedback: Task[];
     done: Task[];
     nextUrgent: Task | null;
+    name: string
 }
 
-export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }: DashboardProps) {
+export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent, name }: DashboardProps) {
 
     const countAllTasks = (): number => {
         const count = todos.length + inProgress.length + awaitFeedback.length + done.length;
@@ -81,7 +82,7 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }
                 </div>
                 <div className="user-container">
                     <span className="greeting">{getTime()}</span>
-                    <span className="name">Name</span>
+                    <span className="name">{name}</span>
                 </div>
             </div>
         </>
