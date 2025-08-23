@@ -28,14 +28,14 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent, 
                 <div className="card-container">
                     <div className="single-row row-1">
                         <div className="card">
-                            <img className='icon' src="#" alt="icon" />
+                            <img className='icon' src="src/assets/icons/pen.svg" alt="pen" />
                             <div>
                                 <span className="count">{todos.length}</span>
                                 <span className='category'>To Do</span>
                             </div>
                         </div>
                         <div className="card">
-                            <img className='icon' src="#" alt="icon" />
+                            <img className='icon' src="src/assets/icons/check.svg" alt="check" />
                             <div>
                                 <span className="count">{done.length}</span>
                                 <span className='category'>Done</span>
