@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../api/supabase/data.ts";
 import { Dashboard } from "../presentation/Dashboard.tsx";
+import { getUser } from "../../api/supabase/user.ts";
+import { getUserName } from "../../utils/user.ts";
 
 export interface Task {
     id: number;
@@ -26,6 +28,8 @@ export function DashboardContainer() {
     const [awaitFeedback, setAwaitFeedback] = useState<Task[]>([])
     const [done, setDone] = useState<Task[]>([])
     const [nextUrgent, setNextUrgent] = useState<Task | null>(null);
+    const [name, setName] = useState<string>('');
+    const [countUrgent, setCountUrgent] = useState<number>(0);
 
 
     const getTaskData = async () => {
@@ -39,7 +43,14 @@ export function DashboardContainer() {
         setAwaitFeedback(awaitFeedback);
         setDone(done);
 
-        getNextUrgent(data)
+        getNextUrgent(data);
+        getUrgentLength(data);
+    }
+
+    const getUserData = async () => {
+        const nameObj = await getUserName();
+        const name = nameObj.firstname + ' ' + nameObj.lastname
+        setName(name)
     }
 
     const getNextUrgent = (tasks: Task[]) => {
@@ -54,9 +65,15 @@ export function DashboardContainer() {
         } else { setNextUrgent(null) }
     }
 
+    const getUrgentLength = (tasks: Task[]) => {
+        const urgents = tasks.filter(tasks => tasks.priority === 'Urgent');
+        setCountUrgent(urgents.length);
+    }
+
 
     useEffect(() => {
         getTaskData();
+        getUserData();
     }, [])
 
     return (
@@ -67,6 +84,8 @@ export function DashboardContainer() {
                 awaitFeedback={awaitFeedback}
                 done={done}
                 nextUrgent={nextUrgent}
+                name={name}
+                countUrgent={countUrgent}
             />
         </>
     )

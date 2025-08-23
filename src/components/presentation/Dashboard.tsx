@@ -1,6 +1,6 @@
 import { getTime, getUrgentDate } from '../../utils/date';
 import type { Task } from '../containers/DashboardContainer';
-import './Dashboard.modules.scss'
+import styles from './Dashboard.module.scss'
 
 interface DashboardProps {
     todos: Task[];
@@ -8,9 +8,11 @@ interface DashboardProps {
     awaitFeedback: Task[];
     done: Task[];
     nextUrgent: Task | null;
+    name: string,
+    countUrgent: number;
 }
 
-export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }: DashboardProps) {
+export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent, name, countUrgent }: DashboardProps) {
 
     const countAllTasks = (): number => {
         const count = todos.length + inProgress.length + awaitFeedback.length + done.length;
@@ -21,36 +23,36 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }
         <>
             <header>
                 <h1>Join 360</h1>
-                <span className='description'>Key Metrics at a Glance</span>
+                <span className={styles.description}>Key Metrics at a Glance</span>
             </header>
-            <div className="container">
-                <div className="card-container">
-                    <div className="single-row row-1">
-                        <div className="card">
-                            <img className='icon' src="#" alt="icon" />
+            <div className={styles.container}>
+                <div className={styles.cardContainer}>
+                    <div className={styles.singleRow}>
+                        <div className={styles.card}>
+                            <img className={styles.icon} src="src/assets/icons/pen.svg" alt="pen" />
                             <div>
-                                <span className="count">{todos.length}</span>
-                                <span className='category'>To Do</span>
+                                <span className={styles.count}>{todos.length}</span>
+                                <span className={styles.category}>To Do</span>
                             </div>
                         </div>
-                        <div className="card">
-                            <img className='icon' src="#" alt="icon" />
+                        <div className={styles.card}>
+                            <img className={styles.icon} src="src/assets/icons/check.svg" alt="check" />
                             <div>
-                                <span className="count">{done.length}</span>
-                                <span className='category'>Done</span>
+                                <span className={styles.count}>{done.length}</span>
+                                <span className={styles.category}>Done</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="single-row row-2">
-                        <div className="card">
-                            <img className='icon' src="#" alt="icon" />
+                    <div className={styles.singleRow}>
+                        <div className={styles.card}>
+                            <img className={`${styles.icon} ${styles.urgent}`} src="src/assets/icons/urgent.svg" alt="icon" />
                             <div>
-                                <span className="count"></span>
-                                <span className='category'>Urgent</span>
+                                <span className={styles.count}>{countUrgent}</span>
+                                <span className={styles.category}>Urgent</span>
                             </div>
                             <div>
-                                <span className="date">
+                                <span className={styles.date}>
                                     {nextUrgent ? getUrgentDate(nextUrgent.due_date) : 'No Urgent Task available'}
                                 </span>
                                 <span>Upcoming Deadline</span>
@@ -58,32 +60,32 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent }
                         </div>
                     </div>
 
-                    <div className="single-row row-3">
-                        <div className="card">
+                    <div className={styles.singleRow}>
+                        <div className={styles.card}>
                             <div>
-                                <span className="count">{countAllTasks()}</span>
-                                <span className='category'>Task in Board</span>
+                                <span className={styles.count}>{countAllTasks()}</span>
+                                <span className={styles.category}>Task in Board</span>
                             </div>
                         </div>
-                        <div className="card">
+                        <div className={styles.card}>
                             <div>
-                                <span className="count">{inProgress.length}</span>
-                                <span className='category'>Tasks in Progress</span>
+                                <span className={styles.count}>{inProgress.length}</span>
+                                <span className={styles.category}>Tasks in Progress</span>
                             </div>
                         </div>
-                        <div className="card">
+                        <div className={styles.card}>
                             <div>
-                                <span className="count">{awaitFeedback.length}</span>
-                                <span className='category'>Awaiting Feedback</span>
+                                <span className={styles.count}>{awaitFeedback.length}</span>
+                                <span className={styles.category}>Awaiting Feedback</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="user-container">
-                    <span className="greeting">{getTime()}</span>
-                    <span className="name">Name</span>
+                <div className={styles.userContainer}>
+                    <span className={styles.greeting}>{getTime()}</span>
+                    <span className={styles.name}>{name}</span>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
