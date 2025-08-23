@@ -1,0 +1,36 @@
+.dropdownContainer {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    font-size: 20px;
+
+    .input {
+        display: flex;
+        justify-content: space-between;
+        border-radius: 10px;
+        border: 1px solid #D1D1D1;
+        background-color: white;
+        padding: 12px 16px;
+        margin-top: 8px;
+    }
+
+    .subs {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 1px solid #D1D1D1;
+        background-color: white;
+
+        .singleSub {
+            padding: 12px 16px;
+
+            &:hover {
+                background-color: var(--color-accent);
+            }
+        }
+
+
+    }
+}
