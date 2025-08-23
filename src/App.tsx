@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { DashboardContainer } from './components/containers/DashboardContainer';
 import './App.css';
+import { TaskContainer } from './components/containers/TaskContainer';
 
 function App() {
   const [user, setUser] = useState<User | null>(null); const [loading, setLoading] = useState(true);
@@ -42,7 +43,7 @@ function App() {
             />
             <Route
               path="tasks"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <TaskContainer /> : <Navigate to="/login" replace />}
             />
             <Route
               path="contacts"

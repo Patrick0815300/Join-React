@@ -28,6 +28,10 @@
     }
 }
 
+.required {
+    color: red;
+}
+
 @media (max-width: 720px) {
     .input-container {
         min-width: auto;
