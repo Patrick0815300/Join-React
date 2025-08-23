@@ -29,6 +29,7 @@ export function DashboardContainer() {
     const [done, setDone] = useState<Task[]>([])
     const [nextUrgent, setNextUrgent] = useState<Task | null>(null);
     const [name, setName] = useState<string>('');
+    const [countUrgent, setCountUrgent] = useState<number>(0);
 
 
     const getTaskData = async () => {
@@ -42,7 +43,8 @@ export function DashboardContainer() {
         setAwaitFeedback(awaitFeedback);
         setDone(done);
 
-        getNextUrgent(data)
+        getNextUrgent(data);
+        getUrgentLength(data);
     }
 
     const getUserData = async () => {
@@ -63,6 +65,11 @@ export function DashboardContainer() {
         } else { setNextUrgent(null) }
     }
 
+    const getUrgentLength = (tasks: Task[]) => {
+        const urgents = tasks.filter(tasks => tasks.priority === 'Urgent');
+        setCountUrgent(urgents.length);
+    }
+
 
     useEffect(() => {
         getTaskData();
@@ -78,6 +85,7 @@ export function DashboardContainer() {
                 done={done}
                 nextUrgent={nextUrgent}
                 name={name}
+                countUrgent={countUrgent}
             />
         </>
     )
