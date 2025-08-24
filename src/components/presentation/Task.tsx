@@ -14,10 +14,11 @@ interface TaskProps {
     onDateChange?: (newDate: string) => void;
     onContactsChange?: (selectedContacts: string[]) => void;
     onCategoryChange?: (selectedCategories: string[]) => void;
+    onSubtaskChange?: (selectedSubtasks: string[]) => void;
 }
 
 export function Task({ title, description, date, contacts, category, subtasks,
-    onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange }: TaskProps) {
+    onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange, onSubtaskChange }: TaskProps) {
     return (
         <>
             <h1>Add Task</h1>
@@ -95,7 +96,7 @@ export function Task({ title, description, date, contacts, category, subtasks,
                         className={styles.input}
                         placeholder='Add a new subtask'
                         value={subtasks}
-                        onChange={e => onTitleChange?.(e.target.value)}
+                        onChange={e => onSubtaskChange?.(e.target.value)}
                     />
                 </div>
 
