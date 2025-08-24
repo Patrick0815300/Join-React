@@ -7,6 +7,7 @@ export function TaskContainer() {
     const [date, setDate] = useState('');
     const [assignedContacts, setAssignedContacts] = useState<string[]>([]);
     const [taskCategory, setTaskCategory] = useState<string[]>([]);
+    const [subtasks, setSubtasks] = useState<string[]>([]);
 
     const handleTitleChange = (newTitle: string) => setTitle(newTitle);
     const handleDescriptionChange = (newDesc: string) => setDescription(newDesc);
@@ -32,6 +33,7 @@ export function TaskContainer() {
                 date={date}
                 contacts={contacts}
                 category={category}
+                subtasks={subtasks}
                 onTitleChange={handleTitleChange}
                 onDescriptionChange={handleDescriptionChange}
                 onDateChange={handleDateChange}

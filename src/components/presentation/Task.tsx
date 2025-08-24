@@ -8,6 +8,7 @@ interface TaskProps {
     date: string;
     contacts: string[];
     category: string[];
+    subtasks: string[];
     onTitleChange?: (newTitle: string) => void;
     onDescriptionChange?: (newDescription: string) => void;
     onDateChange?: (newDate: string) => void;
@@ -15,7 +16,7 @@ interface TaskProps {
     onCategoryChange?: (selectedCategories: string[]) => void;
 }
 
-export function Task({ title, description, date, contacts, category,
+export function Task({ title, description, date, contacts, category, subtasks,
     onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange }: TaskProps) {
     return (
         <>
@@ -84,6 +85,17 @@ export function Task({ title, description, date, contacts, category,
                         subs={category}
                         onSelect={onCategoryChange}
                         required
+                    />
+
+                    <Input
+                        id='subtasks'
+                        name='subtasks'
+                        label='Subtasks'
+                        labelClassName={styles.label}
+                        className={styles.input}
+                        placeholder='Add a new subtask'
+                        value={subtasks}
+                        onChange={e => onTitleChange?.(e.target.value)}
                     />
                 </div>
 
