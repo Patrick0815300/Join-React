@@ -32,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         },
         ref
     ) => (
-        <div className="container">
+        <div className={styles.container}>
             {label && (
                 <label
                     htmlFor={id}
@@ -47,7 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 
             )}
-            <div className='input-container'>
+            <div className={styles.inputContainer}>
                 <input
                     id={id}
                     name={name}
@@ -61,7 +61,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     readOnly={readOnly}
                     autoComplete={autoComplete}
                     ref={ref}
-                    className={`${'input'} ${className}`}
+                    className={`${styles.input} ${className}`}
                     {...props}
                 />
                 {imgSrc && <img src={imgSrc} alt={imgAlt || ''} />}
