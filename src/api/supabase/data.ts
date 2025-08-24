@@ -1,9 +1,25 @@
 import { supabase } from './client.ts';
 
+interface Contact {
+    firstname: string;
+    lastname: string;
+}
+
 export async function getData(database: string) {
     const { data, error } = await supabase.from(database).select();
     if (error) throw error;
     return data;
+}
+
+export async function getDataByColumns<T>(database: string, columns: string | string[]): Promise<T[]> {
+    const selectColumns = Array.isArray(columns) ? columns.join(',') : columns;
+
+    const { data, error } = await supabase
+        .from(database)
+        .select(selectColumns);
+
+    if (error) throw error;
+    return data as T[];
 }
 
 export async function addContact(userId: string, lastname: string, firstname: string, mail: string) {
