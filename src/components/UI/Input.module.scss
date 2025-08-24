@@ -1,4 +1,4 @@
-.input-container {
+.inputContainer {
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -33,7 +33,7 @@
 }
 
 @media (max-width: 720px) {
-    .input-container {
+    .inputContainer {
         min-width: auto;
     }
 }
