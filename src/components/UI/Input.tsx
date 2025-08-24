@@ -7,6 +7,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     imgAlt?: string
     label?: string;
     labelClassName?: string;
+    symbol?: string;
+    onSymbolClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -28,6 +30,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className = "",
             imgSrc,
             imgAlt,
+            symbol,
+            onSymbolClick,
             ...props
         },
         ref
@@ -41,10 +45,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     {label}
                     {required && <span className='required'>*</span>}
                 </label>
-
-
-
-
 
             )}
             <div className={styles.inputContainer}>
@@ -65,6 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     {...props}
                 />
                 {imgSrc && <img src={imgSrc} alt={imgAlt || ''} />}
+                {symbol && <button className={styles.button} onClick={onSymbolClick}>{symbol}</button>}
             </div>
         </div>
 

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Dropdown from '../UI/Dropdown';
 import Input from '../UI/Input'
 import styles from './Task.module.scss'
@@ -14,11 +15,26 @@ interface TaskProps {
     onDateChange?: (newDate: string) => void;
     onContactsChange?: (selectedContacts: string[]) => void;
     onCategoryChange?: (selectedCategories: string[]) => void;
-    onSubtaskChange?: (selectedSubtasks: string[]) => void;
+    onSubtaskChange?: (subtasks: string[]) => void;
 }
 
 export function Task({ title, description, date, contacts, category, subtasks,
     onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange, onSubtaskChange }: TaskProps) {
+    const [newSubtask, setNewSubtask] = useState('');
+    const addSubtask = () => {
+        if (newSubtask.trim() && onSubtaskChange) {
+            onSubtaskChange([...subtasks, newSubtask.trim()]);
+            setNewSubtask('');
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSubtask();
+        }
+    };
+
     return (
         <>
             <h1>Add Task</h1>
@@ -95,9 +111,17 @@ export function Task({ title, description, date, contacts, category, subtasks,
                         labelClassName={styles.label}
                         className={styles.input}
                         placeholder='Add a new subtask'
-                        value={subtasks}
-                        onChange={e => onSubtaskChange?.(e.target.value)}
+                        value={newSubtask}
+                        onChange={e => setNewSubtask(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onSymbolClick={addSubtask}
+                        symbol='+'
                     />
+                    <ul>
+                        {subtasks.map((subtask, index) => (
+                            <li key={index}>{subtask}</li>
+                        ))}
+                    </ul>
                 </div>
 
             </div>
