@@ -5,10 +5,18 @@ import styles from './Task.module.scss'
 interface TaskProps {
     title: string;
     description: string;
-    date: string
+    date: string;
+    contacts: string[];
+    category: string[];
+    onTitleChange?: (newTitle: string) => void;
+    onDescriptionChange?: (newDescription: string) => void;
+    onDateChange?: (newDate: string) => void;
+    onContactsChange?: (selectedContacts: string[]) => void;
+    onCategoryChange?: (selectedCategories: string[]) => void;
 }
 
-export function Task({ title, description, date }: TaskProps) {
+export function Task({ title, description, date, contacts, category,
+    onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange }: TaskProps) {
     return (
         <>
             <h1>Add Task</h1>
@@ -24,6 +32,7 @@ export function Task({ title, description, date }: TaskProps) {
                         placeholder='Enter a title'
                         required
                         value={title}
+                        onChange={e => onTitleChange?.(e.target.value)}
                     />
 
                     <div className={styles.textarea}>
@@ -33,6 +42,7 @@ export function Task({ title, description, date }: TaskProps) {
                             id="description"
                             placeholder='Enter a Description'
                             value={description}
+                            onChange={e => onDescriptionChange?.(e.target.value)}
                         />
                     </div>
 
@@ -44,6 +54,7 @@ export function Task({ title, description, date }: TaskProps) {
                         className={styles.date}
                         type='date'
                         value={date}
+                        onChange={e => onDateChange?.(e.target.value)}
                         imgSrc=''
                         required
                     />
@@ -63,7 +74,16 @@ export function Task({ title, description, date }: TaskProps) {
                     <Dropdown
                         label='Assignet to'
                         placeholder='Select contacts to assign'
-                        subs={['Test 1', 'Test 2', 'Test 3']}
+                        subs={contacts}
+                        onSelect={onContactsChange}
+                    />
+
+                    <Dropdown
+                        label='Category'
+                        placeholder='Select a task category'
+                        subs={category}
+                        onSelect={onCategoryChange}
+                        required
                     />
                 </div>
 
