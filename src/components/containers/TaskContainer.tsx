@@ -14,7 +14,7 @@ export function TaskContainer() {
     const handleDateChange = (newDate: string) => setDate(newDate);
     const handleContactsChange = (contacts: string[]) => setAssignedContacts(contacts);
     const handleCategoryChange = (categories: string[]) => setTaskCategory(categories);
-    const handleSubtaskChange = (subtasks: string[]) => setSubtasks(subtasks);
+    const handleSubtaskChange = (newSubtasks: string[]) => setSubtasks(newSubtasks);
 
 
     const contacts = [

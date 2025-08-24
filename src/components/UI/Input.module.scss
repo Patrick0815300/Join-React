@@ -32,6 +32,11 @@
     color: red;
 }
 
+.button {
+    all: unset;
+    cursor: pointer;
+}
+
 @media (max-width: 720px) {
     .inputContainer {
         min-width: auto;
