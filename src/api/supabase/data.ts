@@ -1,10 +1,5 @@
 import { supabase } from './client.ts';
 
-interface Contact {
-    firstname: string;
-    lastname: string;
-}
-
 export async function getData(database: string) {
     const { data, error } = await supabase.from(database).select();
     if (error) throw error;
