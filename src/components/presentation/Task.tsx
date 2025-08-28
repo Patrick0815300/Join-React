@@ -115,21 +115,30 @@ export function Task({ title, description, date, priority, contacts, category, s
                             </div>
                         </fieldset>
 
+                        <div className={styles.dropdownContainer}>
+                            <Dropdown
+                                label='Assignet to'
+                                placeholder='Select contacts to assign'
+                                subs={contacts}
+                                onSelect={onContactsChange}
+                            />
+                            <div className={styles.selectedContacts}>
 
-                        <Dropdown
-                            label='Assignet to'
-                            placeholder='Select contacts to assign'
-                            subs={contacts}
-                            onSelect={onContactsChange}
-                        />
+                            </div>
+                        </div>
 
-                        <Dropdown
-                            label='Category'
-                            placeholder='Select a task category'
-                            subs={category}
-                            onSelect={onCategoryChange}
-                            required
-                        />
+                        <div className={styles.dropdownContainer}>
+                            <Dropdown
+                                label='Category'
+                                placeholder='Select a task category'
+                                subs={category}
+                                onSelect={onCategoryChange}
+                                required
+                            />
+                        </div>
+
+
+
 
                         <Input
                             id='subtasks'
