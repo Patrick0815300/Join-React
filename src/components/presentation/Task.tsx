@@ -1,26 +1,32 @@
 import { useState } from 'react';
 import Dropdown from '../UI/Dropdown';
 import Input from '../UI/Input'
+import Button from '../UI/Button';
 import styles from './Task.module.scss'
 
 interface TaskProps {
     title: string;
     description: string;
     date: string;
+    priority: string;
     contacts: string[];
     category: string[];
     subtasks: string[];
     onTitleChange?: (newTitle: string) => void;
     onDescriptionChange?: (newDescription: string) => void;
     onDateChange?: (newDate: string) => void;
+    onPriorityChange?: (priority: string) => void;
     onContactsChange?: (selectedContacts: string[]) => void;
     onCategoryChange?: (selectedCategories: string[]) => void;
     onSubtaskChange?: (subtasks: string[]) => void;
+    onSubmitChange?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export function Task({ title, description, date, contacts, category, subtasks,
-    onTitleChange, onDescriptionChange, onDateChange, onContactsChange, onCategoryChange, onSubtaskChange }: TaskProps) {
+export function Task({ title, description, date, priority, contacts, category, subtasks,
+    onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange }: TaskProps) {
+
     const [newSubtask, setNewSubtask] = useState('');
+
     const addSubtask = () => {
         if (newSubtask.trim() && onSubtaskChange) {
             onSubtaskChange([...subtasks, newSubtask.trim()]);
@@ -28,103 +34,132 @@ export function Task({ title, description, date, contacts, category, subtasks,
         }
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            addSubtask();
-        }
-    };
-
     return (
         <>
             <h1>Add Task</h1>
+            <form onSubmit={onSubmitChange}>
+                <div className={styles.container}>
+                    <div className={styles.side}>
+                        <Input
+                            id='title'
+                            name='title'
+                            label='Title'
+                            labelClassName={styles.label}
+                            className={styles.input}
+                            placeholder='Enter a title'
+                            required
+                            value={title}
+                            onChange={e => onTitleChange?.(e.target.value)}
+                        />
 
-            <div className={styles.container}>
-                <div className={styles.side}>
-                    <Input
-                        id='title'
-                        name='title'
-                        label='Title'
-                        labelClassName={styles.label}
-                        className={styles.input}
-                        placeholder='Enter a title'
-                        required
-                        value={title}
-                        onChange={e => onTitleChange?.(e.target.value)}
-                    />
+                        <div className={styles.textarea}>
+                            <label className={styles.label} htmlFor="description">Description</label>
+                            <textarea
+                                name="description"
+                                id="description"
+                                placeholder='Enter a Description'
+                                value={description}
+                                onChange={e => onDescriptionChange?.(e.target.value)}
+                            />
+                        </div>
 
-                    <div className={styles.textarea}>
-                        <label className={styles.label} htmlFor="description">Description</label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            placeholder='Enter a Description'
-                            value={description}
-                            onChange={e => onDescriptionChange?.(e.target.value)}
+                        <Input
+                            id='date'
+                            name='date'
+                            label='Due Date'
+                            labelClassName={styles.label}
+                            className={styles.date}
+                            type='date'
+                            value={date}
+                            onChange={e => onDateChange?.(e.target.value)}
+                            imgSrc=''
+                            required
                         />
                     </div>
+                    <div className={styles.line}></div>
 
-                    <Input
-                        id='date'
-                        name='date'
-                        label='Due Date'
-                        labelClassName={styles.label}
-                        className={styles.date}
-                        type='date'
-                        value={date}
-                        onChange={e => onDateChange?.(e.target.value)}
-                        imgSrc=''
-                        required
-                    />
+                    <div className={styles.side}>
+                        <fieldset className={styles.priorityFieldset}>
+                            <legend>Priority</legend>
+                            <div className={styles.priority}>
+                                <button
+                                    type="button"
+                                    className={priority === 'Urgent' ? styles.redActive : styles.red}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        onPriorityChange?.('Urgent');
+                                    }}
+                                >
+                                    Urgent <img src="#" alt="Urgent" />
+                                </button>
+                                <button
+                                    type="button"
+                                    className={priority === 'Medium' ? styles.yellowActive : styles.yellow}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        onPriorityChange?.('Medium');
+                                    }}
+                                >
+                                    Medium <img src="#" alt="Medium" />
+                                </button>
+                                <button
+                                    type="button"
+                                    className={priority === 'Low' ? styles.greenActive : styles.green}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        onPriorityChange?.('Low');
+                                    }}
+                                >
+                                    Low <img src="#" alt="Low" />
+                                </button>
+                            </div>
+                        </fieldset>
+
+
+                        <Dropdown
+                            label='Assignet to'
+                            placeholder='Select contacts to assign'
+                            subs={contacts}
+                            onSelect={onContactsChange}
+                        />
+
+                        <Dropdown
+                            label='Category'
+                            placeholder='Select a task category'
+                            subs={category}
+                            onSelect={onCategoryChange}
+                            required
+                        />
+
+                        <Input
+                            id='subtasks'
+                            name='subtasks'
+                            label='Subtasks'
+                            labelClassName={styles.label}
+                            className={styles.input}
+                            placeholder='Add a new subtask'
+                            value={newSubtask}
+                            onChange={e => setNewSubtask(e.target.value)}
+                            onSymbolClick={addSubtask}
+                            symbol='+'
+                        />
+                        <ul>
+                            {subtasks.map((subtask, index) => (
+                                <li key={index}>{subtask}</li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-                <div className={styles.line}></div>
-
-                <div className={styles.side}>
-                    <fieldset className={styles.priorityFieldset}>
-                        <legend>Priority</legend>
-                        <div className={styles.priority}>
-                            <button className={styles.red}>Urgent <img src="#" alt="Urgent" /></button>
-                            <button className={styles.yellow}>Medium <img src="#" alt="Medium" /></button>
-                            <button className={styles.green}>Low <img src="#" alt="Low" /></button>
-                        </div>
-                    </fieldset>
-
-                    <Dropdown
-                        label='Assignet to'
-                        placeholder='Select contacts to assign'
-                        subs={contacts}
-                        onSelect={onContactsChange}
-                    />
-
-                    <Dropdown
-                        label='Category'
-                        placeholder='Select a task category'
-                        subs={category}
-                        onSelect={onCategoryChange}
-                        required
-                    />
-
-                    <Input
-                        id='subtasks'
-                        name='subtasks'
-                        label='Subtasks'
-                        labelClassName={styles.label}
-                        className={styles.input}
-                        placeholder='Add a new subtask'
-                        value={newSubtask}
-                        onChange={e => setNewSubtask(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        onSymbolClick={addSubtask}
-                        symbol='+'
-                    />
-                    <ul>
-                        {subtasks.map((subtask, index) => (
-                            <li key={index}>{subtask}</li>
-                        ))}
-                    </ul>
+                <div className={styles.bottom}>
+                    <span><span className={styles.red}>* </span>This field is required</span>
+                    <div className={styles.addTaskButton}>
+                        <Button className={styles.backroundNone}>Clear X</Button>
+                        <Button type='submit'>Create Task <img src="src/assets/icons/check.svg" alt="Check" /></Button>
+                    </div>
                 </div>
 
-            </div>
+            </form>
+
         </>
     )
 }

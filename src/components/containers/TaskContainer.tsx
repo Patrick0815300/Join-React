@@ -12,6 +12,7 @@ export function TaskContainer() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
+    const [priority, setPriority] = useState('Medium');
     const [assignedContacts, setAssignedContacts] = useState<string[]>([]);
     const [taskCategory, setTaskCategory] = useState<string[]>([]);
     const [subtasks, setSubtasks] = useState<string[]>([]);
@@ -23,23 +24,26 @@ export function TaskContainer() {
     const handleCategoryChange = (categories: string[]) => setTaskCategory(categories);
     const handleSubtaskChange = (newSubtasks: string[]) => setSubtasks(newSubtasks);
 
-
     const getContacts = async () => {
         const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname']);
         if (!data) return;
         const names = data.map((item: { lastname: string; firstname: string }) => `${item.firstname} ${item.lastname}`);
-        setContacts(names)
+        setContacts(names);
     }
 
     const category = [
         'Technical',
-        'Business'
+        'Business',
     ]
 
     useEffect(() => {
         getContacts();
     }, [])
 
+    const onSubmitChange = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(title, description, date, priority, assignedContacts, taskCategory, subtasks);
+    }
 
     return (
         <>
@@ -47,15 +51,18 @@ export function TaskContainer() {
                 title={title}
                 description={description}
                 date={date}
+                priority={priority}
                 contacts={contacts}
                 category={category}
                 subtasks={subtasks}
                 onTitleChange={handleTitleChange}
                 onDescriptionChange={handleDescriptionChange}
                 onDateChange={handleDateChange}
+                onPriorityChange={setPriority}
                 onContactsChange={handleContactsChange}
                 onCategoryChange={handleCategoryChange}
                 onSubtaskChange={handleSubtaskChange}
+                onSubmitChange={onSubmitChange}
             />
         </>
     )
