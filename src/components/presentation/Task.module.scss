@@ -74,3 +74,41 @@
         }
     }
 }
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .red {
+        color: red;
+    }
+
+    .addTaskButton {
+        display: flex;
+        gap: 16px;
+
+        .backroundNone {
+            background-color: transparent;
+            color: var(--color-primary);
+        }
+
+        img {
+            width: 17px;
+            object-fit: contain;
+            margin-left: 6px;
+        }
+    }
+}
+
+.redActive {
+    background-color: #FF3D00 !important;
+}
+
+.yellowActive {
+    background-color: #FFA800 !important;
+}
+
+.greenActive {
+    background-color: #7AE229 !important;
+}
