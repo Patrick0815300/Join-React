@@ -54,11 +54,13 @@ const Dropdown = ({ label, placeholder, subs, required }: DropdownProps) => {
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
                         {subs.map((sub, index) => (
-                            <span key={index} className={styles.singleSub}>{sub}</span>
+                            <div className={styles.singleSub}>
+                                <input type="checkbox" value={selctedSub + index} />
+                                <span key={index}>{sub}</span>
+                            </div>
                         ))}
                     </div>
                 )
-
                 }
             </div>
         </>
