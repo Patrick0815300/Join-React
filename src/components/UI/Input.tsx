@@ -43,7 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     className={`input-label ${labelClassName || ''}`}
                 >
                     {label}
-                    {required && <span className='required'>*</span>}
+                    {required && <span className={styles.required}> *</span>}
                 </label>
 
             )}

@@ -10,7 +10,8 @@ interface TaskProps {
     date: string;
     priority: string;
     contacts: string[];
-    category: string[];
+    categoryOptions: string[];
+    selectedCategories: string[];
     subtasks: string[];
     onTitleChange?: (newTitle: string) => void;
     onDescriptionChange?: (newDescription: string) => void;
@@ -22,7 +23,7 @@ interface TaskProps {
     onSubmitChange?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export function Task({ title, description, date, priority, contacts, category, subtasks,
+export function Task({ title, description, date, priority, contacts, categoryOptions, selectedCategories, subtasks,
     onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange }: TaskProps) {
 
     const [newSubtask, setNewSubtask] = useState('');
@@ -131,14 +132,11 @@ export function Task({ title, description, date, priority, contacts, category, s
                             <Dropdown
                                 label='Category'
                                 placeholder='Select a task category'
-                                subs={category}
+                                subs={categoryOptions}
                                 onSelect={onCategoryChange}
                                 required
                             />
                         </div>
-
-
-
 
                         <Input
                             id='subtasks'
@@ -163,7 +161,9 @@ export function Task({ title, description, date, priority, contacts, category, s
                     <span><span className={styles.red}>* </span>This field is required</span>
                     <div className={styles.addTaskButton}>
                         <Button className={styles.backroundNone}>Clear X</Button>
-                        <Button type='submit'>Create Task <img src="src/assets/icons/check.svg" alt="Check" /></Button>
+                        <Button type='submit' disabled={selectedCategories.length < 0}>
+                            Create Task <img src="src/assets/icons/check.svg" alt="Check" />
+                        </Button>
                     </div>
                 </div>
 
