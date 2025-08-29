@@ -56,6 +56,7 @@ export function TaskContainer() {
                 priority={priority}
                 contacts={contacts}
                 categoryOptions={categoryOptions}
+                selectedCategories={taskCategory}
                 subtasks={subtasks}
                 onTitleChange={handleTitleChange}
                 onDescriptionChange={handleDescriptionChange}

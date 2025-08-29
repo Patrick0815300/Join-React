@@ -66,7 +66,12 @@ const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProp
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
                         {subs.map((sub, index) => (
-                            <div className={styles.singleSub} key={index}>
+                            <label
+                                htmlFor={`dropdown-checkbox-${sub}`}
+                                className={styles.singleSub}
+                                style={{ cursor: 'pointer' }}
+                                key={index}
+                            >
                                 <input
                                     type="checkbox"
                                     checked={selectedSub.includes(sub)}
@@ -74,8 +79,9 @@ const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProp
                                     value={sub}
                                     id={`dropdown-checkbox-${sub}`}
                                 />
-                                <label htmlFor={`dropdown-checkbox-${sub}`}>{sub}</label>
-                            </div>
+                                {sub}
+                            </label>
+
                         ))}
                     </div>
                 )}
