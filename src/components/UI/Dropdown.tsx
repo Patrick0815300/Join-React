@@ -6,12 +6,12 @@ interface DropdownProps {
     placeholder: string;
     subs: string[];
     required?: boolean;
+    selected?: string[];
     onSelect?: (selected: string[]) => void;
 }
 
-const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProps) => {
+const Dropdown = ({ label, placeholder, subs, selected = [], required, onSelect }: DropdownProps) => {
     const [showSub, setShowSub] = useState(false);
-    const [selectedSub, setSelectedSub] = useState<string[]>([]);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const toggleSub = () => {
@@ -38,12 +38,11 @@ const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProp
 
     const handleCheckbox = (sub: string) => {
         let updated: string[];
-        if (selectedSub.includes(sub)) {
-            updated = selectedSub.filter(item => item !== sub);
+        if (selected.includes(sub)) {
+            updated = selected.filter(item => item !== sub);
         } else {
-            updated = [...selectedSub, sub];
+            updated = [...selected, sub];
         }
-        setSelectedSub(updated);
         onSelect?.(updated);
     };
 
@@ -66,22 +65,28 @@ const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProp
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
                         {subs.map((sub, index) => (
-                            <div className={styles.singleSub} key={index}>
+                            <label
+                                htmlFor={`dropdown-checkbox-${sub}`}
+                                className={styles.singleSub}
+                                style={{ cursor: 'pointer' }}
+                                key={index}
+                            >
                                 <input
                                     type="checkbox"
-                                    checked={selectedSub.includes(sub)}
+                                    checked={selected.includes(sub)}
                                     onChange={() => handleCheckbox(sub)}
                                     value={sub}
                                     id={`dropdown-checkbox-${sub}`}
                                 />
-                                <label htmlFor={`dropdown-checkbox-${sub}`}>{sub}</label>
-                            </div>
+                                {sub}
+                            </label>
+
                         ))}
                     </div>
                 )}
             </div>
             <div className={styles.listedChecked}>
-                {selectedSub.length > 0 ? selectedSub.join(', ') : null}
+                {selected.length > 0 ? selected.join(', ') : null}
             </div>
         </div>
     );
