@@ -136,7 +136,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                 label='Category'
                                 placeholder='Select a task category'
                                 subs={categoryOptions}
-                                selected={selectedContacts}
+                                selected={selectedCategories}
                                 onSelect={onCategoryChange}
                                 required
                             />
