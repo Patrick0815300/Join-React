@@ -11,6 +11,7 @@ interface TaskProps {
     priority: string;
     contacts: string[];
     categoryOptions: string[];
+    selectedContacts: string[];
     selectedCategories: string[];
     subtasks: string[];
     onTitleChange?: (newTitle: string) => void;
@@ -21,10 +22,11 @@ interface TaskProps {
     onCategoryChange?: (selectedCategories: string[]) => void;
     onSubtaskChange?: (subtasks: string[]) => void;
     onSubmitChange?: (e: React.FormEvent<HTMLFormElement>) => void;
+    clearForm: () => void;
 }
 
-export function Task({ title, description, date, priority, contacts, categoryOptions, selectedCategories, subtasks,
-    onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange }: TaskProps) {
+export function Task({ title, description, date, priority, contacts, selectedContacts, categoryOptions, selectedCategories, subtasks,
+    onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange, clearForm }: TaskProps) {
 
     const [newSubtask, setNewSubtask] = useState('');
 
@@ -121,6 +123,7 @@ export function Task({ title, description, date, priority, contacts, categoryOpt
                                 label='Assignet to'
                                 placeholder='Select contacts to assign'
                                 subs={contacts}
+                                selected={selectedContacts}
                                 onSelect={onContactsChange}
                             />
                             <div className={styles.selectedContacts}>
@@ -133,6 +136,7 @@ export function Task({ title, description, date, priority, contacts, categoryOpt
                                 label='Category'
                                 placeholder='Select a task category'
                                 subs={categoryOptions}
+                                selected={selectedContacts}
                                 onSelect={onCategoryChange}
                                 required
                             />
@@ -160,7 +164,11 @@ export function Task({ title, description, date, priority, contacts, categoryOpt
                 <div className={styles.bottom}>
                     <span><span className={styles.red}>* </span>This field is required</span>
                     <div className={styles.addTaskButton}>
-                        <Button className={styles.backroundNone}>Clear X</Button>
+                        <Button
+                            type='button'
+                            className={styles.backroundNone}
+                            onClick={clearForm}
+                        >Clear X</Button>
                         <Button type='submit' disabled={selectedCategories.length < 0}>
                             Create Task <img src="src/assets/icons/check.svg" alt="Check" />
                         </Button>

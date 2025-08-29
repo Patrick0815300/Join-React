@@ -47,6 +47,16 @@ export function TaskContainer() {
         }
     }
 
+    const clearForm = () => {
+        setTitle('');
+        setDescription('');
+        setDate('');
+        setPriority('Medium');
+        setAssignedContacts([]);
+        setTaskCategory([]);
+        setSubtasks([]);
+    }
+
     return (
         <>
             <Task
@@ -55,6 +65,7 @@ export function TaskContainer() {
                 date={date}
                 priority={priority}
                 contacts={contacts}
+                selectedContacts={assignedContacts}
                 categoryOptions={categoryOptions}
                 selectedCategories={taskCategory}
                 subtasks={subtasks}
@@ -66,6 +77,7 @@ export function TaskContainer() {
                 onCategoryChange={handleCategoryChange}
                 onSubtaskChange={handleSubtaskChange}
                 onSubmitChange={onSubmitChange}
+                clearForm={clearForm}
             />
         </>
     )
