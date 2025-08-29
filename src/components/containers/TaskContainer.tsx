@@ -21,7 +21,7 @@ export function TaskContainer() {
     const handleDescriptionChange = (newDesc: string) => setDescription(newDesc);
     const handleDateChange = (newDate: string) => setDate(newDate);
     const handleContactsChange = (contacts: string[]) => setAssignedContacts(contacts);
-    const handleCategoryChange = (categories: string[]) => setTaskCategory(categories);
+    const handleCategoryChange = (selectedCategories: string[]) => setTaskCategory(selectedCategories);
     const handleSubtaskChange = (newSubtasks: string[]) => setSubtasks(newSubtasks);
 
     const getContacts = async () => {
@@ -31,7 +31,7 @@ export function TaskContainer() {
         setContacts(names);
     }
 
-    const category = [
+    const categoryOptions = [
         'Technical',
         'Business',
     ]
@@ -42,7 +42,9 @@ export function TaskContainer() {
 
     const onSubmitChange = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(title, description, date, priority, assignedContacts, taskCategory, subtasks);
+        if (taskCategory.length > 0) {
+            console.log(title, description, date, priority, assignedContacts, taskCategory, subtasks);
+        }
     }
 
     return (
@@ -53,7 +55,7 @@ export function TaskContainer() {
                 date={date}
                 priority={priority}
                 contacts={contacts}
-                category={category}
+                categoryOptions={categoryOptions}
                 subtasks={subtasks}
                 onTitleChange={handleTitleChange}
                 onDescriptionChange={handleDescriptionChange}

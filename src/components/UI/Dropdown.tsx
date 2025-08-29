@@ -2,22 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
-    label: string
+    label: string;
     placeholder: string;
     subs: string[];
     required?: boolean;
     onSelect?: (selected: string[]) => void;
 }
 
-
-const Dropdown = ({ label, placeholder, subs, required }: DropdownProps) => {
+const Dropdown = ({ label, placeholder, subs, required, onSelect }: DropdownProps) => {
     const [showSub, setShowSub] = useState(false);
+    const [selectedSub, setSelectedSub] = useState<string[]>([]);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
     const toggleSub = () => {
         setShowSub(prevState => !prevState);
     };
 
-    // Klick außerhalb erkennen und Dropdown schließen
+    // Outside click close
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -27,45 +28,63 @@ const Dropdown = ({ label, placeholder, subs, required }: DropdownProps) => {
                 setShowSub(false);
             }
         };
-
         if (showSub) {
             document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
         }
-
-        // Cleanup
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [showSub]);
 
+    const handleCheckbox = (sub: string) => {
+        let updated: string[];
+        if (selectedSub.includes(sub)) {
+            updated = selectedSub.filter(item => item !== sub);
+        } else {
+            updated = [...selectedSub, sub];
+        }
+        setSelectedSub(updated);
+        onSelect?.(updated);
+    };
+
     return (
-        <>
+
+        <div>
             <div ref={dropdownRef} className={styles.dropdownContainer}>
                 <span className={styles.label}>{label} {required && <span className={styles.required}>*</span>}</span>
-                <div className={styles.input} onClick={toggleSub}>{placeholder} <img
-                    src="src/assets/icons/arrow_drop_down.svg"
-                    alt="dropdown"
-                    style={{
-                        transform: showSub && subs.length > 0 ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.2s'
-                    }} /></div>
+                <div className={styles.input} onClick={toggleSub}>
+                    <span>{placeholder}</span>
+                    <img
+                        src="src/assets/icons/arrow_drop_down.svg"
+                        alt="dropdown"
+                        style={{
+                            transform: showSub && subs.length > 0 ? 'rotate(180deg)' : 'rotate(0deg)',
+                            transition: 'transform 0.2s'
+                        }}
+                    />
+                </div>
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
                         {subs.map((sub, index) => (
-                            <div className={styles.singleSub}>
-                                <input type="checkbox" value={selctedSub + index} />
-                                <span key={index}>{sub}</span>
+                            <div className={styles.singleSub} key={index}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedSub.includes(sub)}
+                                    onChange={() => handleCheckbox(sub)}
+                                    value={sub}
+                                    id={`dropdown-checkbox-${sub}`}
+                                />
+                                <label htmlFor={`dropdown-checkbox-${sub}`}>{sub}</label>
                             </div>
                         ))}
                     </div>
-                )
-                }
+                )}
             </div>
-        </>
-
-    )
-}
+            <div className={styles.listedChecked}>
+                {selectedSub.length > 0 ? selectedSub.join(', ') : null}
+            </div>
+        </div>
+    );
+};
 
 export default Dropdown;
