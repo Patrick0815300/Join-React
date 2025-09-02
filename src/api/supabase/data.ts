@@ -6,15 +6,24 @@ export async function getData(database: string) {
     return data;
 }
 
-export async function getDataByColumns<T>(database: string, columns: string | string[]): Promise<T[]> {
+export async function getDataByColumns<T>(table: string, columns: string | string[]): Promise<T[]> {
     const selectColumns = Array.isArray(columns) ? columns.join(',') : columns;
 
     const { data, error } = await supabase
-        .from(database)
+        .from(table)
         .select(selectColumns);
 
     if (error) throw error;
     return data as T[];
+}
+
+export async function insertSingleRow(table: string, rowData: {}) {
+    const { data, error } = await supabase
+        .from(table)
+        .insert([rowData])
+        .select()
+    if (error) throw error;
+    return data
 }
 
 export async function addContact(userId: string, lastname: string, firstname: string, mail: string) {

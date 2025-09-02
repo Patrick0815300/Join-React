@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Task } from "../presentation/Task";
-import { getDataByColumns } from "../../api/supabase/data";
+import { getDataByColumns, insertSingleRow } from "../../api/supabase/data";
 
 interface Contact {
     firstname: string;
@@ -40,10 +40,21 @@ export function TaskContainer() {
         getContacts();
     }, [])
 
-    const onSubmitChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (taskCategory.length > 0) {
-            console.log(title, description, date, priority, assignedContacts, taskCategory, subtasks);
+            const task = {
+                title: title,
+                description: description,
+                due_date: date,
+                priority: priority,
+                assigned_to: assignedContacts,
+                category: taskCategory,
+                subtasks: subtasks,
+                phase: 'todo'
+            }
+            await insertSingleRow('tasks', task)
+            clearForm();
         }
     }
 
