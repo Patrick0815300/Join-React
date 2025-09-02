@@ -1,12 +1,12 @@
 import { AuthFormContainer } from "../containers/AuthContainer";
-import './Login.modules.scss'
+import styles from './Login.module.scss'
 
 export function SignUp({ toast, handleAuthSubmit }: any) {
     return (
         <>
             <section>
                 {toast.show === true ?
-                    <div className="toast">{toast.msg}</div> : null
+                    <div className={styles.toast}>{toast.msg}</div> : null
                 }
 
                 <AuthFormContainer
