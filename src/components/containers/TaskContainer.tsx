@@ -16,6 +16,9 @@ export function TaskContainer() {
     const [assignedContacts, setAssignedContacts] = useState<string[]>([]);
     const [taskCategory, setTaskCategory] = useState<string[]>([]);
     const [subtasks, setSubtasks] = useState<string[]>([]);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMsg, setToastMsg] = useState('');
+
 
     const handleTitleChange = (newTitle: string) => setTitle(newTitle);
     const handleDescriptionChange = (newDesc: string) => setDescription(newDesc);
@@ -53,10 +56,20 @@ export function TaskContainer() {
                 subtasks: subtasks,
                 phase: 'todo'
             }
-            await insertSingleRow('tasks', task)
-            clearForm();
+
+            try {
+                await insertSingleRow('tasks', task);
+                clearForm();
+                setToastMsg('Task successfully created!');
+                setShowToast(true);
+            } catch (error) {
+                setToastMsg('Error creating task.');
+                setShowToast(true);
+                console.error(error);
+            }
         }
-    }
+    };
+
 
     const clearForm = () => {
         setTitle('');
@@ -89,6 +102,9 @@ export function TaskContainer() {
                 onSubtaskChange={handleSubtaskChange}
                 onSubmitChange={onSubmitChange}
                 clearForm={clearForm}
+                showToast={showToast}
+                toastMsg={toastMsg}
+                setShowToast={setShowToast}
             />
         </>
     )

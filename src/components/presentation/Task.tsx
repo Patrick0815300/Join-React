@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dropdown from '../UI/Dropdown';
 import Input from '../UI/Input'
 import Button from '../UI/Button';
 import styles from './Task.module.scss'
+import { Toast } from '../UI/Toast';
 
 interface TaskProps {
     title: string;
@@ -23,10 +24,13 @@ interface TaskProps {
     onSubtaskChange?: (subtasks: string[]) => void;
     onSubmitChange?: (e: React.FormEvent<HTMLFormElement>) => void;
     clearForm: () => void;
+    showToast: boolean;
+    toastMsg: string;
+    setShowToast: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function Task({ title, description, date, priority, contacts, selectedContacts, categoryOptions, selectedCategories, subtasks,
-    onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange, clearForm }: TaskProps) {
+    onTitleChange, onDescriptionChange, onDateChange, onPriorityChange, onContactsChange, onCategoryChange, onSubtaskChange, onSubmitChange, clearForm, showToast, toastMsg, setShowToast }: TaskProps) {
 
     const [newSubtask, setNewSubtask] = useState('');
 
@@ -36,6 +40,13 @@ export function Task({ title, description, date, priority, contacts, selectedCon
             setNewSubtask('');
         }
     };
+
+    useEffect(() => {
+        if (showToast) {
+            const timer = setTimeout(() => setShowToast(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast, setShowToast]);
 
     return (
         <>
@@ -174,8 +185,8 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                         </Button>
                     </div>
                 </div>
-
             </form>
+            {showToast && <Toast content={toastMsg} />}
 
         </>
     )

@@ -1,0 +1,32 @@
+.toast {
+    position: absolute;
+    display: flex;
+    background-color: var(--primary-background);
+    color: white;
+    border-radius: 25px;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 50%;
+    top: 100%;
+    /* Start unten außerhalb des sichtbaren Bereichs */
+    transform: translate(-50%, 0);
+    /* Horizontales Zentrieren */
+    animation: moveToCenter 2s forwards;
+
+    img {
+        object-fit: contain;
+        width: 30px;
+        height: 30px;
+    }
+
+    @keyframes moveToCenter {
+        to {
+            top: 50%;
+            /* Mitte vertikal */
+            transform: translate(-50%, -50%);
+            /* Zentriert horizontal und vertikal */
+        }
+    }
+}
