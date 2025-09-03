@@ -41,12 +41,12 @@ export function Task({ title, description, date, priority, contacts, selectedCon
         }
     };
 
-    // useEffect(() => {
-    //     if (showToast) {
-    //         const timer = setTimeout(() => setShowToast(false), 3000);
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [showToast, setShowToast]);
+    useEffect(() => {
+        if (showToast) {
+            const timer = setTimeout(() => setShowToast(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast, setShowToast]);
 
     return (
         <>

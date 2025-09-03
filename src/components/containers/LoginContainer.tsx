@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Login } from "../presentation/Login.tsx";
 import { login } from "../../api/supabase/user.ts";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,13 @@ export function LoginContainer() {
             console.error("Login fehlgeschlagen", error);
         }
     };
+
+    useEffect(() => {
+        if (toast) {
+            const timer = setTimeout(() => setToast({ msg: '', show: false }), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [toast, setToast]);
 
     return (
         <>
