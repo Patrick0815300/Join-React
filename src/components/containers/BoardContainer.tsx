@@ -1,38 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getData } from "../../api/supabase/data"
 import { Board } from "../presentation/Board"
-
-interface Task {
-    createdAt: Date;
-    title: string;
-    description: string;
-    due_date: Date;
-    priority: string;
-    assignetTo: string[];
-    category: string[];
-    subtasks: string[];
-    phase: string;
-}
+import { Task } from "../../types/Task";
 
 export function BoardContainer() {
-    const getTask = async () => {
+    const [todos, setTodos] = useState<Task[]>([]);
+    const [done, setDone] = useState<Task[]>([]);
+    const [inProgress, setInProgress] = useState<Task[]>([]);
+    const [awaitFeedback, setAwaitFeedback] = useState<Task[]>([]);
+
+    const getTasks = async () => {
         const data = await getData('tasks');
         if (data) {
-            const todos = data.filter(todos => todos.phase === 'todo');
-            const done = data.filter(todos => todos.phase === 'done');
-            const inProgress = data.filter(todos => todos.phase === 'inProgress');
-            const awaitFeedback = data.filter(todos => todos.phase === 'awaitFeedback');
+            setTodos(data.filter(task => task.phase === 'todo'));
+            setDone(data.filter(task => task.phase === 'done'));
+            setInProgress(data.filter(task => task.phase === 'inProgress'));
+            setAwaitFeedback(data.filter(task => task.phase === 'awaitFeedback'));
         }
     }
 
     useEffect(() => {
-        getTask();
+        getTasks();
     }, [])
 
 
     return (
         <>
-            <Board />
+            <Board
+                todos={todos}
+                done={done}
+                inProgress={inProgress}
+                awaitFeedback={awaitFeedback}
+            />
         </>
     )
 }
