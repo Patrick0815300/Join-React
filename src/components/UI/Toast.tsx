@@ -11,7 +11,7 @@ export function Toast({ content, imgSrc, imgAlt }: ToastProp) {
         <>
             <div className={styles.toast}>
                 <span>{content}</span>
-                <img src={imgSrc} alt={imgAlt} />
+                {imgSrc && <img src={imgSrc} alt={imgAlt} />}
             </div>
         </>
     )
