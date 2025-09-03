@@ -1,0 +1,34 @@
+.smallCard {
+    width: 252px;
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 3px #00000014;
+
+    .category {
+        border-radius: 8px;
+        padding: 4px 16px;
+    }
+
+    .technicalCat {
+        background-color: #1FD7C1;
+    }
+
+    .businessCat {
+        background-color: #0038FF;
+    }
+
+    .title {
+        font-size: 16px;
+        font-style: bold;
+        font-weight: 700;
+    }
+
+    .description {
+        color: #A8A8A8;
+        font-size: 16px;
+    }
+}
