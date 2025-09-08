@@ -1,16 +1,17 @@
 import { SignUpContainer } from "../components/containers/SignUpContainer"
-import './LoginPage.modules.scss'
+import { Link } from 'react-router-dom';
+import styles from './LoginPage.module.scss'
 
 export function SignUpPage() {
 
     return (
         <>
             <section>
-                <img className="logo" src="src/assets/icons/logo.svg" alt="Logo" />
+                <img className={styles.logo} src="src/assets/icons/logo.svg" alt="Logo" />
                 <SignUpContainer />
                 <footer>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Legal notice</a>
+                    <Link to="/privacy">Legal Notice</Link>
+                    <Link to="/legal">Privacy Policy</Link>
                 </footer>
             </section>
 

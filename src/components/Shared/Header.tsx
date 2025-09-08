@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { logout } from '../../api/supabase/user';
 import { Link } from 'react-router-dom';
 import { getUserName, shortFormatName } from '../../utils/user';
-import './Header.modules.scss'
+import styles from './Header.module.scss'
 
 
 export function Header() {
@@ -27,14 +27,14 @@ export function Header() {
 
     return (
         <>
-            <header className='header'>
+            <header className={styles.header}>
                 <span>Kanban Project Management Tool</span>
-                <div className='header-btns'>
-                    <button className='help'>?</button>
-                    <button onClick={toggleSubmenu} className='logged-user'>
+                <div className={styles.headerBtns}>
+                    <button className={styles.help}>?</button>
+                    <button onClick={toggleSubmenu} className={styles.loggedUser}>
                         {name}
                         {showSubmenu ?
-                            <div className='submenu-container'>
+                            <div className={styles.submenuContainer}>
                                 <Link to="/privacy">Legal Notice</Link>
                                 <Link to="/legal">Privacy Policy</Link>
                                 <Link to="/login" onClick={logout}>Log out</Link>
