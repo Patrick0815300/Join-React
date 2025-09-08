@@ -46,7 +46,13 @@
 }
 
 @media (max-width: 720px) {
-    .form-container {
-        padding: 32px 0;
+    .formContainer {
+        padding: 32px auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .formContainer {
+        padding: 32px 16px;
     }
 }
