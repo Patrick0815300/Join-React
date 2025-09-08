@@ -19,11 +19,15 @@ export function LoginPage() {
                     <Button onClick={() => navigate('/signup')}>Sign up</Button>
                 </header>
                 <LoginContainer />
+                <header className={styles.mobileHead}>
+                    <span>Not a Join user?</span>
+                    <Button onClick={() => navigate('/signup')}>Sign up</Button>
+                </header>
                 <footer>
                     <Link to="/privacy">Legal Notice</Link>
                     <Link to="/legal">Privacy Policy</Link>
                 </footer>
-            </section>
+            </section >
 
         </>
     )
