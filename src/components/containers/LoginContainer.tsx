@@ -1,14 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Login } from "../presentation/Login.tsx";
-import { login } from "../../api/supabase/user.ts";
+import { login, logout } from "../../api/supabase/user.ts";
 import { useNavigate } from "react-router-dom";
 
+const AUTO_LOGOUT_TIME = 60 * 60 * 1000;
+
 export function LoginContainer() {
+    const timeoutRef = useRef<number | null>(null);
     const navigate = useNavigate();
     const [toast, setToast] = useState({
         msg: '',
         show: false
     })
+
+    const resetTimer = () => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = window.setTimeout(async () => {
+            await logout();
+            // z.B. redirect to login page
+        }, AUTO_LOGOUT_TIME);
+    };
+
+    useEffect(() => {
+        window.addEventListener('mousemove', resetTimer);
+        window.addEventListener('keypress', resetTimer);
+        window.addEventListener('touchstart', resetTimer);
+        resetTimer();
+
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            window.removeEventListener('mousemove', resetTimer);
+            window.removeEventListener('keypress', resetTimer);
+            window.removeEventListener('touchstart', resetTimer);
+        };
+    }, []);
 
     const handleAuthSubmit = async (formData: { email: string; password: string }) => {
         console.log("Daten vom Formular:", formData);
@@ -30,6 +55,8 @@ export function LoginContainer() {
             return () => clearTimeout(timer);
         }
     }, [toast, setToast]);
+
+
 
     return (
         <>
