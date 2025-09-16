@@ -1,3 +1,7 @@
+h1 {
+    margin-bottom: 8px;
+}
+
 .formContainer {
     display: flex;
     flex-direction: column;
@@ -35,7 +39,6 @@
         background-color: var(--color-accent);
         height: 3px;
         border-radius: 50px;
-        margin-top: -48px;
     }
 
     .buttonContainer {

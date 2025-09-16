@@ -8,8 +8,6 @@ import styles from './LoginPage.module.scss'
 export function LoginPage() {
     const navigate = useNavigate();
 
-
-
     return (
         <>
             <section>

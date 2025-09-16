@@ -41,7 +41,7 @@ export function LoginContainer() {
             await login(formData.email, formData.password)
             setToast({ msg: 'Successfull Log In.', show: true })
             setTimeout(() => {
-                navigate('/');
+                navigate('/dashboard');
             }, 2000);
         } catch (error: any) {
             setToast({ msg: error?.message || 'Logged in failed.', show: true })
