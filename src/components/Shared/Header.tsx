@@ -40,7 +40,6 @@ export function Header() {
                                 <Link to="/login" onClick={logout}>Log out</Link>
                             </div> : null
                         }
-
                     </button>
                 </div>
             </header>
