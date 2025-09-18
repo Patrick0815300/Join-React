@@ -23,7 +23,7 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent, 
 
     return (
         <>
-            <header>
+            <header className={styles.header}>
                 <h1>Join 360</h1>
                 <span className={styles.description}>Key Metrics at a Glance</span>
             </header>
