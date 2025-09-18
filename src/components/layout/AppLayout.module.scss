@@ -1,4 +1,4 @@
-.layout-container {
+.layoutContainer {
     display: flex;
 
     .wrapper {
@@ -8,6 +8,7 @@
 
         main {
             flex: 1;
+            margin: 24px;
         }
     }
 }
