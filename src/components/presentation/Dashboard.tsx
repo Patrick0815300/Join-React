@@ -1,5 +1,7 @@
 import { getTime, getUrgentDate } from '../../utils/date';
 import type { Task } from '../containers/DashboardContainer';
+import Pen from '../../assets/icons/pen.svg?react';
+import Check from '../../assets/icons/check.svg?react';
 import styles from './Dashboard.module.scss'
 
 interface DashboardProps {
@@ -29,14 +31,14 @@ export function Dashboard({ todos, inProgress, awaitFeedback, done, nextUrgent, 
                 <div className={styles.cardContainer}>
                     <div className={styles.singleRow}>
                         <div className={styles.card}>
-                            <img className={styles.icon} src="src/assets/icons/pen.svg" alt="pen" />
+                            <Pen className={styles.icon} />
                             <div>
                                 <span className={styles.count}>{todos.length}</span>
                                 <span className={styles.category}>To Do</span>
                             </div>
                         </div>
                         <div className={styles.card}>
-                            <img className={styles.icon} src="src/assets/icons/check.svg" alt="check" />
+                            <Check className={styles.icon} />
                             <div>
                                 <span className={styles.count}>{done.length}</span>
                                 <span className={styles.category}>Done</span>
