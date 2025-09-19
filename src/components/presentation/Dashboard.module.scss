@@ -164,3 +164,30 @@
         flex-direction: column;
     }
 }
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 47px;
+    }
+
+    .count {
+        font-size: 47px !important;
+    }
+
+    .container {
+        .cardContainer {
+            .card {
+                padding: 28px 12px;
+
+                .icon {
+                    width: 24px;
+                    height: 24px;
+                    padding: 16px;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+
+
+}
