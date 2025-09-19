@@ -179,6 +179,10 @@
             .card {
                 padding: 28px 12px;
 
+                &:hover {
+                    transform: none;
+                }
+
                 .icon {
                     width: 24px;
                     height: 24px;
@@ -188,6 +192,4 @@
             }
         }
     }
-
-
 }
