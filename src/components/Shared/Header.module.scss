@@ -11,6 +11,12 @@ button {
     align-items: center;
     box-sizing: border-box;
 
+    .logo {
+        display: none;
+        width: 32px;
+        object-fit: contain;
+    }
+
     .headerBtns {
         display: flex;
         align-items: center;
@@ -60,4 +66,17 @@ a {
     color: #CDCDCD;
     padding: 8px 16px;
     white-space: nowrap;
+}
+
+@media (max-width: 500px) {
+    .header {
+        .logo {
+            display: block;
+        }
+    }
+
+
+    .title {
+        display: none;
+    }
 }
