@@ -3,6 +3,7 @@ import Dropdown from '../UI/Dropdown';
 import Input from '../UI/Input'
 import Button from '../UI/Button';
 import styles from './Task.module.scss'
+import Urgent from '../../assets/icons/urgent.svg?react';
 import { Toast } from '../UI/Toast';
 
 interface TaskProps {
@@ -104,7 +105,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                         onPriorityChange?.('Urgent');
                                     }}
                                 >
-                                    Urgent <img src="#" alt="Urgent" />
+                                    Urgent <Urgent className={styles.urgentIcon} />
                                 </button>
                                 <button
                                     type="button"
@@ -114,7 +115,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                         onPriorityChange?.('Medium');
                                     }}
                                 >
-                                    Medium <img src="#" alt="Medium" />
+                                    Medium <span>=</span>
                                 </button>
                                 <button
                                     type="button"
@@ -124,7 +125,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                         onPriorityChange?.('Low');
                                     }}
                                 >
-                                    Low <img src="#" alt="Low" />
+                                    Low <Urgent className={styles.lowIcon} />
                                 </button>
                             </div>
                         </fieldset>

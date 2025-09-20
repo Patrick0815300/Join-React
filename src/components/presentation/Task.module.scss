@@ -1,5 +1,11 @@
 .container {
     display: flex;
+    justify-content: space-between;
+
+    .line {
+        width: 1px;
+        background-color: #D1D1D1;
+    }
 
     .side {
         display: flex;
@@ -46,9 +52,16 @@
 
     .priority {
         display: flex;
+        justify-content: space-between;
         gap: 8px;
 
         button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 33%;
+            font-size: 20px;
             border-radius: 10px;
             padding: 16px 10px;
             background-color: white;
@@ -58,6 +71,14 @@
             &:hover {
                 color: white;
                 background-color: var(--hover-color);
+
+                svg path {
+                    fill: white;
+                }
+
+                span {
+                    color: white;
+                }
             }
 
             &.red {
@@ -70,6 +91,33 @@
 
             &.green {
                 --hover-color: #7AE229;
+            }
+
+            span {
+                width: 20px;
+                color: #FFA800;
+                height: fit-content;
+                font-size: 24px;
+            }
+
+        }
+
+        .urgentIcon {
+            width: 20px;
+            height: fit-content;
+
+            path {
+                fill: #FF3D00;
+            }
+        }
+
+        .lowIcon {
+            width: 20px;
+            height: fit-content;
+            rotate: 180deg;
+
+            path {
+                fill: #7AE229;
             }
         }
     }
@@ -104,14 +152,26 @@
 .redActive {
     color: white;
     background-color: #FF3D00 !important;
+
+    svg path {
+        fill: white !important;
+    }
 }
 
 .yellowActive {
     color: white;
     background-color: #FFA800 !important;
+
+    span {
+        color: white !important;
+    }
 }
 
 .greenActive {
     color: white;
     background-color: #7AE229 !important;
+
+    svg path {
+        fill: white !important;
+    }
 }
