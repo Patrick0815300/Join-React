@@ -28,7 +28,8 @@ export function Header() {
     return (
         <>
             <header className={styles.header}>
-                <span>Kanban Project Management Tool</span>
+                <span className={styles.title}>Kanban Project Management Tool</span>
+                <img className={styles.logo} src="src/assets/icons/logo.svg" alt="JOIN-Logo" />
                 <div className={styles.headerBtns}>
                     <button className={styles.help}>?</button>
                     <button onClick={toggleSubmenu} className={styles.loggedUser}>

@@ -1,10 +1,19 @@
 .container {
     display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    max-width: 1440px;
+
+    .line {
+        width: 1px;
+        background-color: #D1D1D1;
+    }
 
     .side {
         display: flex;
         flex-direction: column;
         gap: 24px;
+        flex: 1;
     }
 }
 
@@ -21,10 +30,11 @@
         border-radius: 10px;
         border: 1px solid var(--color-border);
         padding: 12px 21px;
-        min-width: 420px;
         height: 120px;
         font-size: 20px;
         outline: none;
+        box-sizing: border-box;
+        width: 100%;
 
         &::placeholder {
             color: var(--color-border);
@@ -43,12 +53,25 @@
 .priorityFieldset {
     border: none;
     font-size: 20px;
+    margin: 0;
+    padding: 0;
+
+    legend {
+        margin-bottom: 8px;
+    }
 
     .priority {
         display: flex;
+        justify-content: space-between;
         gap: 8px;
 
         button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 33%;
+            font-size: 20px;
             border-radius: 10px;
             padding: 16px 10px;
             background-color: white;
@@ -58,6 +81,14 @@
             &:hover {
                 color: white;
                 background-color: var(--hover-color);
+
+                svg path {
+                    fill: white;
+                }
+
+                span {
+                    color: white;
+                }
             }
 
             &.red {
@@ -70,6 +101,33 @@
 
             &.green {
                 --hover-color: #7AE229;
+            }
+
+            span {
+                width: 20px;
+                color: #FFA800;
+                height: fit-content;
+                font-size: 24px;
+            }
+
+        }
+
+        .urgentIcon {
+            width: 20px;
+            height: fit-content;
+
+            path {
+                fill: #FF3D00;
+            }
+        }
+
+        .lowIcon {
+            width: 20px;
+            height: fit-content;
+            rotate: 180deg;
+
+            path {
+                fill: #7AE229;
             }
         }
     }
@@ -104,14 +162,71 @@
 .redActive {
     color: white;
     background-color: #FF3D00 !important;
+
+    svg path {
+        fill: white !important;
+    }
 }
 
 .yellowActive {
     color: white;
     background-color: #FFA800 !important;
+
+    span {
+        color: white !important;
+    }
 }
 
 .greenActive {
     color: white;
     background-color: #7AE229 !important;
+
+    svg path {
+        fill: white !important;
+    }
+}
+
+@media (max-width: 980px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 680px) {
+    h1 {
+        font-size: 47px;
+    }
+
+    .container {
+        font-size: 16px !important;
+
+        .label,
+        button,
+        legend,
+        input,
+        textarea,
+        span {
+            font-size: 16px !important;
+        }
+
+        .line {
+            display: none;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+
+    .bottom {
+        justify-content: flex-end;
+        gap: 24px;
+
+        .requiredInfo {
+            display: none;
+        }
+    }
+
+
 }

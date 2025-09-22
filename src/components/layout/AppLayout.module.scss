@@ -11,10 +11,31 @@
         main {
             flex: 1;
             padding-inline: 24px;
-            margin-bottom: 24px;
+            padding-bottom: 24px;
             overflow-y: auto;
             min-height: 0;
             box-sizing: border-box;
         }
+    }
+}
+
+@media (max-width: 680px) {
+    .layoutContainer {
+        flex-direction: column;
+        min-height: 100vh;
+        max-height: 100vh;
+
+
+        .wrapper {
+            order: 1 !important;
+            min-height: 0;
+        }
+
+        nav {
+            order: 2;
+            min-height: 60px;
+        }
+
+
     }
 }
