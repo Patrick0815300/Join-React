@@ -174,7 +174,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                     </div>
                 </div>
                 <div className={styles.bottom}>
-                    <span><span className={styles.red}>* </span>This field is required</span>
+                    <span className={styles.requiredInfo}><span className={styles.red}>* </span>This field is required</span>
                     <div className={styles.addTaskButton}>
                         <Button
                             type='button'
