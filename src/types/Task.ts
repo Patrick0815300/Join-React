@@ -4,7 +4,7 @@ export interface Task {
     description: string;
     due_date: Date;
     priority: string;
-    assignetTo: string[];
+    assigned_to: string[];
     category: string[];
     subtasks: string[];
     phase: string;

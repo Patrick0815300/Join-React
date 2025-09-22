@@ -1,7 +1,6 @@
-import styles from './Board.module.scss'
 import { Task } from "../../types/Task";
 import { TaskCardSmall } from '../UI/TaskCardSmall';
-import { useState } from 'react';
+import styles from './Board.module.scss'
 
 interface TaskProps {
     todos: Task[];
@@ -21,7 +20,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     title={task.title}
                     description={task.description}
                     subtasks={task.subtasks}
-                    assignetTo={task.assignetTo}
+                    assigned_to={task.assigned_to}
                     priority={task.priority}
                 />
             ))}

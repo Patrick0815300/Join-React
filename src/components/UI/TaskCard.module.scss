@@ -11,6 +11,7 @@
     .category {
         border-radius: 8px;
         padding: 4px 16px;
+        width: fit-content;
     }
 
     .technicalCat {
@@ -19,6 +20,18 @@
 
     .businessCat {
         background-color: #0038FF;
+    }
+
+    .designCat {
+        background-color: #FF6B6B;
+    }
+
+    .marketingCat {
+        background-color: #4ECDC4;
+    }
+
+    .defaultCat {
+        background-color: #A8A8A8;
     }
 
     .title {
