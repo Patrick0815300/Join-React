@@ -193,8 +193,21 @@
 }
 
 @media (max-width: 680px) {
+    h1 {
+        font-size: 47px;
+    }
+
     .container {
-        gap: 24px;
+        font-size: 16px !important;
+
+        .label,
+        button,
+        legend,
+        input,
+        textarea,
+        span {
+            font-size: 16px !important;
+        }
 
         .line {
             display: none;
@@ -205,4 +218,15 @@
             box-sizing: border-box;
         }
     }
+
+    .bottom {
+        justify-content: flex-end;
+        gap: 24px;
+
+        .requiredInfo {
+            display: none;
+        }
+    }
+
+
 }
