@@ -77,3 +77,13 @@ nav {
         }
     }
 }
+
+@media(max-width: 430px) {
+    nav {
+        padding: 0;
+
+        .navLinks {
+            gap: 0;
+        }
+    }
+}
