@@ -7,6 +7,7 @@
     gap: 10px;
     background-color: white;
     box-shadow: 0px 0px 10px 3px #00000014;
+    cursor: pointer;
 
     .category {
         border-radius: 8px;
@@ -43,5 +44,51 @@
     .description {
         color: #A8A8A8;
         font-size: 16px;
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .assignetTo {
+        display: flex;
+
+        .initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 45px;
+            color: white;
+            border: 1px solid white;
+            margin-right: -8px;
+        }
+    }
+
+    .priorityIcon {
+        .urgentIcon {
+            width: 18px;
+
+            path {
+                fill: #FF6B6B;
+            }
+        }
+
+        .mediumIcon {
+            color: #FFA800;
+            font-size: 28px;
+        }
+
+        .lowIcon {
+            rotate: 180deg;
+            width: 18px;
+
+            path {
+                fill: #7AE229;
+            }
+        }
     }
 }
