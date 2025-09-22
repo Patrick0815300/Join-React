@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from './TaskCard.module.scss'
 
 interface TaskCardSmallProps {
@@ -25,7 +26,20 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
         [styles.marketingCat]: firstCategory === 'marketing',
     });
 
-    console.log('ass:', assigned_to);
+    const getRandomColor = () => { return '#' + Math.floor(Math.random() * 16777215).toString(16); }
+
+    const getPriorityIcon = () => {
+        switch (priority) {
+            case 'Urgent':
+                return <Urgent className={styles.urgentIcon} />;
+            case 'Medium':
+                return <span className={styles.mediumIcon}>=</span>;
+            case 'Low':
+                return <Urgent className={styles.lowIcon} />;
+            default:
+                return null;
+        }
+    };
 
     return (
         <div className={styles.smallCard}>
@@ -41,10 +55,17 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
             <div className={styles.bottom}>
                 <div className={styles.assignetTo}>
                     {assigned_to && assigned_to.map((name, index) => (
-                        <span key={index} className={styles.initials}>
+                        <span
+                            key={index}
+                            className={styles.initials}
+                            style={{ backgroundColor: getRandomColor() }}
+                        >
                             {getInitials(name)}
                         </span>
                     ))}
+                </div>
+                <div className={styles.priorityIcon}>
+                    {getPriorityIcon()}
                 </div>
             </div>
         </div>
