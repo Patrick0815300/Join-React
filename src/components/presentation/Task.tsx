@@ -137,6 +137,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                 subs={contacts}
                                 selected={selectedContacts}
                                 onSelect={onContactsChange}
+                                flag={'contacts'}
                             />
                             <div className={styles.selectedContacts}>
 
@@ -150,6 +151,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                                 subs={categoryOptions}
                                 selected={selectedCategories}
                                 onSelect={onCategoryChange}
+                                flag={'category'}
                                 required
                             />
                         </div>

@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from './Dropdown.module.scss'
 import { getInitials } from '../../utils/user';
+import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
     label: string;
     placeholder: string;
     subs: string[];
+    flag: string;
     required?: boolean;
     selected?: string[];
     onSelect?: (selected: string[]) => void;
 }
 
-const Dropdown = ({ label, placeholder, subs, selected = [], required, onSelect }: DropdownProps) => {
+const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onSelect }: DropdownProps) => {
     const [showSub, setShowSub] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -65,29 +66,53 @@ const Dropdown = ({ label, placeholder, subs, selected = [], required, onSelect 
                 </div>
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
-                        {subs.map((sub, index) => (
-                            <label
-                                htmlFor={`dropdown-checkbox-${sub}`}
-                                className={styles.singleSub}
-                                style={{ cursor: 'pointer' }}
-                                key={index}
-                            >
-                                <div>
+                        {flag === 'contacts' ? (
+                            subs.map((sub, index) => (
+                                <label
+                                    htmlFor={`dropdown-checkbox-${sub}`}
+                                    className={styles.singleSub}
+                                    style={{ cursor: 'pointer' }}
+                                    key={index}
+                                >
+                                    <div className={styles.subName}>
+                                        <span className={styles.initials}>{getInitials(sub)}</span>
+                                        <span>{sub}</span>
+                                    </div>
+
+                                    <input
+                                        type="checkbox"
+                                        checked={selected.includes(sub)}
+                                        onChange={() => handleCheckbox(sub)}
+                                        value={sub}
+                                        id={`dropdown-checkbox-${sub}`}
+                                    />
+
+                                </label>
+
+                            ))
+                        ) : (
+                            subs.map((sub, index) => (
+                                <label
+                                    htmlFor={`dropdown-checkbox-${sub}`}
+                                    className={styles.singleSub}
+                                    style={{ cursor: 'pointer' }}
+                                    key={index}
+                                >
                                     {sub}
-                                    <span className={styles.initials}>{getInitials(sub)}</span>
-                                </div>
+                                    <input
+                                        className={styles.dNone}
+                                        type="checkbox"
+                                        checked={selected.includes(sub)}
+                                        onChange={() => handleCheckbox(sub)}
+                                        value={sub}
+                                        id={`dropdown-checkbox-${sub}`}
+                                    />
+                                </label>
 
-                                <input
-                                    type="checkbox"
-                                    checked={selected.includes(sub)}
-                                    onChange={() => handleCheckbox(sub)}
-                                    value={sub}
-                                    id={`dropdown-checkbox-${sub}`}
-                                />
+                            ))
+                        )
 
-                            </label>
-
-                        ))}
+                        }
                     </div>
                 )}
             </div>

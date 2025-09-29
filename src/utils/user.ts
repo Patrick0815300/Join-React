@@ -23,3 +23,4 @@ export const getInitials = (fullName: string) => {
         .map(name => name.charAt(0).toUpperCase())
         .join('');
 }
+
