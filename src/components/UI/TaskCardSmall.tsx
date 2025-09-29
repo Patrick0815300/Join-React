@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from './TaskCard.module.scss'
+import { getInitials } from '../../utils/user';
 
 interface TaskCardSmallProps {
     category: string[];
@@ -12,12 +13,6 @@ interface TaskCardSmallProps {
 }
 
 export function TaskCardSmall({ category, title, description, subtasks, assigned_to, priority }: TaskCardSmallProps) {
-    const getInitials = (fullName: string) => {
-        return fullName
-            .split(' ')
-            .map(name => name.charAt(0).toUpperCase())
-            .join('');
-    }
     const firstCategory = category && category.length > 0 ? category[0]?.toLowerCase() : '';
     const categoryClasses = classNames(styles.category, {
         [styles.technicalCat]: firstCategory === 'technical',
