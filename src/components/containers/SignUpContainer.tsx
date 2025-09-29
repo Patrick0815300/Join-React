@@ -3,6 +3,7 @@ import { SignUp } from "../presentation/SignUp";
 import { useState } from "react";
 import { signUp } from "../../api/supabase/user";
 import { addContact } from "../../api/supabase/data";
+import { generateRandomDarkColor } from "../../utils/color";
 
 type FormDataProp = {
     name: string,
@@ -21,10 +22,11 @@ export function SignUpContainer() {
     })
 
     const signUpUser = async (formData: FormDataProp) => {
+        const color = generateRandomDarkColor()
         const name = splitName(formData.name);
         const data = await signUp(formData.email, formData.password);
         if (data.user) {
-            await addContact(data.user.id, name.lastName, name.firstName, formData.email);
+            await addContact(data.user.id, name.lastName, name.firstName, formData.email, color);
         }
     }
 

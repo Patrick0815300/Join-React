@@ -26,13 +26,11 @@ export async function insertSingleRow(table: string, rowData: {}) {
     return data
 }
 
-export async function addContact(userId: string, lastname: string, firstname: string, mail: string) {
-    console.log('userId addContact: ', userId);
-
+export async function addContact(userId: string, lastname: string, firstname: string, mail: string, color: string) {
     const { data, error } = await supabase
         .from('contacts')
         .insert([
-            { user_id: userId, lastname: lastname, firstname: firstname, mail: mail },
+            { user_id: userId, lastname: lastname, firstname: firstname, mail: mail, color: color },
         ])
         .select()
     if (error) throw error;
