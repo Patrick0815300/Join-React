@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Dropdown.module.scss'
+import { getInitials } from '../../utils/user';
 
 interface DropdownProps {
     label: string;
@@ -71,6 +72,11 @@ const Dropdown = ({ label, placeholder, subs, selected = [], required, onSelect 
                                 style={{ cursor: 'pointer' }}
                                 key={index}
                             >
+                                <div>
+                                    {sub}
+                                    <span className={styles.initials}>{getInitials(sub)}</span>
+                                </div>
+
                                 <input
                                     type="checkbox"
                                     checked={selected.includes(sub)}
@@ -78,7 +84,7 @@ const Dropdown = ({ label, placeholder, subs, selected = [], required, onSelect 
                                     value={sub}
                                     id={`dropdown-checkbox-${sub}`}
                                 />
-                                {sub}
+
                             </label>
 
                         ))}

@@ -16,3 +16,10 @@ export function shortFormatName(firstname: string, lastname: string): string {
     const lastInitial = lastname ? lastname.charAt(0).toUpperCase() : '';
     return firstInitial + lastInitial;
 };
+
+export const getInitials = (fullName: string) => {
+    return fullName
+        .split(' ')
+        .map(name => name.charAt(0).toUpperCase())
+        .join('');
+}
