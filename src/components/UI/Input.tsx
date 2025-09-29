@@ -65,7 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     {...props}
                 />
                 {imgSrc && <img src={imgSrc} alt={imgAlt || ''} />}
-                {symbol && <button className={styles.button} onClick={onSymbolClick}>{symbol}</button>}
+                {symbol && <button type='button' className={styles.button} onClick={onSymbolClick}>{symbol}</button>}
             </div>
         </div>
 

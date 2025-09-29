@@ -154,23 +154,25 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                             />
                         </div>
 
-                        <Input
-                            id='subtasks'
-                            name='subtasks'
-                            label='Subtasks'
-                            labelClassName={styles.label}
-                            className={styles.input}
-                            placeholder='Add a new subtask'
-                            value={newSubtask}
-                            onChange={e => setNewSubtask(e.target.value)}
-                            onSymbolClick={addSubtask}
-                            symbol='+'
-                        />
-                        <ul>
-                            {subtasks.map((subtask, index) => (
-                                <li key={index}>{subtask}</li>
-                            ))}
-                        </ul>
+                        <div className={styles.subtasks}>
+                            <Input
+                                id='subtasks'
+                                name='subtasks'
+                                label='Subtasks'
+                                labelClassName={styles.label}
+                                className={styles.input}
+                                placeholder='Add a new subtask'
+                                value={newSubtask}
+                                onChange={e => setNewSubtask(e.target.value)}
+                                onSymbolClick={addSubtask}
+                                symbol='+'
+                            />
+                            <ul>
+                                {subtasks.map((subtask, index) => (
+                                    <li key={index}>{subtask}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.bottom}>

@@ -43,3 +43,9 @@
         min-width: auto;
     }
 }
+
+@media (max-width: 680px) {
+    .inputContainer {
+        font-size: 680px !important;
+    }
+}

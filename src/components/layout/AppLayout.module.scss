@@ -39,3 +39,15 @@
 
     }
 }
+
+@media (max-width: 360px) {
+    .layoutContainer {
+        .wrapper {
+            main {
+                padding-inline: 8px;
+            }
+        }
+
+    }
+
+}
