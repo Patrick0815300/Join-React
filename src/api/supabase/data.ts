@@ -44,12 +44,30 @@ export async function updateContact(column: string, content: string, mail: strin
         .eq('mail', mail)
 }
 
-export async function getSingleColumn(tableName: string, column: string, id: string) {
+export async function getSingleColumn(tableName: string, column: string, id: string, select?: string) {
     const { data, error } = await supabase
         .from(tableName)
-        .select('*')
+        .select(select || '*')
         .eq(column, id)
         .single()
+    if (error) throw error;
+    return data;
+}
+
+export async function getSingleColumnWithTwoFilters(
+    tableName: string,
+    column1: string,
+    id1: string,
+    column2: string,
+    id2: string,
+    select?: string
+) {
+    const { data, error } = await supabase
+        .from(tableName)
+        .select(select || '*')
+        .eq(column1, id1)
+        .eq(column2, id2)
+        .single();
     if (error) throw error;
     return data;
 }

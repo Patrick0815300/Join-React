@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { getInitials } from '../../utils/user';
+import { getContactColor, getInitials } from '../../utils/user';
 import styles from './Dropdown.module.scss'
+import { getSingleColumn } from '../../api/supabase/data';
 
 interface DropdownProps {
     label: string;
@@ -48,6 +49,8 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
         onSelect?.(updated);
     };
 
+    getContactColor('Thomas Neumann')
+
     return (
 
         <div>
@@ -75,7 +78,7 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                                     key={index}
                                 >
                                     <div className={styles.subName}>
-                                        <span className={styles.initials}>{getInitials(sub)}</span>
+                                        <span style={{ backgroundColor: getContactColor(sub) }} className={styles.initials}>{getInitials(sub)}</span>
                                         <span>{sub}</span>
                                     </div>
 
