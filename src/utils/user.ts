@@ -27,8 +27,6 @@ export const getInitials = (fullName: string) => {
 export const getContactColor = async (fullname: string) => {
     const name = splitName(fullname)
     const color = await getSingleColumnWithTwoFilters('contacts', 'lastname', name.lastname, 'firstname', name.firstname, 'color');
-    console.log('color:', color);
-
     return color;
 }
 

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getContactColor, getInitials } from '../../utils/user';
 import styles from './Dropdown.module.scss'
-import { getSingleColumn } from '../../api/supabase/data';
 
 interface DropdownProps {
     label: string;
@@ -15,13 +14,28 @@ interface DropdownProps {
 
 const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onSelect }: DropdownProps) => {
     const [showSub, setShowSub] = useState(false);
+    const [contactColors, setContactColors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Lade Farben für alle Kontakte
+    useEffect(() => {
+        if (flag === 'contacts') {
+            const loadColors = async () => {
+                const colors: Record<string, string> = {};
+                for (const sub of subs) {
+                    const color = await getContactColor(sub);
+                    colors[sub] = color || '#cccccc';
+                }
+                setContactColors(colors);
+            };
+            loadColors();
+        }
+    }, [subs, flag]);
 
     const toggleSub = () => {
         setShowSub(prevState => !prevState);
     };
 
-    // Outside click close
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -49,10 +63,7 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
         onSelect?.(updated);
     };
 
-    getContactColor('Thomas Neumann')
-
     return (
-
         <div>
             <div ref={dropdownRef} className={styles.dropdownContainer}>
                 <span className={styles.label}>{label} {required && <span className={styles.required}>*</span>}</span>
@@ -78,10 +89,14 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                                     key={index}
                                 >
                                     <div className={styles.subName}>
-                                        <span style={{ backgroundColor: getContactColor(sub) }} className={styles.initials}>{getInitials(sub)}</span>
+                                        <span
+                                            style={{ backgroundColor: contactColors[sub] || '#FF0000' }}
+                                            className={styles.initials}
+                                        >
+                                            {getInitials(sub)}
+                                        </span>
                                         <span>{sub}</span>
                                     </div>
-
                                     <input
                                         type="checkbox"
                                         checked={selected.includes(sub)}
@@ -89,9 +104,7 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                                         value={sub}
                                         id={`dropdown-checkbox-${sub}`}
                                     />
-
                                 </label>
-
                             ))
                         ) : (
                             subs.map((sub, index) => (
@@ -111,11 +124,8 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                                         id={`dropdown-checkbox-${sub}`}
                                     />
                                 </label>
-
                             ))
-                        )
-
-                        }
+                        )}
                     </div>
                 )}
             </div>
