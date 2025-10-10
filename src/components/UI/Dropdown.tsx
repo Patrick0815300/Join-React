@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getContactColor, getInitials } from '../../utils/user';
+import { getContactColor, getContactColorSync, getInitials } from '../../utils/user';
 import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
@@ -81,7 +81,10 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                 {showSub && subs.length > 0 && (
                     <div className={styles.subs}>
                         {flag === 'contacts' ? (
-                            subs.map((sub, index) => (
+                            subs.map((sub, index) =>
+
+                            (
+
                                 <label
                                     htmlFor={`dropdown-checkbox-${sub}`}
                                     className={styles.singleSub}
@@ -90,7 +93,10 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                                 >
                                     <div className={styles.subName}>
                                         <span
-                                            style={{ backgroundColor: contactColors[sub] || '#FF0000' }}
+                                            style={{
+                                                backgroundColor: getContactColorSync(sub),
+                                                backgroundImage: 'none'
+                                            }}
                                             className={styles.initials}
                                         >
                                             {getInitials(sub)}
