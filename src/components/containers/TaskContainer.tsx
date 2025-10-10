@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Task } from "../presentation/Task";
 import { getDataByColumns, insertSingleRow } from "../../api/supabase/data";
+import { setContactColors } from "../../utils/user";
 
 interface Contact {
     firstname: string;
     lastname: string;
+    color: string | '#FF0000';
 }
 
 export function TaskContainer() {
@@ -28,10 +30,13 @@ export function TaskContainer() {
     const handleSubtaskChange = (newSubtasks: string[]) => setSubtasks(newSubtasks);
 
     const getContacts = async () => {
-        const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname']);
+        const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname', 'color']);
         if (!data) return;
-        const names = data.map((item: { lastname: string; firstname: string }) => `${item.firstname} ${item.lastname}`);
-        setContacts(names);
+
+        setContactColors(data);
+
+        const contactNames = data.map((item: { lastname: string; firstname: string; }) => `${item.firstname} ${item.lastname}`);
+        setContacts(contactNames);
     }
 
     const categoryOptions = [

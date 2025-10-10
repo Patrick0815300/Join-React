@@ -1,6 +1,8 @@
 import { getSingleColumn, getSingleColumnWithTwoFilters } from "../api/supabase/data";
 import { getUser } from "../api/supabase/user";
 
+const colorCache: Record<string, string> = {};
+
 export async function getUserName() {
     const user = await getUser();
     const data = await getSingleColumn('contacts', 'user_id', user!.id) as any;
@@ -28,6 +30,17 @@ export const getContactColor = async (fullname: string) => {
     const name = splitName(fullname)
     const color = await getSingleColumnWithTwoFilters('contacts', 'lastname', name.lastname, 'firstname', name.firstname, 'color');
     return color;
+}
+
+export const getContactColorSync = (fullname: string): string => {
+    return colorCache[fullname] || '#cccccc';
+}
+
+export const setContactColors = (contacts: Array<{ firstname: string; lastname: string; color: string }>) => {
+    contacts.forEach(contact => {
+        const fullname = `${contact.firstname} ${contact.lastname}`;
+        colorCache[fullname] = contact.color || '#cccccc';
+    });
 }
 
 export const splitName = (fullName: string) => {
