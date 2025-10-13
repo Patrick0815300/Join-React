@@ -48,9 +48,21 @@ export function TaskContainer() {
         getContacts();
     }, [])
 
+    const setSubtasksToTable = async (): Promise<string[]> => {
+        const subtaskIds = await Promise.all(
+            subtasks.map(async (task) => {
+                const subtask = { task: task };
+                const result = await insertSingleRow('subtasks', subtask);
+                return result[0].id;
+            })
+        );
+        return subtaskIds;
+    }
+
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (taskCategory.length > 0) {
+            const subtaskIds = await setSubtasksToTable();
             const task = {
                 title: title,
                 description: description,
@@ -58,13 +70,13 @@ export function TaskContainer() {
                 priority: priority,
                 assigned_to: assignedContacts,
                 category: taskCategory,
-                subtasks: subtasks,
+                subtasks: subtaskIds,
                 phase: 'todo'
             }
 
             try {
                 await insertSingleRow('tasks', task);
-                clearForm();
+                //clearForm();
                 setToastMsg('Task successfully created!');
                 setShowToast(true);
                 //routing to Board
