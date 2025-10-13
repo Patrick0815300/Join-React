@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from './TaskCard.module.scss'
-import { getInitials } from '../../utils/user';
+import { getContactColorSync, getInitials } from '../../utils/user';
 
 interface TaskCardSmallProps {
     category: string[];
@@ -53,7 +53,7 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
                         <span
                             key={index}
                             className={styles.initials}
-                            style={{ backgroundColor: getRandomColor() }}
+                            style={{ backgroundColor: getContactColorSync(name) }}
                         >
                             {getInitials(name)}
                         </span>

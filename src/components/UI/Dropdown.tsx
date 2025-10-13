@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getContactColor, getContactColorSync, getInitials } from '../../utils/user';
+import { getContactColorSync, getInitials } from '../../utils/user';
 import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
@@ -14,23 +14,7 @@ interface DropdownProps {
 
 const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onSelect }: DropdownProps) => {
     const [showSub, setShowSub] = useState(false);
-    const [contactColors, setContactColors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-    // Lade Farben für alle Kontakte
-    useEffect(() => {
-        if (flag === 'contacts') {
-            const loadColors = async () => {
-                const colors: Record<string, string> = {};
-                for (const sub of subs) {
-                    const color = await getContactColor(sub);
-                    colors[sub] = color || '#cccccc';
-                }
-                setContactColors(colors);
-            };
-            loadColors();
-        }
-    }, [subs, flag]);
 
     const toggleSub = () => {
         setShowSub(prevState => !prevState);
@@ -136,8 +120,23 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                 )}
             </div>
             <div className={styles.listedChecked}>
-                {selected.length > 0 ? selected.join(', ') : null}
+                {selected.length > 0 ? (
+                    selected.map((contact, index) => (
+                        <span
+                            key={index}
+                            style={{
+                                backgroundColor: getContactColorSync(contact),
+                                backgroundImage: 'none'
+                            }}
+                            className={styles.initialsChosen}
+                        >
+                            {getInitials(contact)}
+                        </span>
+
+                    ))
+                ) : null}
             </div>
+
         </div>
     );
 };
