@@ -21,7 +21,6 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
         [styles.marketingCat]: firstCategory === 'marketing',
     });
 
-    const getRandomColor = () => { return '#' + Math.floor(Math.random() * 16777215).toString(16); }
 
     const getPriorityIcon = () => {
         switch (priority) {
@@ -43,10 +42,16 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
             </span>
             <span className={styles.title}>{title}</span>
             <span className={styles.description}>{description}</span>
-            <div className={styles.subtasks}>
-                <span className={styles.subtasksBar}></span>
-                <span className={styles.subtaskCount}>{subtasks ? subtasks.length : null}</span>
-            </div>
+            {subtasks && subtasks.length > 0 ?
+                (<div className={styles.subtasks}>
+                    <div className={styles.subtasksBar}>
+                        {subtasks && subtasks.map((sub, index) => (
+                            <span key={index} className={styles.singleSubtaskBar}></span>
+                        ))}
+                    </div>
+                    <span className={styles.subtaskCount}>0/{subtasks.length}</span>
+                </div>
+                ) : null}
             <div className={styles.bottom}>
                 <div className={styles.assignetTo}>
                     {assigned_to && assigned_to.map((name, index) => (
