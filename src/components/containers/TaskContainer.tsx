@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Task } from "../presentation/Task";
-import { getDataByColumns, insertSingleRow } from "../../api/supabase/data";
+import { getDataByColumns, insertMultipleRows, insertSingleRow } from "../../api/supabase/data";
 import { setContactColors } from "../../utils/user";
 
 interface Contact {
@@ -62,24 +62,35 @@ export function TaskContainer() {
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (taskCategory.length > 0) {
-            const subtaskIds = await setSubtasksToTable();
-            const task = {
-                title: title,
-                description: description,
-                due_date: date,
-                priority: priority,
-                assigned_to: assignedContacts,
-                category: taskCategory,
-                subtasks: subtaskIds,
-                phase: 'todo'
-            }
-
             try {
-                await insertSingleRow('tasks', task);
+                // SCHRITT 1: Task erstellen und UUID zurückbekommen
+                const taskData = {
+                    title: title,
+                    description: description,
+                    due_date: date,
+                    priority: priority,
+                    assigned_to: assignedContacts,
+                    category: taskCategory,
+                    phase: 'todo'
+                }
+
+                const insertedTask = await insertSingleRow('tasks', taskData);
+                const taskId = insertedTask[0].id; // Die generierte UUID!
+                console.log('Created task with ID:', taskId);
+
+                // SCHRITT 2: Subtasks mit task_id erstellen
+                if (subtasks.length > 0) {
+                    const subtaskObjects = subtasks.map(task => ({
+                        task: task,
+                        task_id: taskId,
+                    }));
+
+                    await insertMultipleRows('subtasks', subtaskObjects);
+                }
+
                 //clearForm();
                 setToastMsg('Task successfully created!');
                 setShowToast(true);
-                //routing to Board
             } catch (error) {
                 setToastMsg('Error creating task.');
                 setShowToast(true);
@@ -87,6 +98,7 @@ export function TaskContainer() {
             }
         }
     };
+
 
 
     const clearForm = () => {
