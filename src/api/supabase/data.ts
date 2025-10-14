@@ -26,6 +26,15 @@ export async function insertSingleRow(table: string, rowData: {}) {
     return data
 }
 
+export async function insertMultipleRows(table: string, rowsData: any[]) {
+    const { data, error } = await supabase
+        .from(table)
+        .insert(rowsData)
+        .select()
+    if (error) throw error;
+    return data;
+}
+
 export async function addContact(userId: string, lastname: string, firstname: string, mail: string, color: string) {
     const { data, error } = await supabase
         .from('contacts')
