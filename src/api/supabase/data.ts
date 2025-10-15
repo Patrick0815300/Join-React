@@ -81,6 +81,18 @@ export async function getSingleColumnWithTwoFilters(
     return data;
 }
 
+const getTaskProgress = async (taskId: string) => {
+    const { data: subtasks } = await supabase
+        .from('subtasks')
+        .select('completed')
+        .eq('task_id', taskId);
+
+    const total = subtasks?.length || 0;
+    const completed = subtasks?.filter(s => s.completed).length || 0;
+
+    return { total, completed, percentage: (completed / total) * 100 };
+}
+
 export async function subscribeChannel(table: string) {
     const channels = supabase.channel('custom-all-channel')
         .on(

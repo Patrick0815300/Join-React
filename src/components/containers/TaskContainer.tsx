@@ -48,22 +48,10 @@ export function TaskContainer() {
         getContacts();
     }, [])
 
-    const setSubtasksToTable = async (): Promise<string[]> => {
-        const subtaskIds = await Promise.all(
-            subtasks.map(async (task) => {
-                const subtask = { task: task };
-                const result = await insertSingleRow('subtasks', subtask);
-                return result[0].id;
-            })
-        );
-        return subtaskIds;
-    }
-
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (taskCategory.length > 0) {
             try {
-                // SCHRITT 1: Task erstellen und UUID zurückbekommen
                 const taskData = {
                     title: title,
                     description: description,
@@ -75,20 +63,16 @@ export function TaskContainer() {
                 }
 
                 const insertedTask = await insertSingleRow('tasks', taskData);
-                const taskId = insertedTask[0].id; // Die generierte UUID!
-                console.log('Created task with ID:', taskId);
+                const taskId = insertedTask[0].id;
 
-                // SCHRITT 2: Subtasks mit task_id erstellen
                 if (subtasks.length > 0) {
                     const subtaskObjects = subtasks.map(task => ({
                         task: task,
                         task_id: taskId,
                     }));
-
                     await insertMultipleRows('subtasks', subtaskObjects);
                 }
-
-                //clearForm();
+                clearForm();
                 setToastMsg('Task successfully created!');
                 setShowToast(true);
             } catch (error) {
@@ -98,8 +82,6 @@ export function TaskContainer() {
             }
         }
     };
-
-
 
     const clearForm = () => {
         setTitle('');
