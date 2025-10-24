@@ -81,7 +81,7 @@ export async function getSingleColumnWithTwoFilters(
     return data;
 }
 
-const getTaskProgress = async (taskId: string) => {
+export const getTaskProgress = async (taskId: string) => {
     const { data: subtasks } = await supabase
         .from('subtasks')
         .select('completed')
