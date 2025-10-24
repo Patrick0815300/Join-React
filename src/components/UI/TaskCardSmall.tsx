@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from './TaskCard.module.scss'
 import { getContactColorSync, getInitials } from '../../utils/user';
+import { getTaskProgress } from '../../api/supabase/data';
 
 interface TaskCardSmallProps {
     category: string[];
@@ -21,7 +22,6 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
         [styles.marketingCat]: firstCategory === 'marketing',
     });
 
-
     const getPriorityIcon = () => {
         switch (priority) {
             case 'Urgent':
@@ -35,6 +35,8 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
         }
     };
 
+    //getTaskProgress()
+
     return (
         <div className={styles.smallCard}>
             <span className={categoryClasses}>
@@ -45,11 +47,13 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
             {subtasks && subtasks.length > 0 ?
                 (<div className={styles.subtasks}>
                     <div className={styles.subtasksBar}>
-                        {subtasks && subtasks.map((sub, index) => (
+                        {subtasks && subtasks.map((_, index) => (
                             <span key={index} className={styles.singleSubtaskBar}></span>
                         ))}
                     </div>
-                    <span className={styles.subtaskCount}>0/{subtasks.length}</span>
+                    <span className={styles.subtaskCount}>{
+
+                    }</span>
                 </div>
                 ) : null}
             <div className={styles.bottom}>
