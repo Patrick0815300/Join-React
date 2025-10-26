@@ -12,4 +12,28 @@
 .table {
     display: flex;
     justify-content: space-between;
+
+    .phase {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .addTaskBtn {
+        all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        border: 2px solid var(--color-primary);
+        color: var(--color-primary);
+        background-color: unset;
+
+        &:hover {
+            color: var(--color-accent);
+            border-color: var(--color-accent);
+        }
+    }
 }
