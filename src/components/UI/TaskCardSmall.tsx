@@ -2,9 +2,13 @@ import classNames from 'classnames';
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from './TaskCard.module.scss'
 import { getContactColorSync, getInitials } from '../../utils/user';
-import { getTaskProgress } from '../../api/supabase/data';
+import { getColumn, getTaskProgress } from '../../api/supabase/data';
+import { useEffect, useState } from 'react';
+import { Subtask } from '../../types/Task';
+
 
 interface TaskCardSmallProps {
+    taskId: string;
     category: string[];
     title: string;
     description: string;
@@ -13,7 +17,7 @@ interface TaskCardSmallProps {
     priority: string;
 }
 
-export function TaskCardSmall({ category, title, description, subtasks, assigned_to, priority }: TaskCardSmallProps) {
+export function TaskCardSmall({ taskId, category, title, description, assigned_to, priority }: TaskCardSmallProps) {
     const firstCategory = category && category.length > 0 ? category[0]?.toLowerCase() : '';
     const categoryClasses = classNames(styles.category, {
         [styles.technicalCat]: firstCategory === 'technical',
@@ -21,6 +25,22 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
         [styles.designCat]: firstCategory === 'design',
         [styles.marketingCat]: firstCategory === 'marketing',
     });
+    const [subtasks, setSubtasks] = useState<Subtask[]>([])
+    const [taskProgress, setTaskProgress] = useState({ total: 0, completed: 0, percentage: 0 })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // Subtasks laden
+            const subtaskData = await getColumn<Subtask>('subtasks', 'task_id', taskId);
+            setSubtasks(subtaskData);
+
+            // Progress laden
+            const progress = await getTaskProgress(taskId);
+            setTaskProgress(progress);
+        }
+
+        fetchData();
+    }, [taskId]);
 
     const getPriorityIcon = () => {
         switch (priority) {
@@ -34,8 +54,6 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
                 return null;
         }
     };
-
-    //getTaskProgress()
 
     return (
         <div className={styles.smallCard}>
@@ -51,9 +69,9 @@ export function TaskCardSmall({ category, title, description, subtasks, assigned
                             <span key={index} className={styles.singleSubtaskBar}></span>
                         ))}
                     </div>
-                    <span className={styles.subtaskCount}>{
-
-                    }</span>
+                    <span className={styles.subtaskCount}>
+                        {taskProgress.completed}/{taskProgress.total}
+                    </span>
                 </div>
                 ) : null}
             <div className={styles.bottom}>

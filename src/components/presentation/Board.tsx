@@ -28,6 +28,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     {todos.map((task, index) => (
                         <TaskCardSmall
                             key={index}
+                            taskId={task.id}
                             category={task.category}
                             title={task.title}
                             description={task.description}
@@ -43,6 +44,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     {done.map((task, index) => (
                         <TaskCardSmall
                             key={index}
+                            taskId={task.id}
                             category={task.category}
                             title={task.title}
                             description={task.description}
@@ -58,6 +60,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     {inProgress.map((task, index) => (
                         <TaskCardSmall
                             key={index}
+                            taskId={task.id}
                             category={task.category}
                             title={task.title}
                             description={task.description}
@@ -73,6 +76,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     {awaitFeedback.map((task, index) => (
                         <TaskCardSmall
                             key={index}
+                            taskId={task.id}
                             category={task.category}
                             title={task.title}
                             description={task.description}
