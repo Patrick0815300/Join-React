@@ -63,6 +63,21 @@ export async function getSingleColumn(tableName: string, column: string, id: str
     return data;
 }
 
+export async function getColumn<T>(
+    tableName: string,
+    column: string,
+    id: string,
+    select?: string
+): Promise<T[]> {
+    const { data, error } = await supabase
+        .from(tableName)
+        .select(select || '*')
+        .eq(column, id)
+
+    if (error) throw error;
+    return (data ?? []) as T[];
+}
+
 export async function getSingleColumnWithTwoFilters(
     tableName: string,
     column1: string,
@@ -84,23 +99,13 @@ export async function getSingleColumnWithTwoFilters(
 export const getTaskProgress = async (taskId: string) => {
     const { data: subtasks } = await supabase
         .from('subtasks')
-        .select('completed')
+        .select('done')
         .eq('task_id', taskId);
 
     const total = subtasks?.length || 0;
-    const completed = subtasks?.filter(s => s.completed).length || 0;
+    const completed = subtasks?.filter(s => s.done).length || 0;
 
     return { total, completed, percentage: (completed / total) * 100 };
 }
 
-export async function subscribeChannel(table: string) {
-    const channels = supabase.channel('custom-all-channel')
-        .on(
-            'postgres_changes',
-            { event: '*', schema: 'public', table: table },
-            (payload) => {
-                console.log('Change received!', payload)
-            }
-        )
-        .subscribe()
-}
+

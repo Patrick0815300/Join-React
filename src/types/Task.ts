@@ -1,4 +1,5 @@
 export interface Task {
+    id: string;
     createdAt: Date;
     title: string;
     description: string;
@@ -8,4 +9,12 @@ export interface Task {
     category: string[];
     subtasks: string[];
     phase: string;
+}
+
+export interface Subtask {
+    id: string;
+    task_id: string;
+    created_at: string;
+    task: string;
+    done: boolean
 }
