@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import { Task } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { TaskCardSmall } from '../UI/TaskCardSmall';
 import styles from './Board.module.scss'
+import { TaskContainer } from "../containers/TaskContainer";
 
 interface TaskProps {
     todos: Task[];
@@ -18,6 +20,15 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         { title: 'Await Feedback', tasks: awaitFeedback },
         { title: 'Done', tasks: done },
     ];
+    const [showAddTask, setShowAddTask] = useState(false);
+    useEffect(() => {
+
+    }, [showAddTask])
+
+
+    const addTask = () => {
+        setShowAddTask(prevState => !prevState);
+    }
 
     return (
         <>
@@ -25,7 +36,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                 <h1>Board</h1>
                 <div className={styles.search}>
                     <Input />
-                    <Button>Add Task +</Button>
+                    <Button onClick={addTask}>Add Task +</Button>
                 </div>
             </div>
 
@@ -57,7 +68,11 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                 ))}
             </div>
 
-
+            {showAddTask && (
+                <div className={styles.overlayAddTask}>
+                    <TaskContainer />
+                </div>
+            )}
 
         </>
     )
