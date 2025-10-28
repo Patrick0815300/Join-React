@@ -37,3 +37,23 @@
         }
     }
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    background-color: rgba($color: #a2a2a2, $alpha: 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .overlayAddTask {
+        background-color: lightgrey;
+        padding: 24px;
+        border-radius: 16px;
+        z-index: 20;
+    }
+}

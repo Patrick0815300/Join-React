@@ -1,8 +1,10 @@
+import { useEffect, useRef, useState } from "react";
 import { Task } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { TaskCardSmall } from '../UI/TaskCardSmall';
 import styles from './Board.module.scss'
+import { TaskContainer } from "../containers/TaskContainer";
 
 interface TaskProps {
     todos: Task[];
@@ -18,6 +20,34 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         { title: 'Await Feedback', tasks: awaitFeedback },
         { title: 'Done', tasks: done },
     ];
+    const [showAddTask, setShowAddTask] = useState(false);
+    const addTaskRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+
+    }, [showAddTask])
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                addTaskRef.current &&
+                !addTaskRef.current.contains(event.target as Node)
+            ) {
+                setShowAddTask(false);
+            }
+        };
+        if (showAddTask) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showAddTask]);
+
+
+    const addTask = () => {
+        setShowAddTask(prevState => !prevState);
+    }
 
     return (
         <>
@@ -25,7 +55,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                 <h1>Board</h1>
                 <div className={styles.search}>
                     <Input />
-                    <Button>Add Task +</Button>
+                    <Button onClick={addTask}>Add Task +</Button>
                 </div>
             </div>
 
@@ -34,7 +64,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     <div key={title} className={styles.column}>
                         <div className={styles.phase}>
                             <h2>{title}</h2>
-                            <button className={styles.addTaskBtn}>+</button>
+                            <button className={styles.addTaskBtn} onClick={addTask}>+</button>
                         </div>
 
                         {tasks.length === 0 ? (
@@ -57,7 +87,14 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                 ))}
             </div>
 
+            {showAddTask && (
+                <div className={styles.overlay}>
+                    <div ref={addTaskRef} className={styles.overlayAddTask}>
+                        <TaskContainer />
+                    </div>
+                </div>
 
+            )}
 
         </>
     )
