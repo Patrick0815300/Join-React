@@ -108,4 +108,12 @@ export const getTaskProgress = async (taskId: string) => {
     return { total, completed, percentage: (completed / total) * 100 };
 }
 
-
+export const updateData = async (table: string, column: string, value: string, targetId: string) => {
+    const { data, error } = await supabase
+        .from(table)
+        .update({ [column]: value })
+        .eq('id', targetId)
+        .select()
+    if (error) throw error;
+    return data
+}

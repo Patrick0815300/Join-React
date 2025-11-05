@@ -6,6 +6,7 @@ import { TaskCardSmall } from '../UI/TaskCardSmall';
 import styles from './Board.module.scss'
 import { TaskContainer } from "../containers/TaskContainer";
 import React from 'react';
+import { updateData } from "../../api/supabase/data";
 
 interface TaskProps {
     todos: Task[];
@@ -15,6 +16,12 @@ interface TaskProps {
 }
 
 export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
+    const columnMapping = {
+        'To Do': 'todos',
+        'In Progress': 'inProgress',
+        'Await Feedback': 'awaitFeedback',
+        'Done': 'done',
+    };
     // State für Columns - wird mit Props initialisiert und bei Änderungen synchronisiert
     const [columns, setColumns] = useState({
         'To Do': todos,
@@ -82,7 +89,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
     };
 
     // Drop - verschiebt die Task in die neue Column
-    const handleDrop = (
+    const handleDrop = async (
         event: React.DragEvent<HTMLDivElement>,
         targetColumn: string
     ) => {
@@ -101,7 +108,6 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
 
         if (!task) return;
 
-        // Update State: Task aus Source entfernen und zu Target hinzufügen
         setColumns({
             ...columns,
             [sourceColumn]: columns[sourceColumn as keyof typeof columns].filter(
@@ -110,10 +116,20 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
             [targetColumn]: [...columns[targetColumn as keyof typeof columns], task],
         });
 
-        //hier muss jetzt eine data funktion zum hinzufügen bzw updaten der table gemacht werden.
-        // dazu benötigt wird targetColumn und taskId !
-        console.log('target: ', targetColumn, taskId);
-
+        try {
+            const dbColumnName = columnMapping[targetColumn as keyof typeof columnMapping]
+            const update = await updateData('tasks', 'phase', dbColumnName, taskId);
+            console.log('FERTIG', update);
+        } catch (error) {
+            console.error('Update failed, rolling back:', error);
+            setColumns({
+                ...columns,
+                [targetColumn]: columns[targetColumn as keyof typeof columns].filter(
+                    (t: Task) => t.id !== taskId
+                ),
+                [sourceColumn]: [...columns[sourceColumn as keyof typeof columns], task],
+            });
+        }
     };
 
     return (
