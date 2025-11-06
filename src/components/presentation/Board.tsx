@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Task } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
@@ -15,6 +15,11 @@ interface TaskProps {
     awaitFeedback: Task[];
 }
 
+type FilteredCategory = {
+    tasks: Task[];
+    title: string;
+};
+
 export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
     const columnMapping = {
         'To Do': 'todos',
@@ -22,6 +27,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         'Await Feedback': 'awaitFeedback',
         'Done': 'done',
     };
+
     // State für Columns - wird mit Props initialisiert und bei Änderungen synchronisiert
     const [columns, setColumns] = useState({
         'To Do': todos,
@@ -32,6 +38,8 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
 
     const [showAddTask, setShowAddTask] = useState(false);
     const addTaskRef = useRef<HTMLDivElement>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredData, setFilteredData] = useState<FilteredCategory[]>([]);
 
     // Synchronisiere State mit Props wenn sich Props ändern
     useEffect(() => {
@@ -118,8 +126,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
 
         try {
             const dbColumnName = columnMapping[targetColumn as keyof typeof columnMapping]
-            const update = await updateData('tasks', 'phase', dbColumnName, taskId);
-            console.log('FERTIG', update);
+            await updateData('tasks', 'phase', dbColumnName, taskId);
         } catch (error) {
             console.error('Update failed, rolling back:', error);
             setColumns({
@@ -132,12 +139,39 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         }
     };
 
+    const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setSearchQuery(value);
+    };
+
+    useEffect(() => {
+        if (searchQuery.length >= 3) {
+            const lowerQuery = searchQuery.trim().toLowerCase();
+            const filtered = table.map(category => ({
+                ...category,
+                tasks: category.tasks.filter(task =>
+                    task.title?.toLowerCase().includes(lowerQuery)
+                )
+            }))
+                .filter(category => category.tasks.length > 0);
+            setFilteredData(filtered)
+        } else {
+            setFilteredData(table);
+        }
+    }, [searchQuery]);
+
+
+
     return (
         <>
             <div className={styles.top}>
                 <h1>Board</h1>
                 <div className={styles.search}>
-                    <Input />
+                    <Input
+                        placeholder="Find Task"
+                        value={searchQuery}
+                        onChange={handleInput}
+                    />
                     <Button onClick={addTask}>Add Task +</Button>
                 </div>
             </div>
@@ -159,7 +193,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                             <span className={styles.noTask}>No Tasks {title}</span>
                         ) : (
                             tasks.map((task) => (
-                                <div
+                                <div className={styles.column}
                                     key={task.id}
                                     draggable={true}
                                     onDragStart={(e) => handleDragStart(e, task.id, title)}
