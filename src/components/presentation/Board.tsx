@@ -7,6 +7,7 @@ import styles from './Board.module.scss'
 import { TaskContainer } from "../containers/TaskContainer";
 import React from 'react';
 import { updateData } from "../../api/supabase/data";
+import { TaskCardBig } from "../UI/TaskCardBig";
 
 interface TaskProps {
     todos: Task[];
@@ -14,11 +15,6 @@ interface TaskProps {
     inProgress: Task[];
     awaitFeedback: Task[];
 }
-
-type FilteredCategory = {
-    tasks: Task[];
-    title: string;
-};
 
 export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
     const columnMapping = {
@@ -38,7 +34,10 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
 
     const [showAddTask, setShowAddTask] = useState(false);
     const addTaskRef = useRef<HTMLDivElement>(null);
+    const taskCardRef = useRef<HTMLDivElement>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showBigCard, setShowBigCard] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
     // Synchronisiere State mit Props wenn sich Props ändern
     useEffect(() => {
@@ -156,6 +155,11 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         return table;
     }, [searchQuery, table]);
 
+    const openBigCard = (task: Task) => {
+        setSelectedTask(task);
+        setShowBigCard(true);
+    };
+
 
     return (
         <>
@@ -193,6 +197,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                                     draggable={true}
                                     onDragStart={(e) => handleDragStart(e, task.id, title)}
                                     style={{ cursor: 'grab' }}
+                                    onClick={() => openBigCard(task)}
                                 >
                                     <TaskCardSmall
                                         taskId={task.id}
@@ -217,6 +222,23 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                     </div>
                 </div>
             )}
+
+            {showBigCard && selectedTask && (
+                <div className={styles.overlay}>
+                    <div ref={taskCardRef} className={styles.overlayAddTask}>
+                        <TaskCardBig
+                            taskId={selectedTask.id}
+                            category={selectedTask.category}
+                            title={selectedTask.title}
+                            description={selectedTask.description}
+                            subtasks={selectedTask.subtasks}
+                            assigned_to={selectedTask.assigned_to}
+                            priority={selectedTask.priority}
+                        />
+                    </div>
+                </div>
+            )}
+
         </>
     )
 }
