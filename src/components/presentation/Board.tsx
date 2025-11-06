@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Task } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
@@ -22,7 +22,7 @@ type FilteredCategory = {
 
 export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
     const columnMapping = {
-        'To Do': 'todos',
+        'To Do': 'todo',
         'In Progress': 'inProgress',
         'Await Feedback': 'awaitFeedback',
         'Done': 'done',
@@ -39,7 +39,6 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
     const [showAddTask, setShowAddTask] = useState(false);
     const addTaskRef = useRef<HTMLDivElement>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredData, setFilteredData] = useState<FilteredCategory[]>([]);
 
     // Synchronisiere State mit Props wenn sich Props ändern
     useEffect(() => {
@@ -144,22 +143,18 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         setSearchQuery(value);
     };
 
-    useEffect(() => {
+    const displayData = useMemo(() => {
         if (searchQuery.length >= 3) {
             const lowerQuery = searchQuery.trim().toLowerCase();
-            const filtered = table.map(category => ({
+            return table.map(category => ({
                 ...category,
                 tasks: category.tasks.filter(task =>
                     task.title?.toLowerCase().includes(lowerQuery)
                 )
-            }))
-                .filter(category => category.tasks.length > 0);
-            setFilteredData(filtered)
-        } else {
-            setFilteredData(table);
+            }));
         }
-    }, [searchQuery]);
-
+        return table;
+    }, [searchQuery, table]);
 
 
     return (
@@ -177,7 +172,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
             </div>
 
             <div className={styles.table}>
-                {table.map(({ title, tasks }) => (
+                {displayData.map(({ title, tasks }) => (
                     <div
                         key={title}
                         className={styles.column}
@@ -193,7 +188,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                             <span className={styles.noTask}>No Tasks {title}</span>
                         ) : (
                             tasks.map((task) => (
-                                <div className={styles.column}
+                                <div className={styles.draggable}
                                     key={task.id}
                                     draggable={true}
                                     onDragStart={(e) => handleDragStart(e, task.id, title)}

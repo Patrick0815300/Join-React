@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getData } from "../../api/supabase/data"
+import { getData, subscribeToTable } from "../../api/supabase/data"
 import { Board } from "../presentation/Board"
 import { Task } from "../../types/Task";
 
@@ -21,6 +21,21 @@ export function BoardContainer() {
 
     useEffect(() => {
         getTasks();
+
+        const unsubscribe = subscribeToTable(
+            'tasks',
+            (payload) => {
+                if (payload.eventType === 'INSERT') {
+                    getTasks();
+                    console.log('geht');
+
+                }
+            },
+            (error) => {
+                console.error('Subscribe Error:', error);
+            }
+        );
+        return unsubscribe;
     }, [])
 
     return (

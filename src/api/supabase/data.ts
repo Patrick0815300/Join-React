@@ -117,3 +117,29 @@ export const updateData = async (table: string, column: string, value: string, t
     if (error) throw error;
     return data
 }
+
+export function subscribeToTable(
+    table: string,
+    onData: (payload: any) => void,
+    onError: (error: any) => void,
+    schema: string = 'public'
+) {
+    const channel = supabase
+        .channel(`public:${table}`)
+        .on(
+            'postgres_changes',
+            { event: '*', schema: schema, table: table },
+            (payload) => {
+                onData(payload);
+            }
+        )
+        .subscribe((status) => {
+            if (status === 'SUBSCRIBED') {
+                console.log(`Subscribed to ${table}`);
+            }
+        });
+
+    return () => {
+        channel.unsubscribe();
+    };
+}
