@@ -4,20 +4,10 @@ import styles from './TaskCard.module.scss'
 import { getContactColorSync, getInitials } from '../../utils/user';
 import { getColumn, getTaskProgress } from '../../api/supabase/data';
 import { useEffect, useState } from 'react';
-import { Subtask } from '../../types/Task';
+import { Subtask, TaskCardProps } from '../../types/Task';
 
 
-interface TaskCardSmallProps {
-    taskId: string;
-    category: string[];
-    title: string;
-    description: string;
-    subtasks: string[];
-    assigned_to: string[];
-    priority: string;
-}
-
-export function TaskCardSmall({ taskId, category, title, description, assigned_to, priority }: TaskCardSmallProps) {
+export function TaskCardSmall({ taskId, category, title, description, assigned_to, priority }: TaskCardProps) {
     const firstCategory = category && category.length > 0 ? category[0]?.toLowerCase() : '';
     const categoryClasses = classNames(styles.category, {
         [styles.technicalCat]: firstCategory === 'technical',
