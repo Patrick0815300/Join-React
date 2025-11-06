@@ -12,11 +12,14 @@
 .table {
     display: flex;
     justify-content: space-between;
+    gap: 26px;
+
 
     .phase {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
     }
 
     .addTaskBtn {
@@ -51,8 +54,9 @@
     align-items: center;
 
     .overlayAddTask {
-        background-color: lightgrey;
-        padding: 24px;
+        background-color: #FFFFFF;
+        padding: 32px;
+        padding-inline: 64px;
         border-radius: 16px;
         z-index: 20;
     }
