@@ -18,3 +18,14 @@ export interface Subtask {
     task: string;
     done: boolean
 }
+
+export interface TaskCardProps {
+    taskId: string;
+    category: string[];
+    title: string;
+    description: string;
+    subtasks: string[];
+    assigned_to: string[];
+    priority: string;
+    due_date?: string;
+}
