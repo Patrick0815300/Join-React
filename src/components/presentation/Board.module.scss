@@ -14,12 +14,32 @@
     justify-content: space-between;
     gap: 26px;
 
+    .noTask {
+        border: 1px dashed #A8A8A8;
+        border-radius: 10px;
+        color: #A8A8A8;
+        background-color: #E7E7E7;
+        padding: 10px;
+    }
+
 
     .phase {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
+    }
+
+    .taskDraggable {
+        cursor: grab;
+        transition: all 0.2s ease;
+
+        &.dragging {
+            cursor: grabbing;
+            transform: rotate(10deg) scale(1.05); // Bonus: Auch etwas größer
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Schatteneffekt
+            opacity: 0.8;
+        }
     }
 
     .addTaskBtn {
@@ -33,6 +53,7 @@
         border: 2px solid var(--color-primary);
         color: var(--color-primary);
         background-color: unset;
+        cursor: pointer;
 
         &:hover {
             color: var(--color-accent);
