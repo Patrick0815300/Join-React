@@ -118,6 +118,18 @@ export const updateData = async (table: string, column: string, value: string, t
     return data
 }
 
+export const updateDataBool = async (table: string, column: string, value: boolean, targetId: string) => {
+    const { data, error } = await supabase
+        .from(table)
+        .update({ [column]: value })
+        .eq('id', targetId)
+        .select()
+    if (error) throw error;
+    console.log(data);
+
+    return data
+}
+
 export function subscribeToTable(
     table: string,
     onData: (payload: any) => void,
