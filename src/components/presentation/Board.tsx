@@ -67,7 +67,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                 !taskCardRef.current.contains(event.target as Node)
             ) {
                 setShowAddTask(false);
-                setShowBigCard(false);
+                handleCloseBigCard();
             }
         };
         if (showAddTask || showBigCard) {
@@ -163,6 +163,11 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         setShowBigCard(true);
     };
 
+    const handleCloseBigCard = () => {
+        setSelectedTask(null);
+        setShowBigCard(false);
+    }
+
 
     return (
         <>
@@ -238,6 +243,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                             assigned_to={selectedTask.assigned_to}
                             priority={selectedTask.priority}
                             due_date={selectedTask.due_date}
+                            onClose={handleCloseBigCard}
                         />
                     </div>
                 </div>

@@ -3,7 +3,7 @@ export interface Task {
     createdAt: Date;
     title: string;
     description: string;
-    due_date: Date;
+    due_date: string;
     priority: string;
     assigned_to: string[];
     category: string[];
@@ -27,5 +27,6 @@ export interface TaskCardProps {
     subtasks: string[];
     assigned_to: string[];
     priority: string;
-    due_date?: Date;
+    due_date?: string;
+    onClose?: () => void;
 }

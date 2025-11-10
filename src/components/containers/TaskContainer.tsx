@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { Task } from "../presentation/Task";
 import { getDataByColumns, insertMultipleRows, insertSingleRow } from "../../api/supabase/data";
 import { setContactColors } from "../../utils/user";
-
-interface Contact {
-    firstname: string;
-    lastname: string;
-    color: string | '#FF0000';
-}
+import { Contact } from "../../types/Contact";
 
 export function TaskContainer() {
     const [contacts, setContacts] = useState<string[]>([]);

@@ -20,3 +20,14 @@ export function getUrgentDate(date: string): string {
         }).format(newDate);
     } else { return 'no Urgent Task' }
 }
+
+export const formatDate = (dateString: string | undefined): string => {
+    if (!dateString) return 'Kein Datum vorhanden';
+
+    const date = new Date(dateString);
+    return date.toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+};

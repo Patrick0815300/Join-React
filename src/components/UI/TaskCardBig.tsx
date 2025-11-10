@@ -3,11 +3,14 @@ import { Subtask, TaskCardProps } from "../../types/Task";
 import { getColumn } from "../../api/supabase/data";
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from "./TaskCardBig.module.scss"
+import { formatDate } from "../../utils/date";
+import { getContactColorSync, getInitials } from "../../utils/user";
 
 
 
-export function TaskCardBig({ taskId, category, title, description, assigned_to, priority, due_date }: TaskCardProps) {
+export function TaskCardBig({ taskId, category, title, description, assigned_to, priority, due_date, onClose }: TaskCardProps) {
     const [subtasks, setSubtasks] = useState<Subtask[]>([])
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,28 +29,39 @@ export function TaskCardBig({ taskId, category, title, description, assigned_to,
             case 'Low':
                 return <Urgent className={styles.lowIcon} />;
             default:
+                console.log('No match found, falling to default');
                 return null;
         }
     };
 
-    console.log(due_date);
+    console.log(assigned_to);
 
+
+    // const getColor = () => {
+    //     getContactColor()
+    // }
 
     return (
         <>
             <div className={styles.bigCard}>
                 <div className={styles.dFl}>
                     <span className={styles.category}>{category}</span>
-                    <button className={styles.closeBtn}>x</button>
+                    <button className={styles.closeBtn} onClick={onClose}>x</button>
                 </div>
                 <h1>{title}</h1>
                 <span>{description}</span>
-                <div>Due Date: <span>{ }</span></div>
-                <div>Priority: <span>{priority}  {getPriorityIcon()}</span></div>
-                <div>Assignet to:
+                <div>Due Date: <span>{formatDate(due_date)}</span></div>
+                <div className={styles.priority}>Priority: <span className={styles.priorityIcon}>{priority}  {getPriorityIcon()}</span></div>
+                <div className={styles.assigent}>Assignet to:
                     {assigned_to.map((name, index) => (
-                        <div key={index}>
-                            <span className={styles.initials}></span>
+                        <div className={styles.names} key={index}>
+                            <span
+                                className={styles.initials}
+                                style={{
+                                    backgroundColor: getContactColorSync(name),
+                                    backgroundImage: 'none'
+                                }}
+                            >{getInitials(name)}</span>
                             <span className={styles.name}>{name}</span>
                         </div>
                     ))}
