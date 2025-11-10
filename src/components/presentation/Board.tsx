@@ -233,7 +233,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
 
             {showBigCard && selectedTask && (
                 <div className={styles.overlay}>
-                    <div ref={taskCardRef} className={styles.overlayAddTask}>
+                    <div ref={taskCardRef} className={styles.overlayTaskCard}>
                         <TaskCardBig
                             taskId={selectedTask.id}
                             category={selectedTask.category}

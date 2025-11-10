@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Subtask, TaskCardProps } from "../../types/Task";
-import { getColumn } from "../../api/supabase/data";
+import { getColumn, updateDataBool } from "../../api/supabase/data";
 import Urgent from '../../assets/icons/urgent.svg?react';
 import styles from "./TaskCardBig.module.scss"
 import { formatDate } from "../../utils/date";
@@ -9,8 +9,7 @@ import { getContactColorSync, getInitials } from "../../utils/user";
 
 
 export function TaskCardBig({ taskId, category, title, description, assigned_to, priority, due_date, onClose }: TaskCardProps) {
-    const [subtasks, setSubtasks] = useState<Subtask[]>([])
-
+    const [subtasks, setSubtasks] = useState<Subtask[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,12 +33,16 @@ export function TaskCardBig({ taskId, category, title, description, assigned_to,
         }
     };
 
-    console.log(assigned_to);
+    const handleToggleSubtask = useCallback(async (subtaskId: string) => {
+        const currentSubtask = subtasks.find(s => s.id === subtaskId);
+        if (!currentSubtask) return;
 
+        const newDone = !currentSubtask.done;
 
-    // const getColor = () => {
-    //     getContactColor()
-    // }
+        setSubtasks(p => p.map(s => s.id === subtaskId ? { ...s, done: newDone } : s));
+        await updateDataBool('subtasks', 'done', newDone, subtaskId);
+
+    }, [subtasks]);
 
     return (
         <>
@@ -73,9 +76,9 @@ export function TaskCardBig({ taskId, category, title, description, assigned_to,
                             type="checkbox"
                             id={subtask.id}
                             checked={subtask.done}
-                            onChange={() => { }}
+                            onChange={() => handleToggleSubtask(subtask.id)}
                         />
-                        <span>{subtask.task}</span>
+                        <label htmlFor={subtask.id}>{subtask.task}</label>
                     </div>
                 ))}
             </div>
