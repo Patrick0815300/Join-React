@@ -57,23 +57,26 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
         { title: 'Done', tasks: columns['Done'] },
     ];
 
-    // Click Outside Handler für AddTask Overlay
+    // Click Outside Handler für AddTask + BigCard Overlay
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 addTaskRef.current &&
-                !addTaskRef.current.contains(event.target as Node)
+                !addTaskRef.current.contains(event.target as Node) ||
+                taskCardRef.current &&
+                !taskCardRef.current.contains(event.target as Node)
             ) {
                 setShowAddTask(false);
+                setShowBigCard(false);
             }
         };
-        if (showAddTask) {
+        if (showAddTask || showBigCard) {
             document.addEventListener('mousedown', handleClickOutside);
         }
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [showAddTask]);
+    }, [showAddTask, showBigCard]);
 
     const addTask = () => {
         setShowAddTask(prevState => !prevState);
@@ -234,6 +237,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                             subtasks={selectedTask.subtasks}
                             assigned_to={selectedTask.assigned_to}
                             priority={selectedTask.priority}
+                            due_date={selectedTask.due_date}
                         />
                     </div>
                 </div>

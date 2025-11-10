@@ -30,17 +30,20 @@ export function TaskCardBig({ taskId, category, title, description, assigned_to,
         }
     };
 
+    console.log(due_date);
+
+
     return (
         <>
             <div className={styles.bigCard}>
-                <div>
+                <div className={styles.dFl}>
                     <span className={styles.category}>{category}</span>
-                    <button>X</button>
+                    <button className={styles.closeBtn}>x</button>
                 </div>
                 <h1>{title}</h1>
                 <span>{description}</span>
-                <div>Due Date<span>{due_date}</span></div>
-                <div>Priority<span>{priority}  {getPriorityIcon()}</span></div>
+                <div>Due Date: <span>{ }</span></div>
+                <div>Priority: <span>{priority}  {getPriorityIcon()}</span></div>
                 <div>Assignet to:
                     {assigned_to.map((name, index) => (
                         <div key={index}>
