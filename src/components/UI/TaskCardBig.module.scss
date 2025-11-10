@@ -1,0 +1,53 @@
+.bigCard {
+    width: 525px;
+    border-radius: 30px;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 4px 0px #00000029;
+    font-size: 20px;
+    color: #000000;
+
+    h1 {
+        margin: 0;
+    }
+
+    .closeBtn {
+        all: unset;
+        cursor: 3;
+        width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+        border-radius: 9999px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: var(--color-border);
+
+
+        }
+    }
+
+    .category {
+        border-radius: 8px;
+        padding: 4px 24px;
+        background-color: #0038FF;
+        color: #FFFFFF;
+        font-size: 23px;
+        line-height: 120%;
+    }
+
+    div {
+        color: var(--color-primary);
+    }
+}
+
+.dFl {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

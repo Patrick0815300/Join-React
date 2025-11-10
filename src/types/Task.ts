@@ -27,5 +27,5 @@ export interface TaskCardProps {
     subtasks: string[];
     assigned_to: string[];
     priority: string;
-    due_date?: string;
+    due_date?: Date;
 }
