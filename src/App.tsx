@@ -6,9 +6,10 @@ import { getUser } from './api/supabase/user';
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { DashboardContainer } from './components/containers/DashboardContainer';
-import './App.css';
 import { TaskContainer } from './components/containers/TaskContainer';
 import { BoardContainer } from './components/containers/BoardContainer';
+import './App.css';
+
 
 function App() {
   const [user, setUser] = useState<User | null>(null); const [loading, setLoading] = useState(true);
@@ -22,11 +23,14 @@ function App() {
     checkAuth();
   }, []);
 
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   const isAuthenticated = !!user;
+
+
 
   return (
     <>

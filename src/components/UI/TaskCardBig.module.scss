@@ -41,6 +41,47 @@
         line-height: 120%;
     }
 
+    .priority {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .priorityIcon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    }
+
+    .assigent {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .names {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-left: 8px;
+
+            .initials {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 45px;
+                font-size: 16px;
+                padding: 6px;
+                box-sizing: border-box;
+                background-color: #7AE229;
+                width: 32px;
+                height: 32px;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+
+
     div {
         color: var(--color-primary);
     }
@@ -50,4 +91,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.priorityIcon {
+    .urgentIcon {
+        width: 18px;
+
+        path {
+            fill: #FF6B6B;
+        }
+    }
+
+    .mediumIcon {
+        color: #FFA800;
+        font-size: 28px;
+    }
+
+    .lowIcon {
+        rotate: 180deg;
+        width: 18px;
+
+        path {
+            fill: #7AE229;
+        }
+    }
 }

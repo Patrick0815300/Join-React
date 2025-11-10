@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { getData, subscribeToTable } from "../../api/supabase/data"
+import { getData, getDataByColumns, subscribeToTable } from "../../api/supabase/data"
 import { Board } from "../presentation/Board"
 import { Task } from "../../types/Task";
+import { Contact } from "../../types/Contact";
+import { setContactColors } from "../../utils/user";
 
 export function BoardContainer() {
     const [todos, setTodos] = useState<Task[]>([]);
@@ -19,8 +21,16 @@ export function BoardContainer() {
         }
     }
 
+    const getContactsColors = async () => {
+        const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname', 'color']);
+        if (!data) return;
+
+        setContactColors(data);
+    }
+
     useEffect(() => {
         getTasks();
+        getContactsColors();
 
         const unsubscribe = subscribeToTable(
             'tasks',
