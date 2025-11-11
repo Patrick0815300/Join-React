@@ -125,8 +125,6 @@ export const updateDataBool = async (table: string, column: string, value: boole
         .eq('id', targetId)
         .select()
     if (error) throw error;
-    console.log(data);
-
     return data
 }
 

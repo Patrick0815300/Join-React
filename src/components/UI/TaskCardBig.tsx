@@ -8,7 +8,7 @@ import { getContactColorSync, getInitials } from "../../utils/user";
 
 
 
-export function TaskCardBig({ taskId, category, title, description, assigned_to, priority, due_date, onClose }: TaskCardProps) {
+export function TaskCardBig({ taskId, category, title, description, assigned_to, priority, due_date, onClose, sub }: TaskCardProps) {
     const [subtasks, setSubtasks] = useState<Subtask[]>([]);
 
     useEffect(() => {
@@ -18,6 +18,12 @@ export function TaskCardBig({ taskId, category, title, description, assigned_to,
         }
         fetchData();
     }, [taskId]);
+
+    useEffect(() => {
+        if (sub) {
+            setSubtasks(sub);
+        }
+    }, [sub]);
 
     const getPriorityIcon = () => {
         switch (priority) {

@@ -7,7 +7,7 @@ export interface Task {
     priority: string;
     assigned_to: string[];
     category: string[];
-    subtasks: string[];
+    subtasks: Subtask[];
     phase: string;
 }
 
@@ -24,9 +24,17 @@ export interface TaskCardProps {
     category: string[];
     title: string;
     description: string;
-    subtasks: string[];
+    sub?: Subtask[];
     assigned_to: string[];
     priority: string;
     due_date?: string;
     onClose?: () => void;
+}
+
+export interface TaskProps {
+    todos: Task[];
+    done: Task[];
+    inProgress: Task[];
+    awaitFeedback: Task[];
+    subtasks: Subtask[]
 }
