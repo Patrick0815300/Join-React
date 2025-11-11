@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
-import { Subtask, Task, TaskProps } from "../../types/Task";
+import { Task, TaskProps } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { TaskCardSmall } from '../UI/TaskCardSmall';

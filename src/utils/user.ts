@@ -1,5 +1,6 @@
 import { getSingleColumn, getSingleColumnWithTwoFilters } from "../api/supabase/data";
 import { getUser } from "../api/supabase/user";
+import { SingleContact } from "../types/Contact";
 
 const colorCache: Record<string, string> = {};
 
@@ -54,3 +55,19 @@ export const splitName = (fullName: string) => {
 
     return { firstname, lastname };
 };
+
+export const groupContactsByLetter = (contacts: SingleContact[]) => {
+    return contacts.reduce((groups, contact) => {
+        const firstLetter = contact.firstname.charAt(0).toUpperCase();
+        const lastGroup = groups[groups.length - 1];
+
+        if (!lastGroup || lastGroup.letter !== firstLetter) {
+            groups.push({ letter: firstLetter, contacts: [contact] });
+        } else {
+            lastGroup.contacts.push(contact);
+        }
+
+        return groups;
+    }, [] as { letter: string; contacts: SingleContact[] }[]);
+};
+
