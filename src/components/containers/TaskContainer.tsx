@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Task } from "../presentation/Task";
 import { getDataByColumns, insertMultipleRows, insertSingleRow } from "../../api/supabase/data";
 import { setContactColors } from "../../utils/user";
-import { Contact } from "../../types/Contact";
+import { ContactColor } from "../../types/Contact";
 
 export function TaskContainer() {
     const [contacts, setContacts] = useState<string[]>([]);
@@ -25,7 +25,7 @@ export function TaskContainer() {
     const handleSubtaskChange = (newSubtasks: string[]) => setSubtasks(newSubtasks);
 
     const getContacts = async () => {
-        const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname', 'color']);
+        const data = await getDataByColumns<ContactColor>('contacts', ['lastname', 'firstname', 'color']);
         if (!data) return;
 
         setContactColors(data);
