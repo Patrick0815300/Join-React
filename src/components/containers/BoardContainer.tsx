@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getData, getDataByColumns, subscribeToTable } from "../../api/supabase/data"
 import { Board } from "../presentation/Board"
-import { Task } from "../../types/Task";
+import { Subtask, Task } from "../../types/Task";
 import { Contact } from "../../types/Contact";
 import { setContactColors } from "../../utils/user";
 
@@ -10,6 +10,7 @@ export function BoardContainer() {
     const [done, setDone] = useState<Task[]>([]);
     const [inProgress, setInProgress] = useState<Task[]>([]);
     const [awaitFeedback, setAwaitFeedback] = useState<Task[]>([]);
+    const [subtasks, setSubtasks] = useState<Subtask[]>([])
 
     const getTasks = async () => {
         const data = await getData('tasks');
@@ -21,6 +22,11 @@ export function BoardContainer() {
         }
     }
 
+    const getSubtasks = async () => {
+        const data = await getData('subtasks')
+        if (data) { setSubtasks(data); }
+    }
+
     const getContactsColors = async () => {
         const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname', 'color']);
         if (!data) return;
@@ -30,22 +36,37 @@ export function BoardContainer() {
 
     useEffect(() => {
         getTasks();
+        getSubtasks();
         getContactsColors();
 
-        const unsubscribe = subscribeToTable(
+        const unsubscribeTasks = subscribeToTable(
             'tasks',
             (payload) => {
                 if (payload.eventType === 'INSERT') {
                     getTasks();
-                    console.log('geht');
-
                 }
             },
             (error) => {
                 console.error('Subscribe Error:', error);
             }
         );
-        return unsubscribe;
+
+        const unsubscribeSubtasks = subscribeToTable(
+            'subtasks',
+            (payload) => {
+                if (payload.eventType === 'UPDATE') {
+                    getSubtasks();
+                }
+            },
+            (error) => {
+                console.error('Subscribe Error:', error);
+            }
+        );
+
+        return () => {
+            unsubscribeTasks();
+            unsubscribeSubtasks();
+        };
     }, [])
 
     return (
@@ -55,6 +76,7 @@ export function BoardContainer() {
                 done={done}
                 inProgress={inProgress}
                 awaitFeedback={awaitFeedback}
+                subtasks={subtasks}
             />
         </>
     )

@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
-import { Task } from "../../types/Task";
+import { Subtask, Task, TaskProps } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { TaskCardSmall } from '../UI/TaskCardSmall';
@@ -9,14 +9,7 @@ import React from 'react';
 import { updateData } from "../../api/supabase/data";
 import { TaskCardBig } from "../UI/TaskCardBig";
 
-interface TaskProps {
-    todos: Task[];
-    done: Task[];
-    inProgress: Task[];
-    awaitFeedback: Task[];
-}
-
-export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
+export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: TaskProps) {
     const columnMapping = {
         'To Do': 'todo',
         'In Progress': 'inProgress',
@@ -199,25 +192,29 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                         {tasks.length === 0 ? (
                             <span className={styles.noTask}>No Tasks {title}</span>
                         ) : (
-                            tasks.map((task) => (
-                                <div className={styles.draggable}
-                                    key={task.id}
-                                    draggable={true}
-                                    onDragStart={(e) => handleDragStart(e, task.id, title)}
-                                    style={{ cursor: 'grab' }}
-                                    onClick={() => openBigCard(task)}
-                                >
-                                    <TaskCardSmall
-                                        taskId={task.id}
-                                        category={task.category}
-                                        title={task.title}
-                                        description={task.description}
-                                        subtasks={task.subtasks}
-                                        assigned_to={task.assigned_to}
-                                        priority={task.priority}
-                                    />
-                                </div>
-                            ))
+                            tasks.map((task) => {
+                                const taskSubtasks = subtasks.filter(s => s.task_id === task.id);
+                                return (
+                                    <div
+                                        className={styles.draggable}
+                                        key={task.id}
+                                        draggable={true}
+                                        onDragStart={(e) => handleDragStart(e, task.id, title)}
+                                        style={{ cursor: 'grab' }}
+                                        onClick={() => openBigCard(task)}
+                                    >
+                                        <TaskCardSmall
+                                            taskId={task.id}
+                                            category={task.category}
+                                            title={task.title}
+                                            description={task.description}
+                                            assigned_to={task.assigned_to}
+                                            priority={task.priority}
+                                            sub={taskSubtasks}
+                                        />
+                                    </div>
+                                );
+                            })
                         )}
                     </div>
                 ))}
@@ -239,7 +236,7 @@ export function Board({ todos, done, inProgress, awaitFeedback }: TaskProps) {
                             category={selectedTask.category}
                             title={selectedTask.title}
                             description={selectedTask.description}
-                            subtasks={selectedTask.subtasks}
+                            sub={subtasks.filter(s => s.task_id === selectedTask.id)}
                             assigned_to={selectedTask.assigned_to}
                             priority={selectedTask.priority}
                             due_date={selectedTask.due_date}
