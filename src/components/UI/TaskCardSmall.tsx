@@ -15,8 +15,6 @@ export function TaskCardSmall({ taskId, category, title, description, assigned_t
         [styles.marketingCat]: firstCategory === 'marketing',
     });
     const [taskProgress, setTaskProgress] = useState({ total: 0, completed: 0, percentage: 0 })
-    console.log(taskProgress);
-
 
     useEffect(() => {
         if (sub) {
