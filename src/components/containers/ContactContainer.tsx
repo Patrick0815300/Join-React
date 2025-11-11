@@ -15,14 +15,11 @@ export function ContactContainer() {
             setContacts(data);
             sortContacts(data);
         }
-        console.log(data);
-
     }
 
     const getContactsColors = async () => {
         const data = await getDataByColumns<ContactColor>('contacts', ['lastname', 'firstname', 'color']);
         if (!data) return;
-
         setContactColors(data);
     }
 

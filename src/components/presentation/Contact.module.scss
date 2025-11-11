@@ -1,34 +1,187 @@
+.section {
+    display: flex;
+    gap: 32px;
+    min-height: 0;
+    height: 100%;
+    padding: 32px 24px;
+
+}
+
 .contactListContainer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 32px 24px;
+    gap: 32px;
     overflow-y: auto;
-    width: 50%;
+    width: auto;
+    min-height: 0;
+    height: 100%;
+    padding-right: 12px;
 
-    .singleContact {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-
-        .initials {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 45px;
-            box-sizing: border-box;
-            border: 2px solid #FFFFFF;
-            background-color: rgb(4, 39, 27);
-            color: white;
+    .singleContactContainer {
+        &:last-child {
+            margin-bottom: 32px;
         }
 
-        div {
+        .singleContact {
+            width: 352px;
+            display: flex;
+            flex-shrink: 0;
+            gap: 35px;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 24px;
+            border-radius: 10px;
+
+            &:hover {
+                background-color: #F9F9F9;
+            }
+
+            &:active {
+                background-color: var(--color-primary);
+
+                .name {
+                    color: white;
+                }
+            }
+
+            .initials {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 42px;
+                height: 42px;
+                border-radius: 45px;
+                box-sizing: border-box;
+                border: 2px solid #FFFFFF;
+                background-color: rgb(4, 39, 27);
+                color: white;
+                font-size: 16px;
+            }
+
+            div {
+                display: flex;
+                flex-direction: column;
+
+                a {
+                    all: unset;
+                    color: #007CEE;
+                    cursor: pointer;
+                }
+            }
+
+            .name {
+                font-size: 20px;
+                color: #000000;
+            }
+        }
+
+        .letterContainer {
             display: flex;
             flex-direction: column;
+
+            .letter {
+                font-size: 20px;
+                color: #000000;
+                margin-bottom: 16px;
+            }
+
+            .letterLine {
+                height: 1px;
+                background-color: var(--color-border);
+                margin-block: 8px;
+            }
         }
     }
 }
 
-.viewContactContainer {}
+.viewContactContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 1;
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        color: #000000;
+        margin-left: 32px;
+
+        h1 {
+            margin: 0;
+        }
+
+        .headerLine {
+            width: 3px;
+            height: 100%;
+            background-color: var(--color-accent);
+            border-radius: 10px;
+        }
+
+        span {
+            font-size: 27px;
+            color: var(--color-primary);
+        }
+    }
+
+    .contactInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 21px;
+
+        .nameInfo {
+            display: flex;
+            gap: 54px;
+            align-items: center;
+
+            .nameAndBtn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex: 1;
+                gap: 24px;
+            }
+
+
+            .bigInitials {
+                box-sizing: border-box;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 120px;
+                height: 120px;
+                border: 3px solid #FFFFFF;
+                border-radius: 70px;
+                color: white;
+                font-size: 47px;
+                box-shadow: 0px 0px 4px 0px #0000001A;
+                background-color: orange;
+            }
+
+            h2 {
+                font-size: 47px;
+                color: #000000;
+                font-weight: 500;
+                margin: 0;
+            }
+
+            .btns {
+                display: flex;
+                gap: 8px;
+            }
+
+        }
+
+        .emailContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+
+
+}
