@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getData, getDataByColumns, subscribeToTable } from "../../api/supabase/data"
 import { Board } from "../presentation/Board"
 import { Subtask, Task } from "../../types/Task";
-import { Contact } from "../../types/Contact";
+import { ContactColor } from "../../types/Contact";
 import { setContactColors } from "../../utils/user";
 
 export function BoardContainer() {
@@ -28,7 +28,7 @@ export function BoardContainer() {
     }
 
     const getContactsColors = async () => {
-        const data = await getDataByColumns<Contact>('contacts', ['lastname', 'firstname', 'color']);
+        const data = await getDataByColumns<ContactColor>('contacts', ['lastname', 'firstname', 'color']);
         if (!data) return;
 
         setContactColors(data);

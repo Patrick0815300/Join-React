@@ -9,6 +9,7 @@ import { DashboardContainer } from './components/containers/DashboardContainer';
 import { TaskContainer } from './components/containers/TaskContainer';
 import { BoardContainer } from './components/containers/BoardContainer';
 import './App.css';
+import { ContactContainer } from './components/containers/ContactContainer';
 
 
 function App() {
@@ -56,7 +57,7 @@ function App() {
             />
             <Route
               path="contacts"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <ContactContainer /> : <Navigate to="/login" replace />}
             />
             <Route
               path="legal"
