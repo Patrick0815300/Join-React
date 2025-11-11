@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getData, getDataByColumns, subscribeToTable } from "../../api/supabase/data.ts"
+import { deleteData, getData, getDataByColumns, subscribeToTable } from "../../api/supabase/data.ts"
 import { Contact } from "../presentation/Contact.tsx"
 import { ContactColor, SingleContact } from "../../types/Contact.ts"
 import { setContactColors } from "../../utils/user.ts"
@@ -48,12 +48,17 @@ export function ContactContainer() {
         return unsubscribeContacts;
     }, [])
 
+    const handleDeleteContact = async (cId: string) => {
+        await deleteData('contacts', 'id', cId)
+    }
+
 
     return (
         <>
             <Contact
                 contacts={contacts}
                 sortedContacts={sortedContacts}
+                ondelete={handleDeleteContact}
             />
         </>
     )

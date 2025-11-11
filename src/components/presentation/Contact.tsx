@@ -4,9 +4,15 @@ import { getContactColorSync, getInitials } from "../../utils/user";
 import Button from "../UI/Button";
 import styles from "./Contact.module.scss"
 
-export function Contact({ sortedContacts }: ContactProp) {
+export function Contact({ sortedContacts, ondelete }: ContactProp) {
     const [selectedContact, setSelectedContact] = useState<SingleContact | null>(null)
 
+    const handleDelte = () => {
+        if (selectedContact) {
+            ondelete(selectedContact.id)
+            setSelectedContact(null)
+        }
+    }
     return (
         <>
             <div className={styles.section}>
@@ -43,43 +49,45 @@ export function Contact({ sortedContacts }: ContactProp) {
                         )
                     })}
                 </div>
-                {selectedContact &&
-                    (
-                        <div className={styles.viewContactContainer}>
-                            <div className={styles.header}>
-                                <h1>Contacts</h1>
-                                <span className={styles.headerLine}></span>
-                                <span>Better with a team</span>
-                            </div>
-                            <div className={styles.contactInfo}>
-                                <div className={styles.nameInfo}>
-                                    <span className={styles.bigInitials}
-                                        style={{ backgroundColor: getContactColorSync(`${selectedContact.firstname} ${selectedContact.lastname}`) }}
-                                    >{getInitials(`${selectedContact.firstname} ${selectedContact.lastname}`)}</span>
-                                    <div className={styles.nameAndBtn}>
-                                        <h2>{`${selectedContact.firstname} ${selectedContact.lastname}`}</h2>
-                                        <div className={styles.btns}>
-                                            <button>Edit</button>
-                                            <button>Delete</button>
-                                        </div>
+
+
+                <div className={styles.viewContactContainer}>
+                    <div className={styles.header}>
+                        <h1>Contacts</h1>
+                        <span className={styles.headerLine}></span>
+                        <span>Better with a team</span>
+                    </div>
+                    {selectedContact && (
+                        <div className={styles.contactInfo}>
+                            <div className={styles.nameInfo}>
+                                <span className={styles.bigInitials}
+                                    style={{ backgroundColor: getContactColorSync(`${selectedContact.firstname} ${selectedContact.lastname}`) }}
+                                >{getInitials(`${selectedContact.firstname} ${selectedContact.lastname}`)}</span>
+                                <div className={styles.nameAndBtn}>
+                                    <h2>{`${selectedContact.firstname} ${selectedContact.lastname}`}</h2>
+                                    <div className={styles.btns}>
+                                        <button>Edit</button>
+                                        <button onClick={handleDelte}>Delete</button>
                                     </div>
                                 </div>
+                            </div>
 
-                                <span style={{ fontSize: '20px', marginBlock: '24px' }}>Contact Information</span>
+                            <span style={{ fontSize: '20px', marginBlock: '24px' }}>Contact Information</span>
 
-                                <div className={styles.emailContainer}>
-                                    <span>Email</span>
-                                    <a href={`mailto:${selectedContact.mail}`}>{selectedContact.mail}</a>
-                                </div>
+                            <div className={styles.emailContainer}>
+                                <span>Email</span>
+                                <a href={`mailto:${selectedContact.mail}`}>{selectedContact.mail}</a>
+                            </div>
 
-                                <div className={styles.emailContainer}>
-                                    <span>Email</span>
-                                    <a>{selectedContact.phone || 'Keine Telefonnummer'}</a>
-                                </div>
+                            <div className={styles.emailContainer}>
+                                <span>Email</span>
+                                <a>{selectedContact.phone || 'Keine Telefonnummer'}</a>
                             </div>
                         </div>
-                    )
-                }
+                    )}
+                </div>
+
+
 
             </div>
 
