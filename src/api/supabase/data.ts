@@ -126,6 +126,20 @@ export const updateData = async (table: string, column: string, value: string, t
     return data
 }
 
+export const updateFields = async (
+    table: string,
+    updates: Record<string, any>,
+    targetId: string
+) => {
+    const { data, error } = await supabase
+        .from(table)
+        .update(updates)
+        .eq('id', targetId)
+        .select();
+    if (error) throw error;
+    return data;
+}
+
 export const updateDataBool = async (table: string, column: string, value: boolean, targetId: string) => {
     const { data, error } = await supabase
         .from(table)
