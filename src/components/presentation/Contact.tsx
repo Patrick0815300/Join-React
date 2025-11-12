@@ -10,6 +10,7 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
     const [selectedContact, setSelectedContact] = useState<SingleContact | null>(null)
     const [showAddContact, setShowAddContact] = useState(false);
     const [showEditContact, setShowEditContact] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
     const addContactRef = useRef<HTMLDivElement>(null);
     const editContactRef = useRef<HTMLDivElement>(null);
 
@@ -23,15 +24,29 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
 
     const handleAddContact = () => {
         setShowAddContact(prevState => !prevState)
+        setIsClosing(false);
     }
 
     const handleEditContact = () => {
         setShowEditContact(prevState => !prevState)
+        setIsClosing(false);
+    }
+
+    const handleCloseAdd = () => {
+        setIsClosing(true);
+        setTimeout(() => {
+            setShowAddContact(false);
+            setIsClosing(false);
+        }, 300);  // Match animation duration
     }
 
     const handleCloseEdit = () => {
-        setShowEditContact(false);
-        setSelectedContact(null);
+        setIsClosing(true);
+        setTimeout(() => {
+            setShowEditContact(false);
+            setSelectedContact(null);
+            setIsClosing(false);
+        }, 300);
     }
 
     // Click Outside Handler
@@ -39,12 +54,15 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 addContactRef.current &&
-                !addContactRef.current.contains(event.target as Node) ||
+                !addContactRef.current.contains(event.target as Node)
+            ) {
+                handleCloseAdd();
+            }
+            if (
                 editContactRef.current &&
                 !editContactRef.current.contains(event.target as Node)
             ) {
-                setShowAddContact(false);
-                setShowEditContact(false)
+                handleCloseEdit();
             }
         };
         if (showAddContact || showEditContact) {
@@ -108,8 +126,8 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
                                 <div className={styles.nameAndBtn}>
                                     <h2>{`${selectedContact.firstname} ${selectedContact.lastname}`}</h2>
                                     <div className={styles.btns}>
-                                        <button onClick={handleEditContact}>Edit</button>
-                                        <button onClick={handleDelte}>Delete</button>
+                                        <button onClick={handleEditContact}><img src="src/assets/icons/edit_copy.svg" alt="Pen Icon to edit" />  Edit</button>
+                                        <button onClick={handleDelte}><img src="src/assets/icons/delete.svg" alt="Bin to delete Contact" /> Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +153,7 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
 
             {showAddContact &&
                 (<div className={styles.overlay}>
-                    <div ref={addContactRef}>
+                    <div ref={addContactRef} className={isClosing ? styles.slideOutRight : styles.slideInRight}>
                         <AddContact />
                     </div>
 
@@ -145,7 +163,7 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
 
             {showEditContact && selectedContact &&
                 (<div className={styles.overlay}>
-                    <div ref={editContactRef}>
+                    <div ref={editContactRef} className={isClosing ? styles.slideOutRight : styles.slideInRight}>
                         <EditContact
                             form={{
                                 name: `${selectedContact.firstname} ${selectedContact.lastname}`,

@@ -9,7 +9,7 @@
 
 .overlay {
     z-index: 10;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -180,7 +180,21 @@
 
             .btns {
                 display: flex;
-                gap: 8px;
+                gap: 16px;
+
+                button {
+                    all: unset;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    border-radius: 10px;
+                    padding: 4px 8px;
+
+                    &:hover {
+                        background-color: var(--color-border);
+                    }
+                }
             }
 
         }
@@ -197,4 +211,36 @@
     }
 
 
+}
+
+.slideInRight {
+    animation: slideInFromRight 0.3s ease-out forwards;
+}
+
+.slideOutRight {
+    animation: slideOutToRight 0.3s ease-in forwards;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); // Startet außerhalb rechts
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0); // Endet an Position
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%); // Gleitet nach rechts raus
+        opacity: 0;
+    }
 }

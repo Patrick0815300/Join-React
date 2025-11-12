@@ -3,7 +3,7 @@ import styles from "./AddContact.module.scss"
 import Button from "./Button"
 import Input from "./Input"
 import { validateEmail, validatePhone } from "../../utils/validation";
-import { getContactColorSync, getInitials } from "../../utils/user";
+import { getContactColorSync, getInitials, splitName } from "../../utils/user";
 import { deleteData, updateFields } from "../../api/supabase/data";
 
 interface EditContactProps {
@@ -34,9 +34,13 @@ export function EditContact({ form, cId, close }: EditContactProps) {
         newForm.phone !== form.phone;
 
     const getChangedFields = () => {
-        const changes: Partial<typeof newForm> = {};
+        const changes: any = {};
 
-        if (newForm.name !== form.name) changes.name = newForm.name;
+        if (newForm.name !== form.name) {
+            const { firstname, lastname } = splitName(newForm.name);
+            changes.firstname = firstname;
+            changes.lastname = lastname;
+        }
         if (newForm.email !== form.email) changes.email = newForm.email;
         if (newForm.phone !== form.phone) changes.phone = newForm.phone;
 
