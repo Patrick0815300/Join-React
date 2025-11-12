@@ -36,6 +36,15 @@ export function AddContact() {
         }
     }
 
+    const clearForm = () => {
+        setForm({
+            name: '',
+            email: '',
+            phone: '',
+            password: 'Ofenrohr300#',
+        })
+    }
+
     const onSubmitChange = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -51,9 +60,6 @@ export function AddContact() {
                 phone: '',
                 password: 'Ofenrohr300#',
             })
-            console.log('GEHT');
-
-
         } else {
             // Zeige Fehlermeldungen
             console.log('Validation failed');
@@ -111,7 +117,7 @@ export function AddContact() {
                             imgAlt="Person Icon"
                         />
                         <div className={styles.formBtns}>
-                            <Button className={styles.cancel} type="button">Cancel</Button>
+                            <Button className={styles.cancel} type="button" onClick={clearForm}>Cancel</Button>
                             <Button type="submit">Create Contact</Button>
                         </div>
                     </form>
