@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ContactProp, SingleContact } from "../../types/Contact";
 import { getContactColorSync, getInitials } from "../../utils/user";
 import Button from "../UI/Button";
 import styles from "./Contact.module.scss"
+import { AddContact } from "../UI/AddContact";
 
 export function Contact({ sortedContacts, ondelete }: ContactProp) {
     const [selectedContact, setSelectedContact] = useState<SingleContact | null>(null)
+    const [showAddContact, setShowAddContact] = useState(false);
+    const addContactRef = useRef<HTMLDivElement>(null);
 
     const handleDelte = () => {
         if (selectedContact) {
@@ -13,11 +16,34 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
             setSelectedContact(null)
         }
     }
+
+    const handleAddContact = () => {
+        setShowAddContact(prevState => !prevState)
+    }
+
+    // Click Outside Handler
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                addContactRef.current &&
+                !addContactRef.current.contains(event.target as Node)
+
+            ) {
+                setShowAddContact(false);
+            }
+        };
+        if (showAddContact) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showAddContact]);
     return (
         <>
             <div className={styles.section}>
                 <div className={styles.contactListContainer}>
-                    <Button>Add new Contact</Button>
+                    <Button onClick={handleAddContact}>Add new Contact</Button>
 
                     {sortedContacts && sortedContacts.map((c, index) => {
                         const currentLetter = c.firstname.charAt(0).toUpperCase();
@@ -90,6 +116,16 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
 
 
             </div>
+
+            {showAddContact &&
+                (<div className={styles.overlay}>
+                    <div ref={addContactRef}>
+                        <AddContact />
+                    </div>
+
+                </div>
+                )}
+
 
         </>
     )

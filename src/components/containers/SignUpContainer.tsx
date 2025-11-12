@@ -22,7 +22,7 @@ export function SignUpContainer() {
     })
 
     const signUpUser = async (formData: FormDataProp) => {
-        const color = generateRandomDarkColor()
+        const color = generateRandomDarkColor();
         const name = splitName(formData.name);
         const data = await signUp(formData.email, formData.password);
         if (data.user) {
