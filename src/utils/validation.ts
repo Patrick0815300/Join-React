@@ -13,3 +13,8 @@ export const checkConfirmPassword = (pw: string, pwConfirm: string, mode: string
         return pw === pwConfirm && pwConfirm.length > 0;
     } return true
 }
+
+export const validatePhone = (phone: string) => {
+    const phoneRegex = /^\+?[1-9]\d{7,14}$/;
+    return phoneRegex.test(phone);
+}
