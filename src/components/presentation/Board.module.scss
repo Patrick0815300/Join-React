@@ -172,6 +172,11 @@
 
         .headResp {
             display: flex;
+            margin-block: 32px;
+
+            h1 {
+                margin: 0;
+            }
         }
 
         .search {
