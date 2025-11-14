@@ -6,6 +6,14 @@ export async function getData(database: string) {
     return data;
 }
 
+export async function deleteData(table: string, column: string, value: string) {
+    const { error } = await supabase
+        .from(table)
+        .delete()
+        .eq(column, value)
+    if (error) throw error;
+}
+
 export async function getDataByColumns<T>(table: string, columns: string | string[]): Promise<T[]> {
     const selectColumns = Array.isArray(columns) ? columns.join(',') : columns;
 
@@ -116,6 +124,20 @@ export const updateData = async (table: string, column: string, value: string, t
         .select()
     if (error) throw error;
     return data
+}
+
+export const updateFields = async (
+    table: string,
+    updates: Record<string, any>,
+    targetId: string
+) => {
+    const { data, error } = await supabase
+        .from(table)
+        .update(updates)
+        .eq('id', targetId)
+        .select();
+    if (error) throw error;
+    return data;
 }
 
 export const updateDataBool = async (table: string, column: string, value: boolean, targetId: string) => {

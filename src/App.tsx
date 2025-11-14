@@ -2,13 +2,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { SignUpPage } from './pages/SignUpPage';
 import { LoginPage } from './pages/LoginPage';
 import { AppLayout } from './components/layout/AppLayout';
-import { getUser } from './api/supabase/user';
+import { checkAuthChange, getUser } from './api/supabase/user';
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { DashboardContainer } from './components/containers/DashboardContainer';
 import { TaskContainer } from './components/containers/TaskContainer';
 import { BoardContainer } from './components/containers/BoardContainer';
 import './App.css';
+import { ContactContainer } from './components/containers/ContactContainer';
 
 
 function App() {
@@ -21,6 +22,14 @@ function App() {
       setLoading(false);
     }
     checkAuth();
+
+    const unsubscribe = checkAuthChange((user) => {
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
 
@@ -56,7 +65,7 @@ function App() {
             />
             <Route
               path="contacts"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <ContactContainer /> : <Navigate to="/login" replace />}
             />
             <Route
               path="legal"

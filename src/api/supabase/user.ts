@@ -1,3 +1,4 @@
+import { User } from '@supabase/supabase-js';
 import { supabase } from './client.ts'
 
 export async function getUser() {
@@ -41,4 +42,19 @@ export async function passwordRecovery(email: string) {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
     if (error) throw error
     return data
+}
+
+export function checkAuthChange(callback: (user: User | null) => void) {
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+        callback(session?.user ?? null);
+
+        if (event === 'SIGNED_OUT') {
+            console.log('User signed out');
+            localStorage.clear();
+        }
+    })
+
+    return () => {
+        data.subscription.unsubscribe();
+    };
 }
