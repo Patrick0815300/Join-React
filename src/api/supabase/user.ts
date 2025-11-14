@@ -45,12 +45,12 @@ export async function passwordRecovery(email: string) {
 }
 
 export function checkAuthChange(callback: (user: User | null) => void) {
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
         callback(session?.user ?? null);
-        if (event === 'SIGNED_IN') {
-            console.log('SIGN IN, YUHU');
-        } else if (event === 'TOKEN_REFRESHED') {
-            // handle token refreshed event
+
+        if (event === 'SIGNED_OUT') {
+            console.log('User signed out');
+            localStorage.clear();
         }
     })
 
