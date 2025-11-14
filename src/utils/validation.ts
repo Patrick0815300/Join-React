@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     return emailRegex.test(email)
@@ -14,7 +16,25 @@ export const checkConfirmPassword = (pw: string, pwConfirm: string, mode: string
     } return true
 }
 
-export const validatePhone = (phone: string) => {
-    const phoneRegex = /^\+?[1-9]\d{7,14}$/;
-    return phoneRegex.test(phone);
+
+export function useMediaQuery(query: string): boolean {
+    const [matches, setMatches] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia(query);
+
+        if (media.matches !== matches) {
+            setMatches(media.matches);
+        }
+
+        const listener = (e: MediaQueryListEvent) => {
+            setMatches(e.matches);
+        };
+
+        media.addEventListener('change', listener);
+
+        return () => media.removeEventListener('change', listener);
+    }, [matches, query]);
+
+    return matches;
 }
