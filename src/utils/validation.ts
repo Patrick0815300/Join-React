@@ -16,6 +16,10 @@ export const checkConfirmPassword = (pw: string, pwConfirm: string, mode: string
     } return true
 }
 
+export const validatePhone = (phone: string) => {
+    const phoneRegex = /^\+?[1-9]\d{7,14}$/;
+    return phoneRegex.test(phone);
+}
 
 export function useMediaQuery(query: string): boolean {
     const [matches, setMatches] = useState(false);
