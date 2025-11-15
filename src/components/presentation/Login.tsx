@@ -9,10 +9,12 @@ type Toast = {
 type LoginProps = {
     toast: Toast;
     handleAuthSubmit: (formData: { email: string; password: string }) => Promise<void>;
+    onGuestLogin?: () => void;
 };
 
 
-export function Login({ toast, handleAuthSubmit }: LoginProps) {
+export function Login({ toast, handleAuthSubmit, onGuestLogin }: LoginProps) {
+
     return (
         <>
             <section>
@@ -22,6 +24,7 @@ export function Login({ toast, handleAuthSubmit }: LoginProps) {
                 <AuthFormContainer
                     mode="login"
                     onSubmit={handleAuthSubmit}
+                    onGuestLogin={onGuestLogin}
                 />
             </section>
         </>

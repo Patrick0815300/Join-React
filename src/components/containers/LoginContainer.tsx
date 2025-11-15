@@ -56,6 +56,10 @@ export function LoginContainer() {
         }
     }, [toast, setToast]);
 
+    const handleGuestLogin = async () => {
+        await login('guest@user.com', 'Ofenrohr300#')
+        navigate('/dashboard')
+    }
 
 
     return (
@@ -63,6 +67,7 @@ export function LoginContainer() {
             <Login
                 toast={toast}
                 handleAuthSubmit={handleAuthSubmit}
+                onGuestLogin={handleGuestLogin}
             />
         </>
     )
