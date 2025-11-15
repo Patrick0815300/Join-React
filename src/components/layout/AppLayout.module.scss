@@ -15,6 +15,7 @@
             min-height: 0;
             box-sizing: border-box;
             position: relative;
+            overflow-y: auto;
         }
     }
 }
@@ -29,6 +30,10 @@
         .wrapper {
             order: 1 !important;
             min-height: 0;
+
+            main {
+                padding-inline: 16px;
+            }
         }
 
         nav {
