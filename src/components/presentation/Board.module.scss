@@ -2,10 +2,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+
+    .headResp {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        Button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 45px;
+        }
+    }
 
     .search {
         display: flex;
         gap: 32px;
+
+        Button {
+            font-size: 21px;
+            font-weight: 700;
+            padding: 8px 16px;
+
+            span {
+                font-size: 28px;
+            }
+        }
     }
 }
 
@@ -14,12 +41,28 @@
     justify-content: space-between;
     gap: 26px;
 
+    .column {
+        width: 25%;
+        max-width: 252px;
+
+        .taskContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    }
+
     .noTask {
         border: 1px dashed #A8A8A8;
         border-radius: 10px;
         color: #A8A8A8;
         background-color: #E7E7E7;
         padding: 10px;
+        width: 100%;
+        max-width: 252px;
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
     }
 
 
@@ -84,5 +127,94 @@
 
     .overlayTaskCard {
         z-index: 20;
+    }
+}
+
+
+@media(max-width: 1220px) {
+    .table {
+        flex-direction: column;
+
+        .column {
+            width: 100%;
+            max-width: calc(100vw - 232px - 64px);
+            min-width: 0;
+
+            .taskContainer {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                flex-direction: row; // Mobile
+                overflow-y: visible;
+                flex-wrap: nowrap;
+                gap: 16px;
+                padding: 8px;
+                margin: -8px;
+
+                >* {
+                    flex-shrink: 0;
+                    min-width: 252px;
+                    width: 252px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 980px) {
+    .top {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .noResp {
+            display: none;
+        }
+
+        .headResp {
+            display: flex;
+            margin-block: 32px;
+
+            h1 {
+                margin: 0;
+            }
+        }
+
+        .search {
+            width: 100%;
+
+            >div {
+                width: 100%;
+            }
+
+            Button {
+                display: none;
+            }
+        }
+    }
+
+    .overlay {
+        overflow-y: auto;
+
+        .overlayAddTask {
+            margin-top: 300px;
+        }
+    }
+}
+
+@media (max-width: 680px) {
+    .table {
+        .column {
+            max-width: 100vw;
+        }
+    }
+
+    .overlay {
+        .overlayAddTask {
+            margin-top: 0;
+        }
+
+        .overlayTaskCard {
+            width: 100vw;
+        }
     }
 }

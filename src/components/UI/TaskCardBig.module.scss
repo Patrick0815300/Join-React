@@ -115,3 +115,15 @@
         }
     }
 }
+
+
+
+
+
+
+@media(max-width: 680px) {
+    .bigCard {
+        width: unset;
+        padding: 32px 24px;
+    }
+}

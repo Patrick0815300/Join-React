@@ -3,13 +3,18 @@ import { Task, TaskProps } from "../../types/Task";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { TaskCardSmall } from '../UI/TaskCardSmall';
+import { useNavigate } from 'react-router-dom';
 import styles from './Board.module.scss'
 import { TaskContainer } from "../containers/TaskContainer";
 import React from 'react';
 import { updateData } from "../../api/supabase/data";
 import { TaskCardBig } from "../UI/TaskCardBig";
+import { useMediaQuery } from "../../utils/validation";
+;
 
 export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: TaskProps) {
+    const navigate = useNavigate();
+    const isMobile = useMediaQuery('(max-width: 680px)');
     const columnMapping = {
         'To Do': 'todo',
         'In Progress': 'inProgress',
@@ -72,7 +77,9 @@ export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: Task
     }, [showAddTask, showBigCard]);
 
     const addTask = () => {
-        setShowAddTask(prevState => !prevState);
+        if (isMobile) {
+            navigate('/tasks')
+        } else setShowAddTask(prevState => !prevState);
     }
 
     // Drag Start - speichert Task ID und Source Column
@@ -165,14 +172,21 @@ export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: Task
     return (
         <>
             <div className={styles.top}>
-                <h1>Board</h1>
+                <h1 className={styles.noResp}>Board</h1>
+                <div className={styles.headResp}>
+                    <h1>Board</h1>
+                    <Button onClick={addTask}>+</Button>
+                </div>
                 <div className={styles.search}>
                     <Input
+                        id="findtask"
+                        name="findtask"
                         placeholder="Find Task"
                         value={searchQuery}
                         onChange={handleInput}
+                        imgSrc="src/assets/icons/search.svg"
                     />
-                    <Button onClick={addTask}>Add Task +</Button>
+                    <Button className={styles.noResp} onClick={addTask}>Add Task <span>+</span></Button>
                 </div>
             </div>
 
@@ -189,33 +203,37 @@ export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: Task
                             <button className={styles.addTaskBtn} onClick={addTask}>+</button>
                         </div>
 
-                        {tasks.length === 0 ? (
-                            <span className={styles.noTask}>No Tasks {title}</span>
-                        ) : (
-                            tasks.map((task) => {
-                                const taskSubtasks = subtasks.filter(s => s.task_id === task.id);
-                                return (
-                                    <div
-                                        className={styles.draggable}
-                                        key={task.id}
-                                        draggable={true}
-                                        onDragStart={(e) => handleDragStart(e, task.id, title)}
-                                        style={{ cursor: 'grab' }}
-                                        onClick={() => openBigCard(task)}
-                                    >
-                                        <TaskCardSmall
-                                            taskId={task.id}
-                                            category={task.category}
-                                            title={task.title}
-                                            description={task.description}
-                                            assigned_to={task.assigned_to}
-                                            priority={task.priority}
-                                            sub={taskSubtasks}
-                                        />
-                                    </div>
-                                );
-                            })
-                        )}
+                        <div className={styles.taskContainer}>
+                            {tasks.length === 0 ? (
+                                <span className={styles.noTask}>No Tasks {title}</span>
+                            ) : (
+                                tasks.map((task) => {
+                                    const taskSubtasks = subtasks.filter(s => s.task_id === task.id);
+                                    return (
+                                        <div
+                                            className={styles.draggable}
+                                            key={task.id}
+                                            draggable={true}
+                                            onDragStart={(e) => handleDragStart(e, task.id, title)}
+                                            style={{ cursor: 'grab' }}
+                                            onClick={() => openBigCard(task)}
+                                        >
+                                            <TaskCardSmall
+                                                taskId={task.id}
+                                                category={task.category}
+                                                title={task.title}
+                                                description={task.description}
+                                                assigned_to={task.assigned_to}
+                                                priority={task.priority}
+                                                sub={taskSubtasks}
+                                            />
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
+
+
                     </div>
                 ))}
             </div>
