@@ -14,7 +14,11 @@ type FormDataProp = {
     password: string,
 }
 
-export function AddContact() {
+type AddContactProp = {
+    close: () => void
+}
+
+export function AddContact({ close }: AddContactProp) {
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -71,14 +75,17 @@ export function AddContact() {
         <>
             <div className={styles.container}>
                 <div className={styles.leftside}>
-                    <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
+                    <div className={styles.mobileLogo}>
+                        <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
+                        <button onClick={close}><img src="src/assets/icons/close.svg" alt="Close Add Contact overlay" /></button>
+                    </div>
                     <h1>Add Contact</h1>
                     <span className={styles.desc}>Task are better with a team!</span>
                     <span className={styles.line}></span>
                 </div>
 
                 <div className={styles.rightside}>
-                    <div style={{ display: 'flex' }}>
+                    <div className={styles.mobileIcon} style={{ display: 'flex' }}>
                         <div className={styles.personIcon}>
                             <img src="src/assets/icons/person.svg" alt="Person Icon" />
                         </div>
@@ -118,7 +125,7 @@ export function AddContact() {
                         />
                         <div className={styles.formBtns}>
                             <Button className={styles.cancel} type="button" onClick={clearForm}>Cancel</Button>
-                            <Button type="submit">Create Contact</Button>
+                            <Button type="submit">Create Contact <img src="src/assets/icons/check.svg" /></Button>
                         </div>
                     </form>
                 </div>
