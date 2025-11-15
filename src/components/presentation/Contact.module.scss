@@ -63,6 +63,7 @@
                 align-items: center;
                 justify-content: center;
                 width: 42px;
+                min-width: 42px;
                 height: 42px;
                 border-radius: 45px;
                 box-sizing: border-box;
@@ -243,5 +244,106 @@
     to {
         transform: translateX(100%); // Gleitet nach rechts raus
         opacity: 0;
+    }
+}
+
+
+
+@media (max-width: 1150px) {
+    .viewContactContainer {
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+
+            .mobileHeader {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                button {
+                    all: unset;
+                    cursor: pointer;
+                }
+            }
+
+            span {
+                display: none;
+            }
+
+        }
+    }
+}
+
+@media(max-width: 980px) {
+    .overlay {
+        position: absolute;
+    }
+}
+
+@media(max-width: 680px) {
+    .contactListContainer {
+        gap: 0;
+
+        button {
+            position: fixed;
+            bottom: 100px;
+            right: 12px;
+            width: 56px;
+            height: 56px;
+            border-radius: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .singleContactContainer {
+            .singleContact {
+                width: auto;
+
+                a {
+                    display: flex !important;
+                    font-size: 16px !important;
+                    flex-wrap: wrap !important;
+                    overflow-wrap: anywhere !important;
+                }
+            }
+        }
+    }
+
+    .viewContactContainer {
+        h1 {
+            font-size: 47px;
+        }
+
+        h2 {
+            font-size: 36px;
+        }
+
+        .header {
+            margin-left: 0;
+        }
+
+        .contactInfo {
+            .nameInfo {
+                .bigInitials {
+                    width: 80px;
+                    height: 80px;
+                    font-size: 27px;
+                }
+            }
+        }
+    }
+
+}
+
+@media (max-width: 420px) {
+    .contactListContainer {
+        .singleContactContainer {
+            .singleContact {
+                gap: 16px;
+                padding-inline: 0;
+            }
+        }
     }
 }

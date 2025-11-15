@@ -73,13 +73,16 @@ export function EditContact({ form, cId, close }: EditContactProps) {
         <>
             <div className={styles.container}>
                 <div className={styles.leftside}>
-                    <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
+                    <div className={styles.mobileLogo}>
+                        <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
+                        <button onClick={close}><img src="src/assets/icons/close.svg" alt="Close Add Contact overlay" /></button>
+                    </div>
                     <h1>Edit Contact</h1>
                     <span className={styles.line}></span>
                 </div>
 
                 <div className={styles.rightside}>
-                    <div style={{ display: 'flex' }}>
+                    <div className={styles.mobileIcon} style={{ display: 'flex' }}>
                         <div className={styles.personIcon} style={{ backgroundColor: getContactColorSync(form.name) }}>{getInitials(form.name)}</div>
                     </div>
                     <form onSubmit={onSubmitChange}>
