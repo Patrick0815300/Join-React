@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { logout } from '../../api/supabase/user';
 import { Link } from 'react-router-dom';
 import { getUserName, shortFormatName } from '../../utils/user';
@@ -8,6 +8,8 @@ import styles from './Header.module.scss'
 export function Header() {
     const [name, setName] = useState('');
     const [showSubmenu, setShowSubmenu] = useState(false);
+    const submenuRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         getName();
@@ -24,6 +26,23 @@ export function Header() {
         setShowSubmenu(prevState => !prevState);
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                submenuRef.current &&
+                !submenuRef.current.contains(event.target as Node)
+            ) {
+                toggleSubmenu();
+            }
+        };
+        if (showSubmenu) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showSubmenu]);
+
 
     return (
         <>
@@ -35,7 +54,7 @@ export function Header() {
                     <button onClick={toggleSubmenu} className={styles.loggedUser}>
                         {name}
                         {showSubmenu ?
-                            <div className={styles.submenuContainer}>
+                            <div ref={submenuRef} className={styles.submenuContainer}>
                                 <Link to="/privacy">Legal Notice</Link>
                                 <Link to="/legal">Privacy Policy</Link>
                                 <Link to="/login" onClick={logout}>Log out</Link>

@@ -10,6 +10,8 @@ import { TaskContainer } from './components/containers/TaskContainer';
 import { BoardContainer } from './components/containers/BoardContainer';
 import './App.css';
 import { ContactContainer } from './components/containers/ContactContainer';
+import { Legal } from './components/presentation/Legal';
+import { Privacy } from './components/presentation/Privacy';
 
 
 function App() {
@@ -69,11 +71,11 @@ function App() {
             />
             <Route
               path="legal"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <Legal /> : <Navigate to="/login" replace />}
             />
             <Route
               path="privacy"
-              element={isAuthenticated ? <SignUpPage /> : <Navigate to="/login" replace />}
+              element={isAuthenticated ? <Privacy /> : <Navigate to="/login" replace />}
             />
           </Route>
 
