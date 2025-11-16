@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
+import JoinLogoIcon from '../../assets/icons/join_logo_vector.svg'
 import DashboardIcon from '../../assets/icons/dashboard.svg'
 import EditIcon from '../../assets/icons/edit.svg'
 import IconsIcon from '../../assets/icons/Icons.svg'
@@ -11,7 +12,7 @@ export function Navbar() {
     return (
         <>
             <nav>
-                <img className={styles.logo} src="src/assets/icons/join_logo_vector.svg" alt="Logo" />
+                <img className={styles.logo} src={JoinLogoIcon} alt="Logo" />
                 <ul className={styles.navLinks}>
                     <li className={location.pathname === '/dashboard' ? styles.active : ''}>
                         <NavLink to="/dashboard">

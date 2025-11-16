@@ -9,9 +9,7 @@ import CloseIcon from '../../assets/icons/close.svg'
 import PersonIcon from '../../assets/icons/person.svg'
 import MailIcon from '../../assets/icons/mail.svg'
 import CallIcon from '../../assets/icons/call.svg'
-import CheckIcon from '../../assets/icons/check.svg'
 import styles from "./AddContact.module.scss"
-
 
 interface EditContactProps {
     form: {
