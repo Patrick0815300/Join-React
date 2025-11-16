@@ -167,7 +167,7 @@ export function subscribeToTable(
         )
         .subscribe((status) => {
             if (status === 'SUBSCRIBED') {
-                console.log(`Subscribed to ${table}`);
+                //console.log(`Subscribed to ${table}`);
             }
         });
 

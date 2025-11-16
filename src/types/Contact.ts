@@ -19,4 +19,5 @@ export interface ContactProp {
     contacts: SingleContact[];
     sortedContacts: SingleContact[];
     ondelete: (cId: string) => Promise<void>;
+    toast: boolean
 }

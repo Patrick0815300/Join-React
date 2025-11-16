@@ -15,7 +15,6 @@ export async function getSession() {
 export async function signUp(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
-    console.log('USERID: ', data.user?.id);
     return data;
 }
 

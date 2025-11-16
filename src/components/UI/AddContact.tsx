@@ -1,17 +1,16 @@
 import { useState } from "react";
-import styles from "./AddContact.module.scss"
 import Button from "./Button"
 import Input from "./Input"
 import { validateEmail, validatePhone } from "../../utils/validation";
 import { generateRandomDarkColor } from "../../utils/color";
 import { splitName } from "../../utils/user";
-import { signUp } from "../../api/supabase/user";
+import { getUser } from "../../api/supabase/user";
 import { addContact } from "../../api/supabase/data";
+import styles from "./AddContact.module.scss"
 
 type FormDataProp = {
     name: string,
     email: string,
-    password: string,
 }
 
 type AddContactProp = {
@@ -23,7 +22,6 @@ export function AddContact({ close }: AddContactProp) {
         name: '',
         email: '',
         phone: '',
-        password: 'Ofenrohr300#',
     })
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,9 +32,10 @@ export function AddContact({ close }: AddContactProp) {
     const signUpUser = async (formData: FormDataProp) => {
         const color = generateRandomDarkColor();
         const name = splitName(formData.name);
-        const data = await signUp(formData.email, formData.password);
-        if (data.user) {
-            await addContact(data.user.id, name.lastname, name.firstname, formData.email, color);
+        const data = await getUser()
+        if (data) {
+            await addContact(data.id, name.lastname, name.firstname, formData.email, color);
+            //SignUp User is triggert by Supabase Backend, to add User automaticly
         }
     }
 
@@ -45,7 +44,6 @@ export function AddContact({ close }: AddContactProp) {
             name: '',
             email: '',
             phone: '',
-            password: 'Ofenrohr300#',
         })
     }
 
@@ -55,21 +53,18 @@ export function AddContact({ close }: AddContactProp) {
         const nameOk = form.name.length > 3;
         const emailOk = validateEmail(form.email);
         const phoneOk = validatePhone(form.phone)
-
+        await signUpUser(form)
         if (nameOk && emailOk && phoneOk) {
-            await signUpUser(form)
             setForm({
                 name: '',
                 email: '',
                 phone: '',
-                password: 'Ofenrohr300#',
             })
         } else {
             // Zeige Fehlermeldungen
             console.log('Validation failed');
         }
     };
-
 
     return (
         <>

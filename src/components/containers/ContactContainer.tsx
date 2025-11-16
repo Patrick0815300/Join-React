@@ -8,6 +8,7 @@ import { setContactColors } from "../../utils/user.ts"
 export function ContactContainer() {
     const [contacts, setContacts] = useState<SingleContact[]>([])
     const [sortedContacts, setSortedContacts] = useState<SingleContact[]>([])
+    const [showToast, setShowToast] = useState(false)
 
     const getContactData = async () => {
         const data = await getData('contacts')
@@ -29,13 +30,28 @@ export function ContactContainer() {
     }
 
     useEffect(() => {
+        if (showToast) {
+            console.log('GEHT');
+
+            const timer = setTimeout(() => setShowToast(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast, setShowToast]);
+
+    useEffect(() => {
         getContactData();
         getContactsColors();
 
         const unsubscribeContacts = subscribeToTable(
             'contacts',
             (payload) => {
-                if (payload.eventType === 'INSERT' ||
+                if (payload.eventType === 'INSERT') {
+                    getContactData();
+                    getContactsColors();
+                    setShowToast(true);
+                    console.log('INSERT');
+
+                } else if (
                     payload.eventType === 'UPDATE' ||
                     payload.eventType === 'DELETE') {
                     getContactData();
@@ -59,6 +75,7 @@ export function ContactContainer() {
                 contacts={contacts}
                 sortedContacts={sortedContacts}
                 ondelete={handleDeleteContact}
+                toast={showToast}
             />
         </>
     )

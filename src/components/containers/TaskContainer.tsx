@@ -16,7 +16,6 @@ export function TaskContainer() {
     const [showToast, setShowToast] = useState(false);
     const [toastMsg, setToastMsg] = useState('');
 
-
     const handleTitleChange = (newTitle: string) => setTitle(newTitle);
     const handleDescriptionChange = (newDesc: string) => setDescription(newDesc);
     const handleDateChange = (newDate: string) => setDate(newDate);

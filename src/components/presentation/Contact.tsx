@@ -6,8 +6,9 @@ import styles from "./Contact.module.scss"
 import { AddContact } from "../UI/AddContact";
 import { EditContact } from "../UI/EditContact";
 import { useMediaQuery } from "../../utils/validation";
+import { Toast } from "../UI/Toast";
 
-export function Contact({ sortedContacts, ondelete }: ContactProp) {
+export function Contact({ sortedContacts, ondelete, toast }: ContactProp) {
     const [selectedContact, setSelectedContact] = useState<SingleContact | null>(null)
     const [showAddContact, setShowAddContact] = useState(false);
     const [showEditContact, setShowEditContact] = useState(false);
@@ -67,8 +68,6 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
         setSelectedContact(null);
     }
 
-
-
     useEffect(() => {
         if (isMobile) {
             setViewContactContainer(false);
@@ -78,7 +77,6 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
             setViewContactContainer(true)
         }
     }, [isMobile])
-
 
     // Click Outside Handler
     useEffect(() => {
@@ -226,6 +224,10 @@ export function Contact({ sortedContacts, ondelete }: ContactProp) {
 
                 </div>
                 )
+            }
+
+            {toast &&
+                (<Toast content={"Contact succesfully created"} />)
             }
 
 
