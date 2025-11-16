@@ -55,7 +55,7 @@ export async function addContact(userId: string, lastname: string, firstname: st
 }
 
 export async function updateContact(column: string, content: string, mail: string) {
-    const { error } = await supabase
+    const { } = await supabase
         .from('contacts')
         .update({ column, content })
         .eq('mail', mail)
@@ -153,7 +153,6 @@ export const updateDataBool = async (table: string, column: string, value: boole
 export function subscribeToTable(
     table: string,
     onData: (payload: any) => void,
-    onError: (error: any) => void,
     schema: string = 'public'
 ) {
     const channel = supabase

@@ -23,12 +23,12 @@ type FormErrors = {
 };
 
 // Typ für "berührte" Felder
-type FormTouched = {
-    name: boolean;
-    email: boolean;
-    password: boolean;
-    passwordConfirm: boolean;
-};
+// type FormTouched = {
+//     name: boolean;
+//     email: boolean;
+//     password: boolean;
+//     passwordConfirm: boolean;
+// };
 
 // Props für die Präsentationskomponente
 type AuthFormPresentationProps = {

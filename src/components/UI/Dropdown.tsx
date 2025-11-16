@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getContactColorSync, getInitials } from '../../utils/user';
+import DropdownIcon from '../../assets/icons/arrow_drop_down.svg'
 import styles from './Dropdown.module.scss'
 
 interface DropdownProps {
@@ -54,7 +55,7 @@ const Dropdown = ({ label, placeholder, subs, selected = [], flag, required, onS
                 <div className={styles.input} onClick={toggleSub}>
                     <span>{placeholder}</span>
                     <img
-                        src="src/assets/icons/arrow_drop_down.svg"
+                        src={DropdownIcon}
                         alt="dropdown"
                         style={{
                             transform: showSub && subs.length > 0 ? 'rotate(180deg)' : 'rotate(0deg)',

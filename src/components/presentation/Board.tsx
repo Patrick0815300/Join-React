@@ -10,7 +10,8 @@ import React from 'react';
 import { updateData } from "../../api/supabase/data";
 import { TaskCardBig } from "../UI/TaskCardBig";
 import { useMediaQuery } from "../../utils/validation";
-;
+import SearchIcon from '../../assets/icons/search.svg'
+
 
 export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: TaskProps) {
     const navigate = useNavigate();
@@ -184,7 +185,7 @@ export function Board({ todos, done, inProgress, awaitFeedback, subtasks }: Task
                         placeholder="Find Task"
                         value={searchQuery}
                         onChange={handleInput}
-                        imgSrc="src/assets/icons/search.svg"
+                        imgSrc={SearchIcon}
                     />
                     <Button className={styles.noResp} onClick={addTask}>Add Task <span>+</span></Button>
                 </div>

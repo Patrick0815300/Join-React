@@ -7,6 +7,10 @@ import { AddContact } from "../UI/AddContact";
 import { EditContact } from "../UI/EditContact";
 import { useMediaQuery } from "../../utils/validation";
 import { Toast } from "../UI/Toast";
+import PersonAddIcon from '../../assets/icons/person_add.svg'
+import ArrowLeftIcon from '../../assets/icons/arrow_left.svg'
+import EditIcon from '../../assets/icons/edit_copy.svg'
+import DeleteIcon from '../../assets/icons/delete.svg'
 
 export function Contact({ sortedContacts, ondelete, toast }: ContactProp) {
     const [selectedContact, setSelectedContact] = useState<SingleContact | null>(null)
@@ -108,7 +112,7 @@ export function Contact({ sortedContacts, ondelete, toast }: ContactProp) {
                 {contactListContainer &&
                     (
                         <div className={styles.contactListContainer}>
-                            <Button onClick={handleAddContact}>{isPhone ? <img src="src/assets/icons/person_add.svg" alt="Add new Contact" /> : 'Add new Contact'}</Button>
+                            <Button onClick={handleAddContact}>{isPhone ? <img src={PersonAddIcon} alt="Add new Contact" /> : 'Add new Contact'}</Button>
 
                             {sortedContacts && sortedContacts.map((c, index) => {
                                 const currentLetter = c.firstname.charAt(0).toUpperCase();
@@ -152,7 +156,7 @@ export function Contact({ sortedContacts, ondelete, toast }: ContactProp) {
                                     <h1>Contacts</h1>
                                     {isMobile &&
                                         (
-                                            <button onClick={handleCloseViewContact}><img src="src/assets/icons/arrow_left.svg" alt="Arrow Button to go back" /></button>
+                                            <button onClick={handleCloseViewContact}><img src={ArrowLeftIcon} alt="Arrow Button to go back" /></button>
                                         )
                                     }
                                 </div>
@@ -168,8 +172,8 @@ export function Contact({ sortedContacts, ondelete, toast }: ContactProp) {
                                         <div className={styles.nameAndBtn}>
                                             <h2>{`${selectedContact.firstname} ${selectedContact.lastname}`}</h2>
                                             <div className={styles.btns}>
-                                                <button onClick={handleEditContact}><img src="src/assets/icons/edit_copy.svg" alt="Pen Icon to edit" />  Edit</button>
-                                                <button onClick={handleDelete}><img src="src/assets/icons/delete.svg" alt="Bin to delete Contact" /> Delete</button>
+                                                <button onClick={handleEditContact}><img src={EditIcon} alt="Pen Icon to edit" />  Edit</button>
+                                                <button onClick={handleDelete}><img src={DeleteIcon} alt="Bin to delete Contact" /> Delete</button>
                                             </div>
                                         </div>
                                     </div>

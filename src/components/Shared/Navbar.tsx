@@ -1,4 +1,8 @@
 import { NavLink, useLocation } from "react-router-dom";
+import DashboardIcon from '../../assets/icons/dashboard.svg'
+import EditIcon from '../../assets/icons/edit.svg'
+import IconsIcon from '../../assets/icons/Icons.svg'
+import ContatcsIcon from '../../assets/icons/contacts.svg'
 import styles from './Navbar.module.scss'
 
 export function Navbar() {
@@ -11,25 +15,25 @@ export function Navbar() {
                 <ul className={styles.navLinks}>
                     <li className={location.pathname === '/dashboard' ? styles.active : ''}>
                         <NavLink to="/dashboard">
-                            <img src="src/assets/icons/dashboard.svg" alt="Dashboard" />
+                            <img src={DashboardIcon} alt="Dashboard" />
                             Summary
                         </NavLink>
                     </li>
                     <li className={location.pathname === '/tasks' ? styles.active : ''}>
                         <NavLink to="/tasks">
-                            <img src="src/assets/icons/edit.svg" alt="Board" />
+                            <img src={EditIcon} alt="Board" />
                             Add Task
                         </NavLink>
                     </li>
                     <li className={location.pathname === '/board' ? styles.active : ''}>
                         <NavLink to="/board">
-                            <img src="src/assets/icons/Icons.svg" alt="Board" />
+                            <img src={IconsIcon} alt="Board" />
                             Board
                         </NavLink>
                     </li>
                     <li className={location.pathname === '/contacts' ? styles.active : ''}>
                         <NavLink to="/contacts">
-                            <img src="src/assets/icons/contacts.svg" alt="Contacts" />
+                            <img src={ContatcsIcon} alt="Contacts" />
                             Contacts
                         </NavLink>
                     </li>

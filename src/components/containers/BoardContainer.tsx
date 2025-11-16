@@ -46,9 +46,6 @@ export function BoardContainer() {
                     getTasks();
                 }
             },
-            (error) => {
-                console.error('Subscribe Error:', error);
-            }
         );
 
         const unsubscribeSubtasks = subscribeToTable(
@@ -58,9 +55,6 @@ export function BoardContainer() {
                     getSubtasks();
                 }
             },
-            (error) => {
-                console.error('Subscribe Error:', error);
-            }
         );
 
         return () => {

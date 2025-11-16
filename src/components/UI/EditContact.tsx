@@ -1,10 +1,17 @@
 import { useState } from "react";
-import styles from "./AddContact.module.scss"
 import Button from "./Button"
 import Input from "./Input"
 import { validateEmail, validatePhone } from "../../utils/validation";
 import { getContactColorSync, getInitials, splitName } from "../../utils/user";
 import { deleteData, updateFields } from "../../api/supabase/data";
+import JoinLogoVerctorIcon from '../../assets/icons/join_logo_vector.svg'
+import CloseIcon from '../../assets/icons/close.svg'
+import PersonIcon from '../../assets/icons/person.svg'
+import MailIcon from '../../assets/icons/mail.svg'
+import CallIcon from '../../assets/icons/call.svg'
+import CheckIcon from '../../assets/icons/check.svg'
+import styles from "./AddContact.module.scss"
+
 
 interface EditContactProps {
     form: {
@@ -74,8 +81,8 @@ export function EditContact({ form, cId, close }: EditContactProps) {
             <div className={styles.container}>
                 <div className={styles.leftside}>
                     <div className={styles.mobileLogo}>
-                        <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
-                        <button onClick={close}><img src="src/assets/icons/close.svg" alt="Close Add Contact overlay" /></button>
+                        <img src={JoinLogoVerctorIcon} alt="Join Icon" />
+                        <button onClick={close}><img src={CloseIcon} alt="Close Add Contact overlay" /></button>
                     </div>
                     <h1>Edit Contact</h1>
                     <span className={styles.line}></span>
@@ -93,7 +100,7 @@ export function EditContact({ form, cId, close }: EditContactProps) {
                             value={newForm.name}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/person.svg"
+                            imgSrc={PersonIcon}
                             imgAlt="Person Icon"
                         />
                         <Input
@@ -104,7 +111,7 @@ export function EditContact({ form, cId, close }: EditContactProps) {
                             value={newForm.email}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/mail.svg"
+                            imgSrc={MailIcon}
                             imgAlt="Person Icon"
                         />
                         <Input
@@ -115,7 +122,7 @@ export function EditContact({ form, cId, close }: EditContactProps) {
                             value={`+${newForm.phone}`}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/call.svg"
+                            imgSrc={CallIcon}
                             imgAlt="Person Icon"
                         />
                         <div className={styles.formBtns}>

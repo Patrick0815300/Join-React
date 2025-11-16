@@ -6,6 +6,12 @@ import { generateRandomDarkColor } from "../../utils/color";
 import { splitName } from "../../utils/user";
 import { getUser } from "../../api/supabase/user";
 import { addContact } from "../../api/supabase/data";
+import JoinLogoVerctorIcon from '../../assets/icons/join_logo_vector.svg'
+import CloseIcon from '../../assets/icons/close.svg'
+import PersonIcon from '../../assets/icons/person.svg'
+import MailIcon from '../../assets/icons/mail.svg'
+import CallIcon from '../../assets/icons/call.svg'
+import CheckIcon from '../../assets/icons/check.svg'
 import styles from "./AddContact.module.scss"
 
 type FormDataProp = {
@@ -71,8 +77,8 @@ export function AddContact({ close }: AddContactProp) {
             <div className={styles.container}>
                 <div className={styles.leftside}>
                     <div className={styles.mobileLogo}>
-                        <img src="src/assets/icons/join_logo_vector.svg" alt="Join Icon" />
-                        <button onClick={close}><img src="src/assets/icons/close.svg" alt="Close Add Contact overlay" /></button>
+                        <img src={JoinLogoVerctorIcon} alt="Join Icon" />
+                        <button onClick={close}><img src={CloseIcon} alt="Close Add Contact overlay" /></button>
                     </div>
                     <h1>Add Contact</h1>
                     <span className={styles.desc}>Task are better with a team!</span>
@@ -82,7 +88,7 @@ export function AddContact({ close }: AddContactProp) {
                 <div className={styles.rightside}>
                     <div className={styles.mobileIcon} style={{ display: 'flex' }}>
                         <div className={styles.personIcon}>
-                            <img src="src/assets/icons/person.svg" alt="Person Icon" />
+                            <img src={PersonIcon} alt="Person Icon" />
                         </div>
                     </div>
                     <form onSubmit={onSubmitChange}>
@@ -93,7 +99,7 @@ export function AddContact({ close }: AddContactProp) {
                             value={form.name}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/person.svg"
+                            imgSrc={PersonIcon}
                             imgAlt="Person Icon"
                         />
                         <Input
@@ -104,7 +110,7 @@ export function AddContact({ close }: AddContactProp) {
                             value={form.email}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/mail.svg"
+                            imgSrc={MailIcon}
                             imgAlt="Person Icon"
                         />
                         <Input
@@ -115,12 +121,12 @@ export function AddContact({ close }: AddContactProp) {
                             value={form.phone}
                             onChange={handleInput}
                             required
-                            imgSrc="src/assets/icons/call.svg"
+                            imgSrc={CallIcon}
                             imgAlt="Person Icon"
                         />
                         <div className={styles.formBtns}>
                             <Button className={styles.cancel} type="button" onClick={clearForm}>Cancel</Button>
-                            <Button type="submit">Create Contact <img src="src/assets/icons/check.svg" /></Button>
+                            <Button type="submit">Create Contact <img src={CheckIcon} /></Button>
                         </div>
                     </form>
                 </div>

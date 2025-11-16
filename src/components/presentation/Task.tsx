@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import styles from './Task.module.scss'
 import Urgent from '../../assets/icons/urgent.svg?react';
 import { Toast } from '../UI/Toast';
+import CheckIcon from '../../assets/icons/check.svg'
 
 interface TaskProps {
     title: string;
@@ -186,7 +187,7 @@ export function Task({ title, description, date, priority, contacts, selectedCon
                             onClick={clearForm}
                         >Clear X</Button>
                         <Button type='submit' disabled={selectedCategories.length < 0}>
-                            Create Task <img src="src/assets/icons/check.svg" alt="Check" />
+                            Create Task <img src={CheckIcon} alt="Check" />
                         </Button>
                     </div>
                 </div>

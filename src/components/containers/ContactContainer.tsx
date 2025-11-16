@@ -57,9 +57,6 @@ export function ContactContainer() {
                     getContactData();
                 }
             },
-            (error) => {
-                console.error('Subscribe Error:', error);
-            }
         );
         return unsubscribeContacts;
     }, [])

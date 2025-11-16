@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { logout } from '../../api/supabase/user';
 import { Link } from 'react-router-dom';
 import { getUserName, shortFormatName } from '../../utils/user';
+import LogoIcon from '../../assets/icons/logo.svg'
 import styles from './Header.module.scss'
-
 
 export function Header() {
     const [name, setName] = useState('');
@@ -48,7 +48,7 @@ export function Header() {
         <>
             <header className={styles.header}>
                 <span className={styles.title}>Kanban Project Management Tool</span>
-                <img className={styles.logo} src="src/assets/icons/logo.svg" alt="JOIN-Logo" />
+                <img className={styles.logo} src={LogoIcon} alt="JOIN-Logo" />
                 <div className={styles.headerBtns}>
                     <button className={styles.help}>?</button>
                     <button onClick={toggleSubmenu} className={styles.loggedUser}>

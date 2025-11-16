@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../api/supabase/data.ts";
 import { Dashboard } from "../presentation/Dashboard.tsx";
-import { getUser } from "../../api/supabase/user.ts";
 import { getUserName } from "../../utils/user.ts";
 
 export interface Task {
@@ -22,7 +21,6 @@ type Category = 'User Story' | 'Technical Task' | 'Business'
 type Phase = 'todo' | 'in_progress' | 'await_feedback' | 'done'
 
 export function DashboardContainer() {
-    const [tasks, setTasks] = useState<Task[]>([])
     const [todos, setTodos] = useState<Task[]>([])
     const [inProgress, setInProgress] = useState<Task[]>([])
     const [awaitFeedback, setAwaitFeedback] = useState<Task[]>([])

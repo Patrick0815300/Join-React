@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { TaskCardProps } from '../../types/Task';
 
 
-export function TaskCardSmall({ taskId, category, title, description, assigned_to, priority, sub }: TaskCardProps) {
+export function TaskCardSmall({ category, title, description, assigned_to, priority, sub }: TaskCardProps) {
     const firstCategory = category && category.length > 0 ? category[0]?.toLowerCase() : '';
     const categoryClasses = classNames(styles.category, {
         [styles.technicalCat]: firstCategory === 'technical',
