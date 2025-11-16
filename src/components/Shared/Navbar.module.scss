@@ -4,6 +4,7 @@ nav {
     min-width: 232px;
     color: white;
     height: 100vh;
+    max-height: 1024px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,6 +34,10 @@ nav {
         .active {
             background-color: #091931;
         }
+    }
+
+    .privacy {
+        gap: 0;
     }
 
 

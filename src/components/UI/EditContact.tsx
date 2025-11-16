@@ -117,7 +117,7 @@ export function EditContact({ form, cId, close }: EditContactProps) {
                             name="phone"
                             placeholder="Phone"
                             type="tel"
-                            value={`+${newForm.phone}`}
+                            value={newForm.phone}
                             onChange={handleInput}
                             required
                             imgSrc={CallIcon}

@@ -1,6 +1,8 @@
 .layoutContainer {
     display: flex;
     height: 100vh;
+    max-height: 1024px;
+    max-width: 1440px;
     overflow: hidden;
 
     .wrapper {
@@ -25,7 +27,6 @@
         flex-direction: column;
         min-height: 100vh;
         max-height: 100vh;
-
 
         .wrapper {
             order: 1 !important;
