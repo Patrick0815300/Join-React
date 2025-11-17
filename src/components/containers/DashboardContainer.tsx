@@ -33,14 +33,13 @@ export function DashboardContainer() {
     const getTaskData = async () => {
         const data = await getData('tasks')
         const todos = data.filter(tasks => tasks.phase === 'todo');
-        const inProgress = data.filter(tasks => tasks.phase === 'in_progress');
-        const awaitFeedback = data.filter(tasks => tasks.phase === 'await_feedback');
+        const inProgress = data.filter(tasks => tasks.phase === 'inProgress');
+        const awaitFeedback = data.filter(tasks => tasks.phase === 'awaitFeedback');
         const done = data.filter(tasks => tasks.phase === 'done');
         setTodos(todos);
         setInProgress(inProgress);
         setAwaitFeedback(awaitFeedback);
         setDone(done);
-
         getNextUrgent(data);
         getUrgentLength(data);
     }
